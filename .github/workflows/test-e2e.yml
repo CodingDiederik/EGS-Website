@@ -8,8 +8,31 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+
+    # Set environment variables so the tests / backend will connect to the service
+    env:
+      PORT: 8080
+      DB_HOST: localhost
+      DB_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: egs
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: egs
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready -U postgres
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: actions/checkout@v5
@@ -19,6 +42,19 @@ jobs:
           node-version: '20.x'
       - run: npm install -g pnpm
       - run: pnpm install
+
+      # Ensure we have the psql client so we can wait for the DB to be ready.
+      - name: Install postgres client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Wait for Postgres to be ready
+        run: |
+          echo "Waiting for Postgres to be ready..."
+          for i in {1..30}; do
+            pg_isready -h localhost -p 5432 -U postgres && break
+            echo "Postgres not ready yet (attempt $i), sleeping 2s..."
+            sleep 2
+          done
 
       - name: Run e2e tests
         run: pnpm test:e2e
