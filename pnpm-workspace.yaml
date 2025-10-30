@@ -1,0 +1,4 @@
+packages:
+  - egs-backend
+  - egs-frontend
+  - website

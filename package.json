@@ -1,0 +1,21 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "pnpm -r test",
+    "dev:be": "pnpm --filter egs-backend dev",
+    "dev:fe": "pnpm --filter egs-frontend dev",
+    "format": "pnpm -r format",
+    "lint": "pnpm -r lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.19.0",
+  "dependencies": {
+    "@nestjs/cli": "^11.0.10"
+  },
+  "type": "module"
+}
