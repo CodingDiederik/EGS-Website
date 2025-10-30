@@ -53,4 +53,4 @@ jobs:
         if: always()
         run: |
           echo "Tearing down docker compose services..."
-          docker compose -f egs-backend/docker-compose.yaml --env-file egs-backend/.env down -v
+          docker compose -f egs-backend/docker-compose.yaml down -v
