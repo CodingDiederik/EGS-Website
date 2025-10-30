@@ -1,4 +1,4 @@
-name: Tests/spec
+name: Tests@spec
 
 on: 
   pull_request:
@@ -19,9 +19,6 @@ jobs:
           node-version: '20.x'
       - run: npm install -g pnpm
       - run: pnpm install
-
-      - name: DB up
-        run: pnpm --filter egs-backend db:start
 
       - name: Run tests
         run: pnpm test
