@@ -1,10 +1,8 @@
 
 services:
   db:
-    image: postgres:15
+    image: postgres:18
     container_name: egs-backend-db
-    env_file:
-      - .env
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -12,7 +10,7 @@ services:
     ports:
       - "${DB_PORT}:${DB_PORT}"
     volumes:
-      - egs_pgdata:/var/lib/postgresql/data
+      - egs_pgdata:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 10s

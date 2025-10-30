@@ -5,17 +5,22 @@
   "main": "index.js",
   "scripts": {
     "test": "pnpm -r test",
+    "test:e2e": "pnpm -r test:e2e",
     "dev:be": "pnpm --filter egs-backend dev",
     "dev:fe": "pnpm --filter egs-frontend dev",
+    "dev": "concurrently \"pnpm dev:be\" \"pnpm dev:fe\"",
     "format": "pnpm -r format",
-    "lint": "pnpm -r lint"
+    "format:check": "pnpm -r format:check",
+    "lint": "pnpm -r lint",
+    "lint:check": "pnpm -r lint:check"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.19.0",
   "dependencies": {
-    "@nestjs/cli": "^11.0.10"
+    "@nestjs/cli": "^11.0.10",
+    "concurrently": "^9.2.1"
   },
   "type": "module"
 }
