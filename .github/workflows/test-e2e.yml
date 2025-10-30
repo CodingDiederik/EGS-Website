@@ -31,7 +31,7 @@ jobs:
       - name: Start backend services with docker compose
         run: |
           echo "Starting docker compose services..."
-          docker compose -f egs-backend/docker-compose.yaml --env-file egs-backend/.env.test up -d db
+          docker compose -f egs-backend/docker-compose.yaml --env-file egs-backend/.envtest up -d db
 
       # Ensure we have the psql client so we can wait for the DB to be ready.
       - name: Install postgres client
