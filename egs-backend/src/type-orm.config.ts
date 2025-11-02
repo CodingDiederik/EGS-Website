@@ -10,7 +10,8 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT || '5432', 10),
   username: process.env.DB_USER || process.env.POSTGRES_USER || 'postgres',
-  password: process.env.DB_PASSWORD || process.env.POSTGRES_PASSWORD || 'postgres',
+  password:
+    process.env.DB_PASSWORD || process.env.POSTGRES_PASSWORD || 'postgres',
   database: process.env.DB_NAME || process.env.POSTGRES_DB || 'egs',
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: process.env.TYPEORM_SYNC === 'true',

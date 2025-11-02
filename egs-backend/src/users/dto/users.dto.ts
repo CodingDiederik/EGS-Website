@@ -1,16 +1,23 @@
-import { ApiProperty, PartialType } from "@nestjs/swagger";
+import { PartialType } from '@nestjs/swagger';
+import {
+  IsAlphanumeric,
+  IsEmail,
+  IsString,
+  IsStrongPassword,
+} from 'class-validator';
 
 export class CreateUserRequest {
-
-  @ApiProperty()
+  @IsString()
+  @IsAlphanumeric()
   username: string;
 
-  @ApiProperty()
+  @IsString()
+  @IsEmail()
   email: string;
 
-  @ApiProperty()
+  @IsString()
+  @IsStrongPassword()
   password: string;
 }
 
-export class UpdateUserRequest extends PartialType(CreateUserRequest) {
-}
+export class UpdateUserRequest extends PartialType(CreateUserRequest) {}

@@ -14,7 +14,9 @@ async function bootstrap() {
     .build();
 
   const documentFactory = () =>
-    SwaggerModule.createDocument(app, swaggerConfig, {ignoreGlobalPrefix: true});
+    SwaggerModule.createDocument(app, swaggerConfig, {
+      ignoreGlobalPrefix: true,
+    });
   SwaggerModule.setup('docs', app, documentFactory());
 
   await app.listen(process.env.PORT ?? 8080);
