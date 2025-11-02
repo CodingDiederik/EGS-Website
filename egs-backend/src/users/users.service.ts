@@ -67,7 +67,5 @@ export class UsersService {
     } catch {
       return;
     }
-
-    return;
   }
 }
