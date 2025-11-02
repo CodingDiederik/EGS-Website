@@ -29,6 +29,5 @@ export default class UserSeeder {
       const user = repository.create(seed);
       await repository.save(user);
     }
-
   }
 }
