@@ -1,11 +1,11 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
+import { DataSourceOptions } from 'typeorm';
 
 dotenv.config({
   quiet: true,
 });
 
-export const typeOrmConfig: TypeOrmModuleOptions = {
+export const options: DataSourceOptions = {
   type: 'postgres',
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT || '5432', 10),
@@ -16,6 +16,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: process.env.TYPEORM_SYNC === 'true',
   logging: process.env.TYPEORM_LOGGING === 'true' || false,
-  retryAttempts: parseInt(process.env.DB_RETRY_ATTEMPTS || '5', 10),
-  retryDelay: parseInt(process.env.DB_RETRY_DELAY_MS || '2000', 10),
+  migrations: [__dirname + '/migrations/*{.ts,.js}'],
 };

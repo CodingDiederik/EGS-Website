@@ -1,0 +1,125 @@
+openapi: 3.0.0
+paths:
+  /api/users:
+    get:
+      operationId: UsersController_getAllUsers
+      parameters: []
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+      summary: Gets all users.
+      tags: &a1
+        - Users
+    post:
+      operationId: UsersController_createUser
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      summary: Creates a new user.
+      tags: *a1
+  /api/users/{userId}:
+    patch:
+      operationId: UsersController_updateUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserRequest"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      summary: Updates a user.
+      tags: *a1
+    delete:
+      operationId: UsersController_deleteUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        default:
+          description: ""
+      summary: Deletes a user.
+      tags: *a1
+info:
+  title: EGS Backend API
+  description: API documentation for the EGS Backend
+  version: "1.0"
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        hashedPassword:
+          type: string
+        role:
+          enum:
+            - admin
+            - user
+          type: string
+      required:
+        - email
+        - name
+        - hashedPassword
+        - role
+    CreateUserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - username
+        - email
+        - password
+    UpdateUserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
