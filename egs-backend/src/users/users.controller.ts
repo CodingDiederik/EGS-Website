@@ -26,6 +26,15 @@ export class UsersController {
   }
 
   /**
+   * Get a user.
+   * @returns A User.
+   */
+  @Get(':userId')
+  async getUser(@Param('userId', ParseIntPipe) userId: number): Promise<User> {
+    return await this.usersService.getUser(userId);
+  }
+
+  /**
    * Creates a new user.
    * @returns The created User.
    */

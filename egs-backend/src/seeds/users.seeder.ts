@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
 import { User } from '../users/user.entity';
 import { UserRole } from '../users/user.entity';
+import * as bcrypt from 'bcrypt';
 
 export default class UserSeeder {
   public async run(dataSource: DataSource): Promise<any> {
@@ -10,20 +11,24 @@ export default class UserSeeder {
       {
         email: 'admin@example.com',
         name: 'Admin User',
-        hashedPassword: 'hashedpassword1',
+        hashedPassword: await bcrypt.hash('adminpassword', 10),
         role: UserRole.ADMIN,
       },
       {
         email: 'user@example.com',
         name: 'Regular User',
-        hashedPassword: 'hashedpassword2',
+        hashedPassword: await bcrypt.hash('userpassword', 10),
         role: UserRole.USER,
       },
     ];
 
     for (const seed of seeds) {
       if (await repository.findOneBy({ email: seed.email })) {
-        continue;
+        if (process.env.OVERRIDE_SEEDS == 'true') {
+          await repository.delete({ email: seed.email });
+        } else {
+          continue;
+        }
       }
 
       const user = repository.create(seed);

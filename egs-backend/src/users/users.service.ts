@@ -3,6 +3,7 @@ import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserRequest, UpdateUserRequest } from './dto/users.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -20,6 +21,28 @@ export class UsersService {
   }
 
   /**
+   * Get user by ID.
+   * @param userId ID of the user to retrieve.
+   * @returns A User.
+   */
+  async getUser(userId: number): Promise<User> {
+    return await this.userRepository.findOneOrFail({
+      where: { id: userId },
+    });
+  }
+
+  /**
+   * Get user by email.
+   * @param email Email of the user to retrieve.
+   * @returns A User.
+   */
+  async getUserByEmail(email: string): Promise<User | null> {
+    return await this.userRepository.findOneOrFail({
+      where: { email },
+    });
+  }
+
+  /**
    * Creates a new user.
    * @param userData - Data for the new user.
    * @returns The created User.
@@ -28,7 +51,11 @@ export class UsersService {
     const newUser = new User();
     newUser.email = userData.email;
     newUser.name = userData.username;
-    newUser.hashedPassword = userData.password; // TODO: Hash password
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
+    newUser.hashedPassword = hashedPassword;
+
     return await this.userRepository.save(newUser);
   }
 
@@ -49,7 +76,9 @@ export class UsersService {
       user.name = userData.username;
     }
     if (userData.password) {
-      user.hashedPassword = userData.password; // TODO: Hash password
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
+      user.hashedPassword = hashedPassword;
     }
     return await this.userRepository.save(user);
   }

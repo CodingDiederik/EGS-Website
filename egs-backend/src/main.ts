@@ -7,6 +7,7 @@ import { dirname, resolve } from 'path';
 import { writeFileSync } from 'fs';
 import YAML from 'yaml';
 import { runseeds } from './seeds/seed';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,6 +24,10 @@ async function bootstrap() {
       .setTitle('EGS Backend API')
       .setDescription('API documentation for the EGS Backend')
       .setVersion('1.0')
+      .addBearerAuth(
+        { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+        'access_token',
+      )
       .build();
 
     const documentFactory = () =>
@@ -40,6 +45,8 @@ async function bootstrap() {
 
     await runseeds(orm);
   }
+
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   await orm.runMigrations();
 

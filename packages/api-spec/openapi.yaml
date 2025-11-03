@@ -35,6 +35,23 @@ paths:
       summary: Creates a new user.
       tags: *a1
   /api/users/{userId}:
+    get:
+      operationId: UsersController_getUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      summary: Get a user.
+      tags: *a1
     patch:
       operationId: UsersController_updateUser
       parameters:
@@ -71,6 +88,21 @@ paths:
           description: ""
       summary: Deletes a user.
       tags: *a1
+  /api/auth/login:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        default:
+          description: ""
+      tags:
+        - Auth
 info:
   title: EGS Backend API
   description: API documentation for the EGS Backend
@@ -79,6 +111,11 @@ info:
 tags: []
 servers: []
 components:
+  securitySchemes:
+    access_token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
   schemas:
     User:
       type: object
@@ -123,3 +160,16 @@ components:
           format: email
         password:
           type: string
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: admin@example.com
+        password:
+          type: string
+          example: adminpassword
+      required:
+        - email
+        - password
