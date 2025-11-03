@@ -104,7 +104,7 @@ describe('UsersService', () => {
       jest
         .spyOn(mockUsersRepository, 'findOneOrFail')
         .mockRejectedValue(new Error('User not found'));
-      await usersService.deleteUser(userId);
+      await expect(usersService.deleteUser(userId)).rejects.toThrow('User not found');
     });
   });
 });
