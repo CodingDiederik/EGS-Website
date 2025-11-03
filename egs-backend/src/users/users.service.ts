@@ -59,13 +59,10 @@ export class UsersService {
    * @param userId - ID of the user to delete.
    */
   async deleteUser(userId: number): Promise<void> {
-    try {
-      const user = await this.userRepository.findOneOrFail({
+    const user = await this.userRepository.findOneOrFail({
         where: { id: userId },
       });
-      await this.userRepository.softRemove(user);
-    } catch {
-      return;
-    }
+
+    await this.userRepository.softRemove(user);
   }
 }

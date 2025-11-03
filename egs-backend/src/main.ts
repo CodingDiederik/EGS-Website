@@ -13,6 +13,11 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
+  const orm = app.get(DataSource);
+  if (!orm.isInitialized) {
+    await orm.initialize();
+  }
+
   if (process.env.NODE_ENV !== 'production') {
     const swaggerConfig = new DocumentBuilder()
       .setTitle('EGS Backend API')
@@ -33,14 +38,10 @@ async function bootstrap() {
     const document = documentFactory();
     writeFileSync(out, YAML.stringify(document, { indent: 2 }));
 
-    const orm = app.get(DataSource);
-    if (!orm.isInitialized) {
-      await orm.initialize();
-    }
-    await orm.runMigrations();
-
     await runseeds(orm);
   }
+
+  await orm.runMigrations();
 
   await app.listen(process.env.PORT ?? 8080);
 }

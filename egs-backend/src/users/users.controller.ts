@@ -6,10 +6,10 @@ import {
   Delete,
   ParseIntPipe,
   Param,
+  Body,
 } from '@nestjs/common';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
-import { Body } from '@nestjs/common';
 import { CreateUserRequest, UpdateUserRequest } from './dto/users.dto';
 
 @Controller('users')
@@ -48,7 +48,6 @@ export class UsersController {
 
   /**
    * Deletes a user.
-   * @returns The deleted User.
    */
   @Delete(':userId')
   async deleteUser(
