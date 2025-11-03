@@ -60,8 +60,8 @@ export class UsersService {
    */
   async deleteUser(userId: number): Promise<void> {
     const user = await this.userRepository.findOneOrFail({
-        where: { id: userId },
-      });
+      where: { id: userId },
+    });
 
     await this.userRepository.softRemove(user);
   }
