@@ -2,3 +2,6 @@ packages:
   - egs-backend
   - egs-frontend
   - website
+
+onlyBuiltDependencies:
+  - '@nestjs/core'
