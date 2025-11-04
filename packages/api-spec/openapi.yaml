@@ -101,6 +101,7 @@ paths:
       responses:
         default:
           description: ""
+      summary: Handles user login
       tags:
         - Auth
 info:
@@ -112,10 +113,10 @@ tags: []
 servers: []
 components:
   securitySchemes:
-    access_token:
-      scheme: bearer
-      bearerFormat: JWT
-      type: http
+    jwt:
+      type: apiKey
+      in: cookie
+      name: jwt
   schemas:
     User:
       type: object
@@ -130,6 +131,8 @@ components:
           enum:
             - admin
             - user
+          type: string
+        JTI:
           type: string
       required:
         - email

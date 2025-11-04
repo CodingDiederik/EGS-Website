@@ -1,6 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { EntityNotFoundError} from 'typeorm/error/EntityNotFoundError';
+import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
 
 @Catch(EntityNotFoundError)
 export class EntityNotFoundErrorFilter implements ExceptionFilter {
@@ -10,12 +10,10 @@ export class EntityNotFoundErrorFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     const status = 404;
 
-    response
-      .status(status)
-      .json({
-        statusCode: status,
-        timestamp: new Date().toISOString(),
-        path: request.url,
-      });
+    response.status(status).json({
+      statusCode: status,
+      timestamp: new Date().toISOString(),
+      path: request.url,
+    });
   }
 }

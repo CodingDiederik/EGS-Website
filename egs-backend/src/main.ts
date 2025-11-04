@@ -10,11 +10,19 @@ import { runseeds } from './seeds/seed';
 import { ValidationPipe } from '@nestjs/common';
 import { DomainErrorFilter } from './common/filters/domainError.filter';
 import { EntityNotFoundErrorFilter } from './common/filters/notFound.filter';
+import cookieParser from 'cookie-parser';
+import { AUTH_COOKIE_NAME } from './auth/auth.constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix('api');
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  app.useGlobalFilters(
+    new DomainErrorFilter(),
+    new EntityNotFoundErrorFilter(),
+  );
+  app.use(cookieParser());
 
   const orm = app.get(DataSource);
   if (!orm.isInitialized) {
@@ -26,9 +34,12 @@ async function bootstrap() {
       .setTitle('EGS Backend API')
       .setDescription('API documentation for the EGS Backend')
       .setVersion('1.0')
-      .addBearerAuth(
-        { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-        'access_token',
+      .addCookieAuth(
+        AUTH_COOKIE_NAME, {
+          type: 'apiKey',
+          in: 'cookie',
+        },
+        AUTH_COOKIE_NAME,
       )
       .build();
 
@@ -47,9 +58,6 @@ async function bootstrap() {
 
     await runseeds(orm);
   }
-
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
-  app.useGlobalFilters(new DomainErrorFilter(), new EntityNotFoundErrorFilter());
 
   await orm.runMigrations();
 

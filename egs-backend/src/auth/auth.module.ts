@@ -4,8 +4,7 @@ import { UsersModule } from 'src/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './jwt.strategy';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import { AuthGuard } from './guard/auth.guard';
 
 @Module({
   imports: [
@@ -13,16 +12,15 @@ import { JwtAuthGuard } from './jwt-auth.guard';
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '60m' },
     }),
   ],
   controllers: [AuthController],
   providers: [
     AuthService,
-    JwtStrategy,
     {
       provide: 'APP_GUARD',
-      useClass: JwtAuthGuard,
+      useClass: AuthGuard,
     },
   ],
 })

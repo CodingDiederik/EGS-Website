@@ -23,4 +23,7 @@ export class User extends BaseEntity {
     default: UserRole.USER,
   })
   role: UserRole;
+
+  @Column({ nullable: true })
+  JTI?: string;
 }

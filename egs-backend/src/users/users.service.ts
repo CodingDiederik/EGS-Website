@@ -84,6 +84,20 @@ export class UsersService {
   }
 
   /**
+   * Updates the JWT token for a user.
+   * @param userId - ID of the user to update.
+   * @param token - New JWT token.
+   * @returns The updated User.
+   */
+  async updateToken(userId: number, token: string): Promise<User> {
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: userId },
+    });
+    user.JTI = token;
+    return await this.userRepository.save(user);
+  }
+
+  /**
    * Deletes a user.
    * @param userId - ID of the user to delete.
    */
