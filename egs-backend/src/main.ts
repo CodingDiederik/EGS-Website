@@ -8,6 +8,8 @@ import { writeFileSync } from 'fs';
 import YAML from 'yaml';
 import { runseeds } from './seeds/seed';
 import { ValidationPipe } from '@nestjs/common';
+import { DomainErrorFilter } from './common/filters/domainError.filter';
+import { EntityNotFoundErrorFilter } from './common/filters/notFound.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -47,6 +49,7 @@ async function bootstrap() {
   }
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  app.useGlobalFilters(new DomainErrorFilter(), new EntityNotFoundErrorFilter());
 
   await orm.runMigrations();
 
