@@ -35,7 +35,8 @@ async function bootstrap() {
       .setDescription('API documentation for the EGS Backend')
       .setVersion('1.0')
       .addCookieAuth(
-        AUTH_COOKIE_NAME, {
+        AUTH_COOKIE_NAME,
+        {
           type: 'apiKey',
           in: 'cookie',
         },

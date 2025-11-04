@@ -3,9 +3,9 @@ import { JwtService } from '@nestjs/jwt';
 import type { Request } from 'express';
 import { JwtPayload } from '../dto/auth.dto';
 import { Reflector } from '@nestjs/core';
-import { UserRole } from 'src/users/user.entity';
+import { UserRole } from '../../users/user.entity';
 import { AUTH_COOKIE_NAME } from '../auth.constants';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../../users/users.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -26,7 +26,9 @@ export class AuthGuard implements CanActivate {
     }
 
     const request: Request = context.switchToHttp().getRequest();
-    const token = (request.cookies as { [AUTH_COOKIE_NAME]?: string })?.[AUTH_COOKIE_NAME];
+    const token = (request.cookies as { [AUTH_COOKIE_NAME]?: string })?.[
+      AUTH_COOKIE_NAME
+    ];
 
     if (!token) {
       return false;
@@ -57,7 +59,6 @@ export class AuthGuard implements CanActivate {
       if (!user || user.JTI !== token) {
         return false;
       }
-
     } catch {
       return false;
     }
