@@ -22,6 +22,7 @@ export class AuthGuard implements CanActivate {
     ]);
 
     if (isPublic == true) {
+      // always allow access to public routes
       return true;
     }
 
@@ -35,6 +36,7 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
+      // Verify JWT token
       const payload = await this.jwtService.verifyAsync<JwtPayload>(token);
 
       request['user'] = payload;
@@ -45,6 +47,7 @@ export class AuthGuard implements CanActivate {
       );
 
       if (requiredRoles && requiredRoles.length > 0) {
+        // Check user roles
         const userRole = payload.role;
 
         const hasRole = requiredRoles.some(
@@ -55,6 +58,7 @@ export class AuthGuard implements CanActivate {
         }
       }
 
+      // Verify token against user's token
       const user = await this.usersService.getUser(payload.sub);
       if (!user || user.JTI !== token) {
         return false;

@@ -5,6 +5,7 @@ import { User } from '../users/user.entity';
 import { LoginRequest } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './dto/auth.dto';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -24,6 +25,11 @@ export class AuthService {
     return null;
   }
 
+  /**
+   * Handles user login
+   * @param user the login request data
+   * @returns the access token if login is successful, null otherwise
+   */
   async login(user: LoginRequest): Promise<{ access_token: string } | null> {
     const validUser = await this.validateUser(user.email, user.password);
 
@@ -41,10 +47,11 @@ export class AuthService {
     return null;
   }
 
-  async logout(user: LoginRequest): Promise<void> {
-    const validUser = await this.validateUser(user.email, user.password);
-    if (validUser) {
-      // TODO
-    }
+  /**
+   * Handles user logout
+   * @param userid the ID of the user to log out
+   */
+  async logout(userid: number): Promise<void> {
+    await this.usersService.updateToken(userid, '');
   }
 }
