@@ -121,7 +121,7 @@ describe('AuthGuard', () => {
 
     const result = await authGuard.canActivate(context);
     expect(result).toBe(false);
-    expect(mockUsersService.getUser).toHaveBeenCalledWith('1');
+    expect(mockUsersService.getUser).toHaveBeenCalledWith(1);
     expect(mockJWTService.verifyAsync).toHaveBeenCalledWith('valid-token');
   });
 
