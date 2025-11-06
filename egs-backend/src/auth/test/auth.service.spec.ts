@@ -47,12 +47,6 @@ describe('AuthService', () => {
     });
 
     it('should return null if password is invalid', async () => {
-      const mockUser = {
-        id: 1,
-        email: 'test@example.com',
-        hashedPassword: await bcrypt.hash('password123', 10),
-        role: 'user',
-      };
 
       const result = await authService['validateUser'](
         'test@example.com',

@@ -5,7 +5,7 @@ import { App } from 'supertest/types';
 import { AppModule } from '../src/app.module';
 import { AUTH_COOKIE_NAME } from '../src/auth/auth.constants';
 import cookieParser from 'cookie-parser';
-import { DataSource, getConnection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { runseeds } from '../src/seeds/seed';
 
 describe('Auth E2E Test', () => {
@@ -43,7 +43,7 @@ describe('Auth E2E Test', () => {
   it('/auth/login (POST) - fail', () => {
     return request(app.getHttpServer())
       .post('/auth/login')
-      .send({ username: 'admin@example.com', password: 'wrongpassword' })
+      .send({ email: 'admin@example.com', password: 'wrongpassword' })
       .expect(401)
       .expect((res) => {
         expect(res.body).toHaveProperty('message', 'Invalid credentials');

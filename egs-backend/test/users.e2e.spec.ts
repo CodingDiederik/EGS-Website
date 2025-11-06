@@ -1,11 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from '../src/app.module';
 import { AUTH_COOKIE_NAME } from '../src/auth/auth.constants';
 import cookieParser from 'cookie-parser';
-import { CreateUserRequest } from '../src/users/dto/users.dto';
 import { DomainErrorFilter } from '../src/common/filters/domainError.filter';
 import { EntityNotFoundErrorFilter } from '../src/common/filters/notFound.filter';
 import { DataSource } from 'typeorm';
