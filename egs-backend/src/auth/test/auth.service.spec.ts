@@ -47,7 +47,6 @@ describe('AuthService', () => {
     });
 
     it('should return null if password is invalid', async () => {
-
       const result = await authService['validateUser'](
         'test@example.com',
         'wrongpassword',

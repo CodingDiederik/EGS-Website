@@ -59,7 +59,7 @@ export class AuthGuard implements CanActivate {
       }
 
       // Verify token against user's token
-      const user = await this.usersService.getUser(payload.sub);
+      const user = await this.usersService.getUser(Number(payload.sub));
       if (!user || user.JTI !== token) {
         return false;
       }

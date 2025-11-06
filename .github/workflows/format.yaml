@@ -25,7 +25,7 @@ jobs:
 
       - name: Run format check
         run: pnpm format:check
-        continue-on-error: true
+
   lint:
 
     runs-on: ubuntu-latest
