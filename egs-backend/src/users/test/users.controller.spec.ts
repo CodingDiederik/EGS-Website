@@ -8,6 +8,7 @@ describe('UsersController', () => {
   beforeEach(() => {
     mockUsersService = {
       getAllUsers: jest.fn(),
+      getUser: jest.fn(),
       createUser: jest.fn(),
       updateUser: jest.fn(),
       deleteUser: jest.fn(),
@@ -23,6 +24,18 @@ describe('UsersController', () => {
       const result = await usersController.getAllUsers();
       expect(result).toBe(mockUsers);
       expect(mockUsersService.getAllUsers).toHaveBeenCalled();
+    });
+  });
+
+  describe('getUser', () => {
+    it('should return a user by ID', async () => {
+      const userId = 1;
+      const mockUser = { id: userId, name: 'John Doe' };
+      mockUsersService.getUser.mockResolvedValue(mockUser);
+
+      const result = await usersController.getUser(userId);
+      expect(result).toBe(mockUser);
+      expect(mockUsersService.getUser).toHaveBeenCalledWith(userId);
     });
   });
 

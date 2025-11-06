@@ -12,7 +12,7 @@ import { AuthGuard } from './guard/auth.guard';
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '60m' },
+      signOptions: { expiresIn: '2h' },
     }),
   ],
   controllers: [AuthController],

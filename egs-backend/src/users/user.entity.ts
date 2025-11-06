@@ -1,28 +1,24 @@
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '../common/entities/baseEntity';
-
-export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
-}
+import { UserRole } from './users.enum';
 
 @Entity()
 export class User extends BaseEntity {
   @Column({ unique: true })
-  email: string;
+  email!: string;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column()
-  hashedPassword: string;
+  hashedPassword!: string;
 
   @Column({
     type: 'enum',
     enum: UserRole,
     default: UserRole.USER,
   })
-  role: UserRole;
+  role!: UserRole;
 
   @Column({ nullable: true })
   JTI?: string;

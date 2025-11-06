@@ -60,10 +60,6 @@ export class AuthController {
   ) {
     const payload = request.user as JwtPayload;
 
-    if (!payload) {
-      throw new UnauthorizedException('Not logged in');
-    }
-
     request['user'] = payload;
 
     await this.authService.logout(payload.sub);

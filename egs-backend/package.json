@@ -21,8 +21,11 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "db:start": "docker compose up -d"
+    "test:e2e": "pnpm db:start && jest --config ./test/jest-e2e.json --runInBand",
+    "db:start": "docker compose up -d",
+    "migration:generate": "node -r ts-node/register ./node_modules/typeorm/cli.js migration:generate Migration -d src/data-source.ts -p",
+    "migration:run": "node -r ts-node/register ./node_modules/typeorm/cli.js migration:run -d src/data-source.ts",
+    "migration:revert": "node -r ts-node/register ./node_modules/typeorm/cli.js migration:revert -d src/data-source.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.8",
@@ -95,16 +98,21 @@
       "!**/*.entity.ts",
       "!**/entities/**",
       "!**/*.d.ts",
-      "!**/seeds/**"
+      "!**/seeds/**",
+      "!**/common/filters/**",
+      "!**/common/decorators/**",
+      "!**/common/exceptions/**",
+      "!**/migrations/**",
+      "!**/main.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "coverageThreshold": {
       "global": {
-        "branches": 70,
-        "functions": 80,
-        "lines": 80,
-        "statements": 80
+        "branches": 80,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
       }
     }
   }

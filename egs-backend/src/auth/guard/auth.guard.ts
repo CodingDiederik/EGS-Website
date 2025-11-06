@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import type { Request } from 'express';
 import { JwtPayload } from '../dto/auth.dto';
 import { Reflector } from '@nestjs/core';
-import { UserRole } from '../../users/user.entity';
+import { UserRole } from '../../users/users.enum';
 import { AUTH_COOKIE_NAME } from '../auth.constants';
 import { UsersService } from '../../users/users.service';
 
@@ -53,7 +53,7 @@ export class AuthGuard implements CanActivate {
         const hasRole = requiredRoles.some(
           (role: UserRole) => userRole === role,
         );
-        if (!hasRole) {
+        if (!hasRole && userRole !== UserRole.ADMIN) {
           return false;
         }
       }

@@ -9,8 +9,10 @@ import {
   Body,
 } from '@nestjs/common';
 import { User } from './user.entity';
+import { UserRole } from './users.enum';
 import { UsersService } from './users.service';
 import { CreateUserRequest, UpdateUserRequest } from './dto/users.dto';
+import { Roles } from '../common/decorators/roles.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -20,6 +22,7 @@ export class UsersController {
    * Gets all users.
    * @returns An array of Users.
    */
+  @Roles(UserRole.ADMIN)
   @Get()
   async getAllUsers(): Promise<User[]> {
     return await this.usersService.getAllUsers();
@@ -29,6 +32,7 @@ export class UsersController {
    * Get a user.
    * @returns A User.
    */
+  @Roles(UserRole.ADMIN)
   @Get(':userId')
   async getUser(@Param('userId', ParseIntPipe) userId: number): Promise<User> {
     return await this.usersService.getUser(userId);
@@ -38,6 +42,7 @@ export class UsersController {
    * Creates a new user.
    * @returns The created User.
    */
+  @Roles(UserRole.ADMIN)
   @Post()
   async createUser(@Body() userData: CreateUserRequest): Promise<User> {
     return await this.usersService.createUser(userData);
@@ -47,6 +52,7 @@ export class UsersController {
    * Updates a user.
    * @returns The updated User.
    */
+  @Roles(UserRole.ADMIN)
   @Patch(':userId')
   async updateUser(
     @Param('userId', ParseIntPipe) userId: number,
@@ -58,6 +64,7 @@ export class UsersController {
   /**
    * Deletes a user.
    */
+  @Roles(UserRole.ADMIN)
   @Delete(':userId')
   async deleteUser(
     @Param('userId', ParseIntPipe) userId: number,

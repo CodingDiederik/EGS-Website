@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { UserRole } from '../../users/user.entity';
+import { UserRole } from '../../users/users.enum';
 
 export interface JwtPayload {
   sub: number;
