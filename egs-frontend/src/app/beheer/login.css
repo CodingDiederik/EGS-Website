@@ -13,15 +13,15 @@
 .loginContainer h2 {
   margin-bottom: 20px;
   color: red;
-  font-family: "Merriweather", serif;
+  font-family: 'Merriweather', serif;
 }
 
 .merriweather {
-  font-family: "Merriweather", serif;
+  font-family: 'Merriweather', serif;
   font-optical-sizing: auto;
   font-weight: 100;
   font-style: normal;
-  font-variation-settings: "wdth" 100.5;
+  font-variation-settings: 'wdth' 100.5;
 }
 
 .backgroundLogo {

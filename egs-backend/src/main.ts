@@ -24,6 +24,12 @@ async function bootstrap() {
   );
   app.use(cookieParser());
 
+  app.enableCors({
+    origin: process.env.CORS_ORIGIN?.split(',') || 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+    credentials: true,
+  });
+
   const orm = app.get(DataSource);
   if (!orm.isInitialized) {
     await orm.initialize();
