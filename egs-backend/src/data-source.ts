@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
-import { DataSourceOptions } from 'typeorm';
+import type { DataSourceOptions } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 dotenv.config({
   quiet: true,
@@ -18,3 +19,6 @@ export const options: DataSourceOptions = {
   logging: process.env.TYPEORM_LOGGING === 'true' || false,
   migrations: [__dirname + '/migrations/*{.ts,.js}'],
 };
+
+const AppDataSource = new DataSource(options);
+export default AppDataSource;

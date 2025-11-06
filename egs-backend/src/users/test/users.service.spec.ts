@@ -30,6 +30,30 @@ describe('UsersService', () => {
     });
   });
 
+  describe('getUser', () => {
+    it('should return a user by ID', async () => {
+      const userId = 1;
+      const mockUser = new User();
+      jest
+        .spyOn(mockUsersRepository, 'findOneOrFail')
+        .mockResolvedValue(mockUser);
+
+      expect(await usersService.getUser(userId)).toBe(mockUser);
+    });
+  });
+
+  describe('getUserByEmail', () => {
+    it('should return a user by email', async () => {
+      const email = 'johndoe@example.com';
+      const mockUser = new User();
+      jest
+        .spyOn(mockUsersRepository, 'findOneOrFail')
+        .mockResolvedValue(mockUser);
+
+      expect(await usersService.getUserByEmail(email)).toBe(mockUser);
+    });
+  });
+
   describe('createUser', () => {
     it('should create and return a user', async () => {
       const userData: CreateUserRequest = {
@@ -87,6 +111,19 @@ describe('UsersService', () => {
     });
   });
 
+  describe('updateToken', () => {
+    it('should update and return the user token', async () => {
+      const userId = 1;
+      const token = 'new-jwt-token';
+      const mockUser = new User();
+      jest
+        .spyOn(mockUsersRepository, 'findOneOrFail')
+        .mockResolvedValue(mockUser);
+      jest.spyOn(mockUsersRepository, 'save').mockResolvedValue(mockUser);
+      expect(await usersService.updateToken(userId, token)).toBe(mockUser);
+    });
+  });
+
   describe('deleteUser', () => {
     it('should soft delete the user', async () => {
       const userId = 1;
@@ -104,7 +141,9 @@ describe('UsersService', () => {
       jest
         .spyOn(mockUsersRepository, 'findOneOrFail')
         .mockRejectedValue(new Error('User not found'));
-      await expect(usersService.deleteUser(userId)).rejects.toThrow('User not found');
+      await expect(usersService.deleteUser(userId)).rejects.toThrow(
+        'User not found',
+      );
     });
   });
 });
