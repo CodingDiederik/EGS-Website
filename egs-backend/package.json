@@ -25,7 +25,8 @@
     "db:start": "docker compose up -d",
     "migration:generate": "node -r ts-node/register ./node_modules/typeorm/cli.js migration:generate Migration -d src/data-source.ts -p",
     "migration:run": "node -r ts-node/register ./node_modules/typeorm/cli.js migration:run -d src/data-source.ts",
-    "migration:revert": "node -r ts-node/register ./node_modules/typeorm/cli.js migration:revert -d src/data-source.ts"
+    "migration:revert": "node -r ts-node/register ./node_modules/typeorm/cli.js migration:revert -d src/data-source.ts",
+    "copy:env": "cp .env.example .env"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.8",

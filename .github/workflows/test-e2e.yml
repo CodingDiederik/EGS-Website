@@ -48,6 +48,12 @@ jobs:
             echo "Postgres not ready yet (attempt $i), sleeping 2s..."
             sleep 2
           done
+      
+      - name: copy env file
+        run: |
+          cd egs-backend
+          pnpm run copy:env
+          cd ..
 
       - name: Run e2e tests
         run: pnpm test:e2e
