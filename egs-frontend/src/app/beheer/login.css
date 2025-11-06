@@ -1,0 +1,38 @@
+.loginContainer {
+  width: 400px;
+  border: 10px solid #3a7199;
+  margin: 0 auto;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 80px;
+  background-color: var(--background);
+}
+
+.loginContainer h2 {
+  margin-bottom: 20px;
+  color: red;
+  font-family: "Merriweather", serif;
+}
+
+.merriweather {
+  font-family: "Merriweather", serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-variation-settings: "wdth" 100.5;
+}
+
+.backgroundLogo {
+  position: absolute;
+  align-items: center;
+  top: 50%;
+  left: 52.5%;
+  display: flex;
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
+  width: 300px;
+  height: 300px;
+  z-index: -1;
+}
