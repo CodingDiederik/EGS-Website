@@ -20,22 +20,22 @@ describe('Auth E2E Test', () => {
     app = moduleFixture.createNestApplication();
     app.use(cookieParser());
     orm = app.get(DataSource);
-    
+
     if (!orm.isInitialized) {
       await orm.initialize();
     }
 
     // Fetch all the entities
     const entities = orm.entityMetadatas;
-    
+
     // Clear each entity table's content
     for (const entity of entities) {
       const repository = orm.getRepository(entity.name); // Get repository
       await repository.clear(); // Clear each entity table's content
     }
-    
+
     await runseeds(orm);
-    
+
     await orm.runMigrations();
     await app.init();
   });
@@ -87,7 +87,7 @@ describe('Auth E2E Test', () => {
   afterEach(async () => {
     // Fetch all the entities
     const entities = orm.entityMetadatas;
-    
+
     // Clear each entity table's content
     for (const entity of entities) {
       const repository = orm.getRepository(entity.name); // Get repository
