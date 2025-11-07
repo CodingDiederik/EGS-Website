@@ -42,7 +42,6 @@
 }
 
 .errorMessage {
-  border: 2px solid var(--accent-highlight); /* Softer border */
   align-items: center;
   display: flex;
   justify-content: center;

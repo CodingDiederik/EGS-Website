@@ -77,7 +77,7 @@ function EmailInput() {
 }
 
 function PasswordInput() {
-  return <input type="password" placeholder='Voor je wachtwoord in'/>;
+  return <input type="password" placeholder='Voer je wachtwoord in'/>;
 }
 
 function LoginForm({
