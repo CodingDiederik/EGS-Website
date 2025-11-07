@@ -17,12 +17,18 @@ export class AuthService {
     email: string,
     password: string,
   ): Promise<User | null> {
-    const user = await this.usersService.getUserByEmail(email);
-    if (user) {
-      const isMatch = await bcrypt.compare(password, user.hashedPassword);
-      if (isMatch) {
-        return user;
+    try {
+      const user = await this.usersService.getUserByEmail(email);
+
+      if (user) {
+        const isMatch = await bcrypt.compare(password, user.hashedPassword);
+        if (isMatch) {
+          return user;
+        }
       }
+    } catch {
+      // user not found, return null
+      return null;
     }
     return null;
   }

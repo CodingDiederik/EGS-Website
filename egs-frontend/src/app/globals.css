@@ -1,0 +1,51 @@
+
+:root {
+  --background-primary: #F5F5F5;
+  --background-secondary: #EAEAEA;
+  --background-accent: #1E1E1E;
+
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-accent: #FFFFFF;
+
+  --accent-primary: #0077B6;
+  --accent-secondary: #00B4D8;
+  --accent-highlight: #9e4d37;
+
+  --accent-error: #FF4C4C;
+
+  --font-primary: 'Merriweather', serif;
+  --font-secondary: 'Open Sans', sans-serif;
+}
+
+body {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+}
+
+header {
+  background-color: var(--background-accent);
+  color: var(--text-accent);
+}
+
+button {
+  background-color: var(--accent-primary);
+  color: var(--text-accent);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--accent-secondary);
+}
+
+.card {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--accent-primary);
+  border-radius: 10px;
+  padding: 20px;
+}

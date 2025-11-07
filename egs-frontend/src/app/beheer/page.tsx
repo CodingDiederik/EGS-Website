@@ -1,9 +1,15 @@
 'use client';
 import './login.css';
-import Head from 'next/head';
-import Image from 'next/image';
+import { useState } from 'react';
+import { AUTH_COOKIE_NAME } from '@/constants';
 
-function LoginButton() {
+function LoginButton({
+  setError,
+  setIsLoggedIn,
+}: {
+  setError: (message: string) => void;
+  setIsLoggedIn: (value: boolean) => void;
+}) {
   async function handleLogin() {
     const email = (
       document.querySelector('input[type="email"]') as HTMLInputElement
@@ -12,8 +18,15 @@ function LoginButton() {
       document.querySelector('input[type="password"]') as HTMLInputElement
     )?.value;
 
+    if (!email || !password) {
+      setError('Vul zowel email als wachtwoord in');
+      return;
+    }
+
+    setError('');
+
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -21,44 +34,70 @@ function LoginButton() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
+      const data: { message: string[]; statusCode: number } =
+        await response.json();
 
       if (response.ok) {
-        console.log('Login successful:', data);
+        console.info('Login successful:', data);
+        setIsLoggedIn(true);
       } else {
-        console.error('Login mislukte:', data.message);
+        console.info('Login mislukte:', data);
+        if (data.statusCode === 401) {
+          setError('Onjuiste email of wachtwoord');
+          return;
+        }
+
+        for (const msg of data.message) {
+          // check if email is valid input format
+          if (msg.includes('email')) {
+            setError('Ongeldig email formaat');
+            return;
+          } else if (msg.includes('password')) {
+            setError('Ongeldig wachtwoord formaat');
+            return;
+          }
+        }
+
+        setError('Onjuiste email of wachtwoord');
+        return;
       }
     } catch (error) {
       console.error('Error connecting to the backend:', error);
+      setError(
+        'Kan geen verbinding maken met de server. Probeer het later opnieuw.',
+      );
     }
   }
 
-  return <button onClick={handleLogin}>Login</button>;
+  return <button onClick={handleLogin}>Inloggen</button>;
 }
 
 function EmailInput() {
-  return <input type="email" />;
+  return <input type="email" placeholder='schaakclub@egs.nl' />;
 }
 
 function PasswordInput() {
-  return <input type="password" />;
+  return <input type="password" placeholder='Voor je wachtwoord in'/>;
 }
 
-function LoginForm() {
+function LoginForm({
+  error,
+  setError,
+  setIsLoggedIn,
+}: {
+  error: string;
+  setError: (message: string) => void;
+  setIsLoggedIn: (value: boolean) => void;
+}) {
   return (
-    <div>
-      <div className="loginContainer">
-        <h2>Inloggen op de beheerpagina</h2>
-        <p className="merriweather">Email:</p>
-        <EmailInput />
-        <p className="merriweather">Wachtwoord:</p>
-        <PasswordInput />
-        <p></p>
-        <LoginButton />
-      </div>
-      <div className="backgroundLogo">
-        <Image src="/EGS-logo.svg" alt="EGS Logo" width={200} height={200} />
-      </div>
+    <div className="loginContainer">
+      <h2>Inloggen op de beheerpagina</h2>
+      <p className="merriweather">Email:</p>
+      <EmailInput />
+      <p className="merriweather">Wachtwoord:</p>
+      <PasswordInput />
+      {error && <div className="errorMessage">{error}</div>}
+      <LoginButton setError={setError} setIsLoggedIn={setIsLoggedIn} />
     </div>
   );
 }
@@ -67,27 +106,39 @@ function AdminPanel() {
   return <div>Welcome to the admin panel!</div>;
 }
 
+function CheckAlreadyLoggedIn() {
+  // check if user has a cookie
+  if (typeof document === 'undefined') {
+    return false;
+  }
+  const cookies = document.cookie.split('; ');
+  const authCookie = cookies.find((cookie) => cookie.startsWith(AUTH_COOKIE_NAME));
+  if (authCookie === undefined) {
+    return false;
+  }
+
+  // check if the cookie is not expired
+  const token = authCookie.split('=')[1];
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  const isExpired = payload.exp < Date.now() / 1000;
+  return !isExpired;
+}
+
+
 export default function BeheerPage() {
-  const isLoggedIn = false;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [error, setError] = useState('');
 
   let content;
 
-  if (isLoggedIn) {
+  if (isLoggedIn || CheckAlreadyLoggedIn()) {
     content = <AdminPanel />;
   } else {
-    content = <LoginForm />;
+    content = <LoginForm error={error} setError={setError} setIsLoggedIn={setIsLoggedIn} />;
   }
 
   return (
     <>
-      <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-      </Head>
       <main>{content}</main>
     </>
   );

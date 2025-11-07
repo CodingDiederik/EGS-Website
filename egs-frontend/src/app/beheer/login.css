@@ -1,38 +1,91 @@
 .loginContainer {
   width: 400px;
-  border: 10px solid #3a7199;
   margin: 0 auto;
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  border-radius: 80px;
-  background-color: var(--background);
+  padding: 30px;
+  border-radius: 20px; /* Reduced border radius */
+  background-color: var(--background-secondary);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Modern shadow */
+  border: 1px solid var(--accent-primary); /* Subtle border */
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .loginContainer h2 {
   margin-bottom: 20px;
-  color: red;
-  font-family: 'Merriweather', serif;
+  color: var(--accent-primary); /* Modern blue accent */
+  font-family: var(--font-primary);
+  font-weight: 700; 
+  letter-spacing: 0px; 
+}
+
+.loginContainer p {
+  margin-bottom: 10px;
+}
+
+.loginContainer input {
+  margin-bottom: 20px;
 }
 
 .merriweather {
-  font-family: 'Merriweather', serif;
-  font-optical-sizing: auto;
-  font-weight: 100;
-  font-style: normal;
-  font-variation-settings: 'wdth' 100.5;
+  font-family: var(--font-primary);
+  font-size: 15px; 
+  font-weight: 500; 
+  color: var(--text-secondary); 
+  margin-bottom: 5px; 
+  align-self: flex-start; 
 }
 
-.backgroundLogo {
-  position: absolute;
+.errorMessage {
+  border: 2px solid var(--accent-highlight); /* Softer border */
   align-items: center;
-  top: 50%;
-  left: 52.5%;
   display: flex;
-  transform: translate(-50%, -50%);
-  opacity: 0.3;
-  width: 300px;
-  height: 300px;
-  z-index: -1;
+  justify-content: center;
+  font-family: var(--font-secondary);
+  color: var(--accent-error);
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 8px;
+  padding: 10px 15px;
+  background: rgba(255, 76, 76, 0.2);
+  margin-bottom: 15px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.errorMessage:empty {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%; /* Full width of the container */
+  padding: 10px 15px; 
+  font-family: var(--font-secondary);
+  font-size: 16px; 
+  color: var(--text-primary); 
+  border: 1px solid var(--accent-primary); 
+  border-radius: 8px; 
+  background-color: var(--background-primary); 
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: var(--accent-secondary); /* Highlight border on focus */
+  box-shadow: 0 0 5px rgba(0, 180, 216, 0.5); /* Subtle glow effect */
+  outline: none; /* Remove default outline */
 }
