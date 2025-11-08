@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import { User } from '../users/user.entity';
@@ -11,6 +11,7 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly logger: Logger,
   ) {}
 
   private async validateUser(
@@ -26,8 +27,9 @@ export class AuthService {
           return user;
         }
       }
-    } catch {
+    } catch (error) {
       // user not found, return null
+      this.logger.log('User validation failed: ' + error);
       return null;
     }
     return null;

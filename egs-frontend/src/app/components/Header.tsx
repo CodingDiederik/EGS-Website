@@ -4,7 +4,7 @@ import Link from 'next/link';
 const Header = () => {
   return (
     <header>
-      <nav>
+      <nav aria-label="Main navigation">
         <Link href="/">
           <Image
             src="/EGS-logo.svg"

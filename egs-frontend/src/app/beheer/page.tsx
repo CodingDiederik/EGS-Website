@@ -67,14 +67,16 @@ function LoginButton({
           return;
         }
 
-        for (const msg of data.message) {
-          // check if email is valid input format
-          if (msg.includes('email')) {
-            setError('Ongeldig email formaat');
-            return;
-          } else if (msg.includes('password')) {
-            setError('Ongeldig wachtwoord formaat');
-            return;
+        if (Array.isArray(data.message)) {
+          for (const msg of data.message) {
+            // check if email is valid input format
+            if (msg.includes('email')) {
+              setError('Ongeldig email formaat');
+              return;
+            } else if (msg.includes('password')) {
+              setError('Ongeldig wachtwoord formaat');
+              return;
+            }
           }
         }
 
@@ -156,11 +158,19 @@ function LoginForm({
   return (
     <div className="loginContainer">
       <h2>Inloggen op de beheerpagina</h2>
-      <p className="merriweather">Email:</p>
+      <p className="merriweather" aria-label="email">
+        Email:
+      </p>
       <EmailInput email={email} setEmail={setEmail} />
-      <p className="merriweather">Wachtwoord:</p>
+      <p className="merriweather" aria-label="password">
+        Wachtwoord:
+      </p>
       <PasswordInput password={password} setPassword={setPassword} />
-      {error && <div className="errorMessage">{error}</div>}
+      {error && (
+        <div className="errorMessage" role="alert">
+          {error}
+        </div>
+      )}
       <LoginButton
         setError={setError}
         setIsLoggedIn={setIsLoggedIn}
@@ -221,6 +231,8 @@ export default function BeheerPage() {
             alignItems: 'center',
             zIndex: 9999,
           }}
+          role="status"
+          aria-label="Loading"
         >
           <SpinnerCircular
             size={50}
