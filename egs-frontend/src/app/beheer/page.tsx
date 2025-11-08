@@ -93,7 +93,7 @@ function LoginButton({
 
   return (
     <button onClick={() => handleLogin(email, password)} disabled={isLoading}>
-      {isLoading ? ('Inloggen...') : ('Inloggen')}
+      {isLoading ? 'Inloggen...' : 'Inloggen'}
     </button>
   );
 }
