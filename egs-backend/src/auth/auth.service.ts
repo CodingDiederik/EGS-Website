@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import { User } from '../users/user.entity';
@@ -12,17 +12,25 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
   ) {}
+  private readonly logger = new Logger(AuthService.name);
 
   private async validateUser(
     email: string,
     password: string,
   ): Promise<User | null> {
-    const user = await this.usersService.getUserByEmail(email);
-    if (user) {
-      const isMatch = await bcrypt.compare(password, user.hashedPassword);
-      if (isMatch) {
-        return user;
+    try {
+      const user = await this.usersService.getUserByEmail(email);
+
+      if (user) {
+        const isMatch = await bcrypt.compare(password, user.hashedPassword);
+        if (isMatch) {
+          return user;
+        }
       }
+    } catch (error) {
+      // user not found, return null
+      this.logger.log('User validation failed: ' + error);
+      return null;
     }
     return null;
   }

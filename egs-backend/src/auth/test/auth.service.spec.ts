@@ -11,9 +11,13 @@ describe('AuthService', () => {
   let mockJWTService: any = {
     signAsync: jest.fn().mockResolvedValue('mocked_jwt_token'),
   };
+  let mockLogger: any = {
+    log: jest.fn(),
+    error: jest.fn(),
+  };
 
   beforeEach(async () => {
-    authService = new AuthService(mockUserService, mockJWTService);
+    authService = new AuthService(mockUserService, mockJWTService, mockLogger);
   });
 
   describe('validateUser', () => {
@@ -50,6 +54,19 @@ describe('AuthService', () => {
       const result = await authService['validateUser'](
         'test@example.com',
         'wrongpassword',
+      );
+
+      expect(result).toBeNull();
+    });
+
+    it('should return null if the user is not found (exception case)', async () => {
+      jest
+        .spyOn(mockUserService, 'getUserByEmail')
+        .mockRejectedValue(new Error('User not found'));
+
+      const result = await authService['validateUser'](
+        'test@example.com',
+        'password123',
       );
 
       expect(result).toBeNull();
