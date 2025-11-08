@@ -32,8 +32,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     AuthService,
     {
       provide: 'APP_GUARD',
-      useClass: AuthGuard,
+      useExisting: AuthGuard,
     },
+    AuthGuard,
   ],
 })
 export class AuthModule {}
