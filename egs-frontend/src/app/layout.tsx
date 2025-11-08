@@ -6,11 +6,13 @@ import './globals.css';
 const merriweather = Merriweather({
   variable: '--font-merriweather',
   subsets: ['latin'],
+  weight: ['300', '400', '700'],
 });
 
 const merriweatherSans = Merriweather_Sans({
   variable: '--font-merriweather-sans',
   subsets: ['latin'],
+  weight: ['300', '400', '700'],
 });
 
 export const metadata: Metadata = {

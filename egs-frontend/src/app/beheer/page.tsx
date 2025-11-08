@@ -1,25 +1,36 @@
 'use client';
 import './login.css';
 import { useState } from 'react';
-import { AUTH_COOKIE_NAME } from '@/constants';
 
 function LoginButton({
   setError,
   setIsLoggedIn,
+  email,
+  password,
 }: {
   setError: (message: string) => void;
   setIsLoggedIn: (value: boolean) => void;
+  email: string;
+  password: string;
 }) {
-  async function handleLogin() {
-    const email = (
-      document.querySelector('input[type="email"]') as HTMLInputElement
-    )?.value;
-    const password = (
-      document.querySelector('input[type="password"]') as HTMLInputElement
-    )?.value;
-
+  async function handleLogin(email: string, password: string) {
     if (!email || !password) {
       setError('Vul zowel email als wachtwoord in');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError('Ongeldig email formaat');
+      return;
+    }
+
+    if (password.length < 8) {
+      setError('Wachtwoord moet minstens 8 tekens lang zijn');
+      return;
+    }
+
+    if (password.length > 64) {
+      setError('Wachtwoord mag maximaal 64 tekens lang zijn');
       return;
     }
 
@@ -33,6 +44,7 @@ function LoginButton({
           headers: {
             'Content-Type': 'application/json',
           },
+          credentials: 'include',
           body: JSON.stringify({ email, password }),
         },
       );
@@ -72,35 +84,74 @@ function LoginButton({
     }
   }
 
-  return <button onClick={handleLogin}>Inloggen</button>;
+  return <button onClick={() => handleLogin(email, password)}>Inloggen</button>;
 }
 
-function EmailInput() {
-  return <input type="email" placeholder="schaakclub@egs.nl" />;
+function EmailInput({
+  email,
+  setEmail,
+}: {
+  email: string;
+  setEmail: (value: string) => void;
+}) {
+  return (
+    <input
+      type="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      placeholder="schaakclub@egs.nl"
+    />
+  );
 }
 
-function PasswordInput() {
-  return <input type="password" placeholder="Voer je wachtwoord in" />;
+function PasswordInput({
+  password,
+  setPassword,
+}: {
+  password: string;
+  setPassword: (value: string) => void;
+}) {
+  return (
+    <input
+      type="password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      placeholder="Voer je wachtwoord in"
+    />
+  );
 }
 
 function LoginForm({
   error,
   setError,
   setIsLoggedIn,
+  email,
+  setEmail,
+  password,
+  setPassword,
 }: {
   error: string;
   setError: (message: string) => void;
   setIsLoggedIn: (value: boolean) => void;
+  email: string;
+  setEmail: (value: string) => void;
+  password: string;
+  setPassword: (value: string) => void;
 }) {
   return (
     <div className="loginContainer">
       <h2>Inloggen op de beheerpagina</h2>
       <p className="merriweather">Email:</p>
-      <EmailInput />
+      <EmailInput email={email} setEmail={setEmail} />
       <p className="merriweather">Wachtwoord:</p>
-      <PasswordInput />
+      <PasswordInput password={password} setPassword={setPassword} />
       {error && <div className="errorMessage">{error}</div>}
-      <LoginButton setError={setError} setIsLoggedIn={setIsLoggedIn} />
+      <LoginButton
+        setError={setError}
+        setIsLoggedIn={setIsLoggedIn}
+        email={email}
+        password={password}
+      />
     </div>
   );
 }
@@ -109,33 +160,15 @@ function AdminPanel() {
   return <div>Welcome to the admin panel!</div>;
 }
 
-function CheckAlreadyLoggedIn() {
-  // check if user has a cookie
-  if (typeof document === 'undefined') {
-    return false;
-  }
-  const cookies = document.cookie.split('; ');
-  const authCookie = cookies.find((cookie) =>
-    cookie.startsWith(AUTH_COOKIE_NAME),
-  );
-  if (authCookie === undefined) {
-    return false;
-  }
-
-  // check if the cookie is not expired
-  const token = authCookie.split('=')[1];
-  const payload = JSON.parse(atob(token.split('.')[1]));
-  const isExpired = payload.exp < Date.now() / 1000;
-  return !isExpired;
-}
-
 export default function BeheerPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   let content;
 
-  if (isLoggedIn || CheckAlreadyLoggedIn()) {
+  if (isLoggedIn) {
     content = <AdminPanel />;
   } else {
     content = (
@@ -143,6 +176,10 @@ export default function BeheerPage() {
         error={error}
         setError={setError}
         setIsLoggedIn={setIsLoggedIn}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
       />
     );
   }

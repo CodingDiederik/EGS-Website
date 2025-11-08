@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength, MaxLength } from 'class-validator';
 import { UserRole } from '../../users/users.enum';
 
 export interface JwtPayload {
@@ -18,5 +18,7 @@ export class LoginRequest {
   @ApiProperty({ example: 'adminpassword' })
   @IsString()
   @IsNotEmpty()
+  @MinLength(8)
+  @MaxLength(64)
   password: string;
 }
