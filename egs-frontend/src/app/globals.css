@@ -1,17 +1,17 @@
 :root {
-  --background-primary: #F0F8FF; 
-  --background-secondary: #E3F2FD; 
-  --background-accent: #1565C0; 
+  --background-primary: #f0f8ff;
+  --background-secondary: #e3f2fd;
+  --background-accent: #1565c0;
 
-  --text-primary: #0D47A1; 
-  --text-secondary: #1976D2; 
-  --text-accent: #FFFFFF; 
+  --text-primary: #0d47a1;
+  --text-secondary: #1976d2;
+  --text-accent: #ffffff;
 
-  --accent-primary: #1976D2; 
-  --accent-secondary: #42A5F5; 
-  --accent-highlight: #0288D1; 
+  --accent-primary: #1976d2;
+  --accent-secondary: #42a5f5;
+  --accent-highlight: #0288d1;
 
-  --accent-error: #D32F2F; 
+  --accent-error: #d32f2f;
 
   --font-primary: 'Merriweather', serif;
   --font-secondary: 'Open Sans', sans-serif;
@@ -86,7 +86,9 @@ button {
   padding: var(--spacing-small) var(--spacing-medium);
   border-radius: var(--border-radius);
   cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
   font-family: var(--font-secondary);
 }
 

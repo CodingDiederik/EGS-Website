@@ -26,13 +26,16 @@ function LoginButton({
     setError('');
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
         },
-        body: JSON.stringify({ email, password }),
-      });
+      );
 
       const data: { message: string[]; statusCode: number } =
         await response.json();
@@ -73,11 +76,11 @@ function LoginButton({
 }
 
 function EmailInput() {
-  return <input type="email" placeholder='schaakclub@egs.nl' />;
+  return <input type="email" placeholder="schaakclub@egs.nl" />;
 }
 
 function PasswordInput() {
-  return <input type="password" placeholder='Voer je wachtwoord in'/>;
+  return <input type="password" placeholder="Voer je wachtwoord in" />;
 }
 
 function LoginForm({
@@ -112,7 +115,9 @@ function CheckAlreadyLoggedIn() {
     return false;
   }
   const cookies = document.cookie.split('; ');
-  const authCookie = cookies.find((cookie) => cookie.startsWith(AUTH_COOKIE_NAME));
+  const authCookie = cookies.find((cookie) =>
+    cookie.startsWith(AUTH_COOKIE_NAME),
+  );
   if (authCookie === undefined) {
     return false;
   }
@@ -124,7 +129,6 @@ function CheckAlreadyLoggedIn() {
   return !isExpired;
 }
 
-
 export default function BeheerPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState('');
@@ -134,7 +138,13 @@ export default function BeheerPage() {
   if (isLoggedIn || CheckAlreadyLoggedIn()) {
     content = <AdminPanel />;
   } else {
-    content = <LoginForm error={error} setError={setError} setIsLoggedIn={setIsLoggedIn} />;
+    content = (
+      <LoginForm
+        error={error}
+        setError={setError}
+        setIsLoggedIn={setIsLoggedIn}
+      />
+    );
   }
 
   return (

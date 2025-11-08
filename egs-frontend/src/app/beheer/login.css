@@ -20,8 +20,8 @@
   margin-bottom: 20px;
   color: var(--accent-primary); /* Modern blue accent */
   font-family: var(--font-primary);
-  font-weight: 700; 
-  letter-spacing: 0px; 
+  font-weight: 700;
+  letter-spacing: 0px;
 }
 
 .loginContainer p {
@@ -34,11 +34,11 @@
 
 .merriweather {
   font-family: var(--font-primary);
-  font-size: 15px; 
-  font-weight: 500; 
-  color: var(--text-secondary); 
-  margin-bottom: 5px; 
-  align-self: flex-start; 
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+  align-self: flex-start;
 }
 
 .errorMessage {
@@ -69,21 +69,23 @@
   }
 }
 
-input[type="email"],
-input[type="password"] {
+input[type='email'],
+input[type='password'] {
   width: 100%; /* Full width of the container */
-  padding: 10px 15px; 
+  padding: 10px 15px;
   font-family: var(--font-secondary);
-  font-size: 16px; 
-  color: var(--text-primary); 
-  border: 1px solid var(--accent-primary); 
-  border-radius: 8px; 
-  background-color: var(--background-primary); 
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 16px;
+  color: var(--text-primary);
+  border: 1px solid var(--accent-primary);
+  border-radius: 8px;
+  background-color: var(--background-primary);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-input[type="email"]:focus,
-input[type="password"]:focus {
+input[type='email']:focus,
+input[type='password']:focus {
   border-color: var(--accent-secondary); /* Highlight border on focus */
   box-shadow: 0 0 5px rgba(0, 180, 216, 0.5); /* Subtle glow effect */
   outline: none; /* Remove default outline */
