@@ -27,10 +27,9 @@ describe('Migrations E2E Test', () => {
 
   it('should run migrations successfully', async () => {
     // Run pending migrations
-    await orm.runMigrations()
-        .then(() => {
-            expect(true).toBe(true); // If migrations run without error, the test passes
-        });
+    await orm.runMigrations().then(() => {
+      expect(true).toBe(true); // If migrations run without error, the test passes
+    });
   });
 
   afterEach(async () => {
