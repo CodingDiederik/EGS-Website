@@ -1,17 +1,22 @@
 'use client';
 import './login.css';
 import { useState } from 'react';
+import { SpinnerCircular } from 'spinners-react';
 
 function LoginButton({
   setError,
   setIsLoggedIn,
   email,
   password,
+  isLoading,
+  setIsLoading,
 }: {
   setError: (message: string) => void;
   setIsLoggedIn: (value: boolean) => void;
   email: string;
   password: string;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
 }) {
   async function handleLogin(email: string, password: string) {
     if (!email || !password) {
@@ -34,7 +39,7 @@ function LoginButton({
       return;
     }
 
-    setError('');
+    setIsLoading(true);
 
     try {
       const response = await fetch(
@@ -81,10 +86,16 @@ function LoginButton({
       setError(
         'Kan geen verbinding maken met de server. Probeer het later opnieuw.',
       );
+    } finally {
+      setIsLoading(false);
     }
   }
 
-  return <button onClick={() => handleLogin(email, password)}>Inloggen</button>;
+  return (
+    <button onClick={() => handleLogin(email, password)} disabled={isLoading}>
+      {isLoading ? ('Inloggen...') : ('Inloggen')}
+    </button>
+  );
 }
 
 function EmailInput({
@@ -129,6 +140,8 @@ function LoginForm({
   setEmail,
   password,
   setPassword,
+  isLoading,
+  setIsLoading,
 }: {
   error: string;
   setError: (message: string) => void;
@@ -137,6 +150,8 @@ function LoginForm({
   setEmail: (value: string) => void;
   password: string;
   setPassword: (value: string) => void;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
 }) {
   return (
     <div className="loginContainer">
@@ -151,6 +166,8 @@ function LoginForm({
         setIsLoggedIn={setIsLoggedIn}
         email={email}
         password={password}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
     </div>
   );
@@ -165,6 +182,7 @@ export default function BeheerPage() {
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   let content;
 
@@ -180,6 +198,8 @@ export default function BeheerPage() {
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
     );
   }
@@ -187,6 +207,29 @@ export default function BeheerPage() {
   return (
     <>
       <main>{content}</main>
+      {isLoading && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(200, 200, 200, 0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 9999,
+          }}
+        >
+          <SpinnerCircular
+            size={50}
+            thickness={100}
+            speed={100}
+            color="var(--accent-primary)"
+          />
+        </div>
+      )}
     </>
   );
 }
