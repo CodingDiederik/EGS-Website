@@ -2,7 +2,7 @@
 services:
   db:
     image: postgres:18
-    container_name: egs-backend-db
+    container_name: egs-backend-test-db
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -10,7 +10,7 @@ services:
     ports:
       - "${DB_PORT}:5432"
     volumes:
-      - egs_pgdata:/var/lib/postgresql
+      - egs_test_pgdata:/var/lib/postgresql
     healthcheck:
       test: "pg_isready -U ${POSTGRES_USER}"
       interval: 10s
@@ -18,4 +18,4 @@ services:
       retries: 5
 
 volumes:
-  egs_pgdata:
+  egs_test_pgdata:

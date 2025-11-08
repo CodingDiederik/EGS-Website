@@ -3,21 +3,24 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from '../src/app.module';
-import { AUTH_COOKIE_NAME } from '../src/auth/auth.constants';
 import cookieParser from 'cookie-parser';
 import { DomainErrorFilter } from '../src/common/filters/domainError.filter';
 import { EntityNotFoundErrorFilter } from '../src/common/filters/notFound.filter';
 import { DataSource } from 'typeorm';
 import { runseeds } from '../src/seeds/seed';
+import { AuthGuard } from '../src/auth/guard/auth.guard';
+import { MockAuthGuard } from './mockAuthGuard';
 
 describe('Users E2E Test', () => {
   let app: INestApplication<App>;
-  let cookie: string;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider(AuthGuard)
+      .useClass(MockAuthGuard)
+      .compile();
 
     app = moduleFixture.createNestApplication();
     app.use(cookieParser());
@@ -33,33 +36,16 @@ describe('Users E2E Test', () => {
       await orm.initialize();
     }
 
+    // remove all data from the database before each test
+    await orm.synchronize(true);
+
     await runseeds(orm);
 
-    await orm.runMigrations();
-
     await app.init();
-
-    let response = await request(app.getHttpServer())
-      .post('/auth/login')
-      .send({ email: 'admin@example.com', password: 'adminpassword' });
-
-    expect(response.status).toBe(201);
-    expect(response.headers['set-cookie']).toBeDefined();
-    expect(response.headers['set-cookie'][0]).toMatch(
-      new RegExp(`${AUTH_COOKIE_NAME}=.+`),
-    );
-
-    const raw = response.headers['set-cookie']?.[0];
-    expect(raw).toBeDefined();
-    expect(raw).toMatch(new RegExp(`${AUTH_COOKIE_NAME}=`));
-
-    cookie = raw.split(';')[0].trim();
   });
 
   it('/users/getAllUsers (GET)', async () => {
-    const response = await request(app.getHttpServer())
-      .get('/users')
-      .set('Cookie', cookie);
+    const response = await request(app.getHttpServer()).get('/users');
 
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
@@ -68,9 +54,7 @@ describe('Users E2E Test', () => {
 
   it('/users/:userId (GET)', async () => {
     // get a user already created from seeds
-    const allusersresponse = await request(app.getHttpServer())
-      .get('/users')
-      .set('Cookie', cookie);
+    const allusersresponse = await request(app.getHttpServer()).get('/users');
 
     expect(allusersresponse.status).toBe(200);
     expect(Array.isArray(allusersresponse.body)).toBe(true);
@@ -78,9 +62,7 @@ describe('Users E2E Test', () => {
 
     const userId = allusersresponse.body[0].id;
 
-    const response = await request(app.getHttpServer())
-      .get(`/users/${userId}`)
-      .set('Cookie', cookie);
+    const response = await request(app.getHttpServer()).get(`/users/${userId}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toBeDefined();
@@ -88,18 +70,14 @@ describe('Users E2E Test', () => {
   });
 
   it('/users/:userId (GET) - fail', async () => {
-    const response = await request(app.getHttpServer())
-      .get('/users/999')
-      .set('Cookie', cookie);
+    const response = await request(app.getHttpServer()).get('/users/999');
 
     expect(response.status).toBe(404);
   });
 
   it('/users/:userId (PATCH) - success', async () => {
     // update a user already created from seeds
-    const allusersresponse = await request(app.getHttpServer())
-      .get('/users')
-      .set('Cookie', cookie);
+    const allusersresponse = await request(app.getHttpServer()).get('/users');
 
     expect(allusersresponse.status).toBe(200);
     expect(Array.isArray(allusersresponse.body)).toBe(true);
@@ -113,8 +91,7 @@ describe('Users E2E Test', () => {
 
     const response = await request(app.getHttpServer())
       .patch(`/users/${userId}`)
-      .send(updatedData)
-      .set('Cookie', cookie);
+      .send(updatedData);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('id', userId);
@@ -122,9 +99,7 @@ describe('Users E2E Test', () => {
 
   it('/users/:userId (DELETE) - success', async () => {
     // delete a user created from seeds
-    const allusersresponse = await request(app.getHttpServer())
-      .get('/users')
-      .set('Cookie', cookie);
+    const allusersresponse = await request(app.getHttpServer()).get('/users');
 
     expect(allusersresponse.status).toBe(200);
     expect(Array.isArray(allusersresponse.body)).toBe(true);
@@ -132,20 +107,14 @@ describe('Users E2E Test', () => {
 
     const userId = allusersresponse.body[0].id;
 
-    const response = await request(app.getHttpServer())
-      .delete(`/users/${userId}`)
-      .set('Cookie', cookie);
+    const response = await request(app.getHttpServer()).delete(
+      `/users/${userId}`,
+    );
 
     expect(response.status).toBe(200);
   });
 
   afterEach(async () => {
-    // logout
-    const response = await request(app.getHttpServer())
-      .post('/auth/logout')
-      .set('Cookie', cookie);
-    expect(response.status).toBe(201);
-    expect(response.body).toHaveProperty('message', 'Logout successful');
     await app.close();
   });
 });

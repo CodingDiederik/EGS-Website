@@ -34,9 +34,11 @@ describe('Auth E2E Test', () => {
       await repository.clear(); // Clear each entity table's content
     }
 
+    // remove all data from the database before each test
+    await orm.synchronize(true);
+
     await runseeds(orm);
 
-    await orm.runMigrations();
     await app.init();
   });
 
