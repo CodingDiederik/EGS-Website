@@ -59,7 +59,7 @@ describe('AuthService', () => {
       jest
         .spyOn(mockUserService, 'getUserByEmail')
         .mockRejectedValue(new Error('User not found'));
-      
+
       const result = await authService['validateUser'](
         'test@example.com',
         'password123',
