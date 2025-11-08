@@ -54,6 +54,19 @@ describe('AuthService', () => {
 
       expect(result).toBeNull();
     });
+
+    it('should return null if the user is not found (exception case)', async () => {
+      jest
+        .spyOn(mockUserService, 'getUserByEmail')
+        .mockRejectedValue(new Error('User not found'));
+      
+      const result = await authService['validateUser'](
+        'test@example.com',
+        'password123',
+      );
+
+      expect(result).toBeNull();
+    });
   });
 
   describe('login', () => {
