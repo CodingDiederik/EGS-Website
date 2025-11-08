@@ -39,8 +39,3 @@ jobs:
       - name: Run e2e tests
         run: pnpm test:e2e
 
-      - name: Tear down compose (always)
-        if: always()
-        run: |
-          echo "Tearing down docker compose services..."
-          docker compose -f egs-backend/docker-compose.yaml down -v
