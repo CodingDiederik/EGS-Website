@@ -11,9 +11,13 @@ describe('AuthService', () => {
   let mockJWTService: any = {
     signAsync: jest.fn().mockResolvedValue('mocked_jwt_token'),
   };
+  let mockLogger: any = {
+    log: jest.fn(),
+    error: jest.fn(),
+  };
 
   beforeEach(async () => {
-    authService = new AuthService(mockUserService, mockJWTService);
+    authService = new AuthService(mockUserService, mockJWTService, mockLogger);
   });
 
   describe('validateUser', () => {
