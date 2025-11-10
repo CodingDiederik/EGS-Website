@@ -83,7 +83,7 @@ export class AuthController {
   }
 
   /**
-   * Retrieves information about the currently authenticated user
+   * Get current user info
    * @param request Request object
    * @returns User
    */
