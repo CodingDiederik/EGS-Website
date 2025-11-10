@@ -37,7 +37,7 @@ export default class ArticleSeeder {
 
     for (const seed of seeds) {
       if (await repository.findOneBy({ title: seed.title })) {
-        if (process.env.OVERRIDE_SEEDS == 'true') {
+        if (process.env.OVERRIDE_SEEDS === 'true') {
           await repository.delete({ title: seed.title });
         } else {
           continue;

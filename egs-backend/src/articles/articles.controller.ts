@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   UseInterceptors,
   ClassSerializerInterceptor,
+  NotFoundException,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleRequest } from './dto/create-article.dto';
@@ -50,17 +51,6 @@ export class ArticlesController {
   }
 
   /**
-   * Get an article by ID which is published. (Public)
-   * @param articleId
-   * @returns
-   */
-  @Get(':articleId')
-  @Public()
-  async findOne(@Param('articleId', ParseIntPipe) articleId: number) {
-    return await this.articlesService.findOne(articleId);
-  }
-
-  /**
    * Get an article by ID.
    */
   @Get('/unpublished/:articleId')
@@ -68,6 +58,21 @@ export class ArticlesController {
     @Param('articleId', ParseIntPipe) articleId: number,
   ) {
     return await this.articlesService.findOneUnpublished(articleId);
+  }
+
+  /**
+   * Get an article by ID which is published. (Public)
+   * @param articleId
+   * @returns
+   */
+  @Get(':articleId')
+  @Public()
+  async findOne(@Param('articleId', ParseIntPipe) articleId: number) {
+    const article = await this.articlesService.findOne(articleId);
+    if (!article) {
+      throw new NotFoundException('Article not found');
+    }
+    return article;
   }
 
   /**

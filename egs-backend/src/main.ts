@@ -8,7 +8,6 @@ import { writeFileSync } from 'fs';
 import YAML from 'yaml';
 import { runseeds } from './seeds/seed';
 import { ValidationPipe } from '@nestjs/common';
-import { DomainErrorFilter } from './common/filters/domainError.filter';
 import { EntityNotFoundErrorFilter } from './common/filters/notFound.filter';
 import cookieParser from 'cookie-parser';
 import { AUTH_COOKIE_NAME } from './auth/auth.constants';
@@ -18,10 +17,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
-  app.useGlobalFilters(
-    new DomainErrorFilter(),
-    new EntityNotFoundErrorFilter(),
-  );
+  app.useGlobalFilters(new EntityNotFoundErrorFilter());
   app.use(cookieParser());
 
   app.enableCors({

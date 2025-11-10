@@ -10,7 +10,7 @@ export class Article extends BaseEntity {
   content!: string;
 
   @Column()
-  publicAuthor: string;
+  publicAuthor!: string;
 
   @Column({ nullable: true })
   publicationDate?: Date;

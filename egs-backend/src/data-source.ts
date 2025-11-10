@@ -15,7 +15,7 @@ export const options: DataSourceOptions = {
   database: process.env.POSTGRES_DB || 'egs',
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: process.env.TYPEORM_SYNC === 'true',
-  logging: process.env.TYPEORM_LOGGING === 'true' || false,
+  logging: process.env.TYPEORM_LOGGING === 'true',
   migrations: [__dirname + '/migrations/*{.ts,.js}'],
 };
 

@@ -1,5 +1,5 @@
 import { ArticlesController } from '../articles.controller';
-import { CreateArticleDto } from '../dto/create-article.dto';
+import { CreateArticleRequest } from '../dto/create-article.dto';
 
 describe('ArticlesController', () => {
   let controller: ArticlesController;
@@ -20,7 +20,7 @@ describe('ArticlesController', () => {
 
   describe('/ (POST)', () => {
     it('should create an article', async () => {
-      const createArticleDto: CreateArticleDto = {
+      const createArticleDto: CreateArticleRequest = {
         title: 'Test Article',
         content: 'This is a test article.',
         publicAuthor: 'John Doe',

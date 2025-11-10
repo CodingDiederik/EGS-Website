@@ -1,4 +1,10 @@
-import { IsDate, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import {
+  IsDate,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateArticleRequest {
   @IsNotEmpty()
@@ -16,6 +22,7 @@ export class CreateArticleRequest {
   @MaxLength(30)
   publicAuthor!: string;
 
+  @IsOptional()
   @IsDate()
   publicationDate?: Date;
 }

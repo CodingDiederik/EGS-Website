@@ -18,16 +18,8 @@ export class ArticlesService {
    * @returns the created article
    */
   async create(createArticleDto: CreateArticleRequest) {
-    const article = new Article();
-    article.title = createArticleDto.title;
-    article.content = createArticleDto.content;
-    article.publicAuthor = createArticleDto.publicAuthor;
-    if (createArticleDto.publicationDate) {
-      article.publicationDate = createArticleDto.publicationDate;
-    }
-
+    const article = this.articleRepository.create(createArticleDto);
     await this.articleRepository.save(article);
-
     return article;
   }
 
@@ -72,9 +64,9 @@ export class ArticlesService {
   /**
    * Finds an article by ID.
    * @param id - The ID of the article to find.
-   * @returns The found article or null if not found.
+   * @returns The found article
    */
-  async findOneUnpublished(id: number): Promise<Article | null> {
+  async findOneUnpublished(id: number): Promise<Article> {
     const article = await this.articleRepository.findOneByOrFail({ id });
     return article;
   }
@@ -101,7 +93,7 @@ export class ArticlesService {
       article.publicAuthor = updateArticleDto.publicAuthor;
     }
     if (updateArticleDto.publicationDate !== undefined) {
-      article.publicationDate = new Date(updateArticleDto.publicationDate);
+      article.publicationDate = updateArticleDto.publicationDate;
     }
 
     await this.articleRepository.save(article);
