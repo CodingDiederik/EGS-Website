@@ -5,16 +5,15 @@ import { UserRole } from '../users.enum';
 
 describe('UsersController', () => {
   let usersController: UsersController;
-  let mockUsersService: any;
+  let mockUsersService: any = {
+    getAllUsers: jest.fn(),
+    getUser: jest.fn(),
+    createUser: jest.fn(),
+    updateUser: jest.fn(),
+    deleteUser: jest.fn(),
+  };
 
   beforeEach(() => {
-    mockUsersService = {
-      getAllUsers: jest.fn(),
-      getUser: jest.fn(),
-      createUser: jest.fn(),
-      updateUser: jest.fn(),
-      deleteUser: jest.fn(),
-    };
     usersController = new UsersController(mockUsersService);
   });
 
@@ -47,6 +46,7 @@ describe('UsersController', () => {
         username: 'johndoe',
         email: 'johndoe@example.com',
         password: 'StrongP@ssw0rd',
+        role: UserRole.USER,
       };
       const mockCreatedUser = { id: 2, ...mockUserData };
       mockUsersService.createUser.mockResolvedValue(mockCreatedUser);

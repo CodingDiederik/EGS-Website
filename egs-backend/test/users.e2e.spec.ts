@@ -4,7 +4,6 @@ import request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from '../src/app.module';
 import cookieParser from 'cookie-parser';
-import { DomainErrorFilter } from '../src/common/filters/domainError.filter';
 import { EntityNotFoundErrorFilter } from '../src/common/filters/notFound.filter';
 import { DataSource } from 'typeorm';
 import { runseeds } from '../src/seeds/seed';
@@ -28,10 +27,7 @@ describe('Users E2E Test', () => {
     app = moduleFixture.createNestApplication();
     app.use(cookieParser());
 
-    app.useGlobalFilters(
-      new DomainErrorFilter(),
-      new EntityNotFoundErrorFilter(),
-    );
+    app.useGlobalFilters(new EntityNotFoundErrorFilter());
 
     const orm: DataSource = app.get(DataSource);
 

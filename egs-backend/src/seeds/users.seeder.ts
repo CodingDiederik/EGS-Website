@@ -24,7 +24,7 @@ export default class UserSeeder {
 
     for (const seed of seeds) {
       if (await repository.findOneBy({ email: seed.email })) {
-        if (process.env.OVERRIDE_SEEDS == 'true') {
+        if (process.env.OVERRIDE_SEEDS === 'true') {
           await repository.delete({ email: seed.email });
         } else {
           continue;
