@@ -26,15 +26,15 @@ export class BaseEntity {
   @Exclude()
   deletedDate?: Date;
 
-  @OneToOne(() => User, (user) => user.id)
+  @OneToOne(() => User, (user) => user.id, { nullable: true })
   @Exclude()
-  createdBy!: User;
+  createdBy?: User;
 
-  @OneToOne(() => User, (user) => user.id)
+  @OneToOne(() => User, (user) => user.id, { nullable: true })
   @Exclude()
-  updatedBy!: User;
+  updatedBy?: User;
 
-  @OneToOne(() => User, (user) => user.id)
+  @OneToOne(() => User, (user) => user.id, { nullable: true })
   @Exclude()
-  deletedBy!: User;
+  deletedBy?: User;
 }
