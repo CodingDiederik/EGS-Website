@@ -3,6 +3,7 @@ import { User } from '../user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserRequest } from '../dto/create-user.dto';
 import { UpdateUserRequest } from '../dto/update-user.dto';
+import { UserRole } from '../users.enum';
 
 type UsersRepository = Repository<User>;
 let mockUsersRepository: Partial<UsersRepository>;
@@ -61,6 +62,7 @@ describe('UsersService', () => {
         username: 'johndoe',
         email: 'johndoe@example.com',
         password: 'StrongP@ssw0rd',
+        role: UserRole.USER,
       };
       const mockUser = new User();
       jest.spyOn(mockUsersRepository, 'create').mockReturnValue(mockUser);
@@ -76,6 +78,7 @@ describe('UsersService', () => {
         email: 'johndoe@example.com',
         username: 'johndoe',
         password: 'NewStr0ngP@ss',
+        role: UserRole.ADMIN,
       };
       const mockUser = new User();
       jest
