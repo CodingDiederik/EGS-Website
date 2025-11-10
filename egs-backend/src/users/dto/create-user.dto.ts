@@ -7,6 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { UserRole } from '../users.enum';
 
 export class CreateUserRequest {
   @IsString()
@@ -25,4 +26,7 @@ export class CreateUserRequest {
   @MinLength(8)
   @MaxLength(64)
   password: string;
+
+  @IsNotEmpty()
+  role: UserRole;
 }

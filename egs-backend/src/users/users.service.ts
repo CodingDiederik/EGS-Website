@@ -52,6 +52,7 @@ export class UsersService {
     const newUser = new User();
     newUser.email = userData.email;
     newUser.name = userData.username;
+    newUser.role = userData.role;
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
@@ -75,6 +76,9 @@ export class UsersService {
     }
     if (userData.username) {
       user.name = userData.username;
+    }
+    if (userData.role) {
+      user.role = userData.role;
     }
     if (userData.password) {
       const saltRounds = 10;
