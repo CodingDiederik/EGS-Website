@@ -3,7 +3,7 @@ import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from './article.entity';
-import { Repository } from 'typeorm';
+import { LessThanOrEqual, MoreThan, Repository, IsNull } from 'typeorm';
 
 @Injectable()
 export class ArticlesService {
@@ -32,11 +32,41 @@ export class ArticlesService {
   }
 
   /**
-   * Gets all articles.
-   * @returns an array of articles
+   * Gets all published articles.
+   * @returns an array of published articles
    */
   async findAll(): Promise<Article[]> {
-    return await this.articleRepository.find();
+    return await this.articleRepository.find({
+      where: {
+        publicationDate: LessThanOrEqual(new Date()),
+      },
+    });
+  }
+
+  /**
+   * Finds all unpublished articles.
+   * @returns an array of unpublished articles
+   */
+  async findAllUnpublished(): Promise<Article[]> {
+    return await this.articleRepository.find({
+      where: [
+        { publicationDate: IsNull() },
+        { publicationDate: MoreThan(new Date()) },
+      ],
+    });
+  }
+
+  /**
+   * Finds an article by ID.
+   * @param id - The ID of the article to find.
+   * @returns The found article or null if not found or unpublished.
+   */
+  async findOne(id: number): Promise<Article | null> {
+    const article = await this.articleRepository.findOneByOrFail({ id });
+    if (!article.publicationDate || article.publicationDate > new Date()) {
+      return null;
+    }
+    return article;
   }
 
   /**
@@ -44,7 +74,7 @@ export class ArticlesService {
    * @param id - The ID of the article to find.
    * @returns The found article or null if not found.
    */
-  async findOne(id: number): Promise<Article | null> {
+  async findOneUnpublished(id: number): Promise<Article | null> {
     const article = await this.articleRepository.findOneByOrFail({ id });
     return article;
   }

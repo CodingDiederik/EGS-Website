@@ -41,7 +41,16 @@ export class ArticlesController {
   }
 
   /**
-   * Get an article by ID. (Public)
+   * Gets all unpublished articles.
+   * @returns
+   */
+  @Get('/unpublished')
+  async findAllUnpublished() {
+    return await this.articlesService.findAllUnpublished();
+  }
+
+  /**
+   * Get an article by ID which is published. (Public)
    * @param articleId
    * @returns
    */
@@ -49,6 +58,16 @@ export class ArticlesController {
   @Public()
   async findOne(@Param('articleId', ParseIntPipe) articleId: number) {
     return await this.articlesService.findOne(articleId);
+  }
+
+  /**
+   * Get an article by ID.
+   */
+  @Get('/unpublished/:articleId')
+  async findOneUnpublished(
+    @Param('articleId', ParseIntPipe) articleId: number,
+  ) {
+    return await this.articlesService.findOneUnpublished(articleId);
   }
 
   /**
