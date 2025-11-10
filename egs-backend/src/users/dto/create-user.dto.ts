@@ -1,4 +1,3 @@
-import { PartialType } from '@nestjs/swagger';
 import {
   IsAlphanumeric,
   IsEmail,
@@ -8,6 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { UserRole } from '../users.enum';
 
 export class CreateUserRequest {
   @IsString()
@@ -26,6 +26,7 @@ export class CreateUserRequest {
   @MinLength(8)
   @MaxLength(64)
   password: string;
-}
 
-export class UpdateUserRequest extends PartialType(CreateUserRequest) {}
+  @IsNotEmpty()
+  role: UserRole;
+}

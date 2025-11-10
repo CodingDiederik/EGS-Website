@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "pnpm -r test",
-    "test:e2e": "pnpm -r test:e2e",
-    "test:cov": "pnpm -r test:cov",
+    "test": "pnpm --filter egs-backend test",
+    "test:e2e": "pnpm --filter egs-backend test:e2e",
+    "test:cov": "pnpm --filter egs-backend test:cov",
     "dev:be": "pnpm --filter egs-backend dev",
     "dev:fe": "pnpm --filter egs-frontend dev",
     "dev": "concurrently \"pnpm dev:be\" \"pnpm dev:fe\"",

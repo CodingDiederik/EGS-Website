@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import type { Request } from 'express';
-import { JwtPayload } from '../dto/auth.dto';
+import { JwtPayload } from '../jwtPayload.interface';
 import { Reflector } from '@nestjs/core';
 import { UserRole } from '../../users/users.enum';
 import { AUTH_COOKIE_NAME } from '../auth.constants';

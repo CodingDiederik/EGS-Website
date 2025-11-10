@@ -10,6 +10,9 @@ import { DataSource } from 'typeorm';
 import { runseeds } from '../src/seeds/seed';
 import { AuthGuard } from '../src/auth/guard/auth.guard';
 import { MockAuthGuard } from './mockAuthGuard';
+import { CreateUserRequest } from '../src/users/dto/create-user.dto';
+import { UserRole } from '../src/users/users.enum';
+import { UpdateUserRequest } from '../src/users/dto/update-user.dto';
 
 describe('Users E2E Test', () => {
   let app: INestApplication<App>;
@@ -44,12 +47,28 @@ describe('Users E2E Test', () => {
     await app.init();
   });
 
-  it('/users/getAllUsers (GET)', async () => {
+  it('/users/ (GET)', async () => {
     const response = await request(app.getHttpServer()).get('/users');
 
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body.length).toBeGreaterThan(0);
+  });
+
+  it('/users/ (POST)', async () => {
+    const newUser: CreateUserRequest = {
+      username: 'New User',
+      email: 'newuser@example.com',
+      password: 'newuserpassword',
+      role: UserRole.USER,
+    };
+
+    const response = await request(app.getHttpServer())
+      .post('/users')
+      .send(newUser);
+
+    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty('id');
   });
 
   it('/users/:userId (GET)', async () => {
@@ -85,7 +104,7 @@ describe('Users E2E Test', () => {
 
     const userId = allusersresponse.body[0].id;
 
-    const updatedData = {
+    const updatedData: UpdateUserRequest = {
       password: 'updatedpassword',
     };
 

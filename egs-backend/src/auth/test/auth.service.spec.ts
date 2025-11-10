@@ -11,13 +11,17 @@ describe('AuthService', () => {
   let mockJWTService: any = {
     signAsync: jest.fn().mockResolvedValue('mocked_jwt_token'),
   };
-  let mockLogger: any = {
+  let loggerMock: any = {
     log: jest.fn(),
-    error: jest.fn(),
   };
 
   beforeEach(async () => {
-    authService = new AuthService(mockUserService, mockJWTService, mockLogger);
+    authService = new AuthService(mockUserService, mockJWTService);
+    // override logger
+    loggerMock = {
+      log: jest.fn(),
+    };
+    (authService as any).logger = loggerMock;
   });
 
   describe('validateUser', () => {
@@ -25,7 +29,7 @@ describe('AuthService', () => {
       const mockUser = {
         id: 1,
         email: 'test@example.com',
-        hashedPassword: await bcrypt.hash('password123', 10),
+        password: await bcrypt.hash('password123', 10),
         role: 'user',
       };
 
@@ -69,6 +73,9 @@ describe('AuthService', () => {
         'password123',
       );
 
+      expect(loggerMock.log).toHaveBeenCalledWith(
+        'User validation failed: Error: User not found',
+      );
       expect(result).toBeNull();
     });
   });
@@ -78,7 +85,7 @@ describe('AuthService', () => {
       const mockUser = {
         id: 1,
         email: 'test@example.com',
-        hashedPassword: await bcrypt.hash('password123', 10),
+        password: await bcrypt.hash('password123', 10),
         role: 'user',
       };
 

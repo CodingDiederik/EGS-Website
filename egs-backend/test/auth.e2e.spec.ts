@@ -86,6 +86,22 @@ describe('Auth E2E Test', () => {
       });
   });
 
+  it('/auth/me (GET) - success', async () => {
+    let response = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({ email: 'admin@example.com', password: 'adminpassword' });
+    const raw = response.headers['set-cookie']?.[0];
+    const cookie = raw.split(';')[0].trim();
+
+    response = await request(app.getHttpServer())
+      .get('/auth/me')
+      .set('Cookie', cookie);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('email', 'admin@example.com');
+    expect(response.body).toHaveProperty('role', 'admin');
+  });
+
   afterEach(async () => {
     // Fetch all the entities
     const entities = orm.entityMetadatas;

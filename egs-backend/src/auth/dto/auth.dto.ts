@@ -6,13 +6,6 @@ import {
   MinLength,
   MaxLength,
 } from 'class-validator';
-import { UserRole } from '../../users/users.enum';
-
-export interface JwtPayload {
-  sub: number;
-  email: string;
-  role: UserRole;
-}
 
 export class LoginRequest {
   @ApiProperty({ example: 'admin@example.com' })

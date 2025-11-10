@@ -5,18 +5,28 @@ import {
   Post,
   UnauthorizedException,
   Req,
+  Get,
+  ClassSerializerInterceptor,
+  UseInterceptors,
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { AuthService } from './auth.service';
-import { JwtPayload, LoginRequest } from './dto/auth.dto';
+import { LoginRequest } from './dto/auth.dto';
+import { JwtPayload } from './jwtPayload.interface';
 import { Public } from '../common/decorators/public.decorator';
 import { AUTH_COOKIE_NAME } from './auth.constants';
 import { ApiCreatedResponse, ApiForbiddenResponse } from '@nestjs/swagger';
 import type { Request } from 'express';
+import { User } from '../users/user.entity';
+import { UsersService } from '../users/users.service';
 
 @Controller('auth')
+@UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,
+  ) {}
 
   /**
    * Handles user login
@@ -70,5 +80,16 @@ export class AuthController {
       path: '/',
     });
     return { message: 'Logout successful' };
+  }
+
+  /**
+   * Get current user info
+   * @param request Request object
+   * @returns User
+   */
+  @Get('me')
+  async me(@Req() request: Request): Promise<User> {
+    const payload = request.user as JwtPayload;
+    return await this.usersService.getUser(payload.sub);
   }
 }

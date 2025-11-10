@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from '../users/user.entity';
 import { LoginRequest } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from './dto/auth.dto';
+import { JwtPayload } from './jwtPayload.interface';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +22,7 @@ export class AuthService {
       const user = await this.usersService.getUserByEmail(email);
 
       if (user) {
-        const isMatch = await bcrypt.compare(password, user.hashedPassword);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
           return user;
         }

@@ -1,5 +1,7 @@
 import { UsersController } from '../users.controller';
-import { CreateUserRequest, UpdateUserRequest } from '../dto/users.dto';
+import { CreateUserRequest } from '../dto/create-user.dto';
+import { UpdateUserRequest } from '../dto/update-user.dto';
+import { UserRole } from '../users.enum';
 
 describe('UsersController', () => {
   let usersController: UsersController;
@@ -61,9 +63,9 @@ describe('UsersController', () => {
       const mockUserData: UpdateUserRequest = { email: 'johndoe@example.com' };
       const mockUpdatedUser = {
         id: userId,
-        username: 'johndoe',
+        name: 'johndoe',
         email: 'johndoe@example.com',
-        password: 'StrongP@ssw0rd',
+        role: UserRole.USER,
       };
       mockUsersService.updateUser.mockResolvedValue(mockUpdatedUser);
 
