@@ -11,13 +11,13 @@ export default class UserSeeder {
       {
         email: 'admin@example.com',
         name: 'Admin User',
-        hashedPassword: await bcrypt.hash('adminpassword', 10),
+        password: await bcrypt.hash('adminpassword', 10),
         role: UserRole.ADMIN,
       },
       {
         email: 'user@example.com',
         name: 'Regular User',
-        hashedPassword: await bcrypt.hash('userpassword', 10),
+        password: await bcrypt.hash('userpassword', 10),
         role: UserRole.USER,
       },
     ];
