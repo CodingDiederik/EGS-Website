@@ -23,7 +23,7 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   /**
-   * Gets all users.
+   * Gets all users. (Admin only)
    * @returns An array of Users.
    */
   @Roles(UserRole.ADMIN)
@@ -33,7 +33,7 @@ export class UsersController {
   }
 
   /**
-   * Get a user.
+   * Get a user. (Admin only)
    * @returns A User.
    */
   @Roles(UserRole.ADMIN)
@@ -43,7 +43,7 @@ export class UsersController {
   }
 
   /**
-   * Creates a new user.
+   * Creates a new user. (Admin only)
    * @returns The created User.
    */
   @Roles(UserRole.ADMIN)
@@ -53,7 +53,7 @@ export class UsersController {
   }
 
   /**
-   * Updates a user.
+   * Updates a user. (Admin only)
    * @returns The updated User.
    */
   @Roles(UserRole.ADMIN)
@@ -66,7 +66,7 @@ export class UsersController {
   }
 
   /**
-   * Deletes a user.
+   * Deletes a user. (Admin only)
    */
   @Roles(UserRole.ADMIN)
   @Delete(':userId')

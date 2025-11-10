@@ -7,40 +7,71 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { Public } from '../common/decorators/public.decorator';
 
 @Controller('articles')
+@UseInterceptors(ClassSerializerInterceptor)
 export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
+  /**
+   * Create a new article.
+   * @param createArticleDto
+   * @returns
+   */
   @Post()
-  create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articlesService.create(createArticleDto);
+  async create(@Body() createArticleDto: CreateArticleDto) {
+    return await this.articlesService.create(createArticleDto);
   }
 
+  /**
+   * Get all articles. (Public)
+   * @returns
+   */
   @Get()
-  findAll() {
-    return this.articlesService.findAll();
+  @Public()
+  async findAll() {
+    return await this.articlesService.findAll();
   }
 
+  /**
+   * Get an article by ID. (Public)
+   * @param articleId
+   * @returns
+   */
   @Get(':articleId')
-  findOne(@Param('articleId', ParseIntPipe) articleId: number) {
-    return this.articlesService.findOne(articleId);
+  @Public()
+  async findOne(@Param('articleId', ParseIntPipe) articleId: number) {
+    return await this.articlesService.findOne(articleId);
   }
 
+  /**
+   * Update an article by ID.
+   * @param articleId
+   * @param updateArticleDto
+   * @returns
+   */
   @Patch(':articleId')
-  update(
+  async update(
     @Param('articleId', ParseIntPipe) articleId: number,
     @Body() updateArticleDto: UpdateArticleDto,
   ) {
-    return this.articlesService.update(articleId, updateArticleDto);
+    return await this.articlesService.update(articleId, updateArticleDto);
   }
 
+  /**
+   * Delete an article by ID.
+   * @param articleId
+   * @returns
+   */
   @Delete(':articleId')
-  remove(@Param('articleId', ParseIntPipe) articleId: number) {
-    return this.articlesService.remove(articleId);
+  async remove(@Param('articleId', ParseIntPipe) articleId: number) {
+    return await this.articlesService.remove(articleId);
   }
 }

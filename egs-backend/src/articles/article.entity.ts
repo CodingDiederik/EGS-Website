@@ -7,4 +7,10 @@ export class Article extends BaseEntity {
 
   @Column('text')
   content!: string;
+
+  @Column()
+  publicAuthor: string;
+
+  @Column({ nullable: true })
+  publicationDate?: Date;
 }
