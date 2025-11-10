@@ -10,7 +10,7 @@ import { DataSource } from 'typeorm';
 import { runseeds } from '../src/seeds/seed';
 import { AuthGuard } from '../src/auth/guard/auth.guard';
 import { MockAuthGuard } from './mockAuthGuard';
-import { CreateUserRequest } from 'src/users/dto/create-user.dto';
+import { CreateUserRequest } from '../src/users/dto/create-user.dto';
 import { UserRole } from '../src/users/users.enum';
 import { UpdateUserRequest } from '../src/users/dto/update-user.dto';
 
