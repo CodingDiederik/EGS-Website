@@ -79,7 +79,9 @@ describe('Articles E2E Test', () => {
 
     const articleId = allResponse.body[0].id;
 
-    const response = await request(app.getHttpServer()).get(`/articles/${articleId}`);
+    const response = await request(app.getHttpServer()).get(
+      `/articles/${articleId}`,
+    );
 
     expect(response.status).toBe(200);
     expect(response.body).toBeDefined();
@@ -93,7 +95,9 @@ describe('Articles E2E Test', () => {
   });
 
   it('/articles/unpublished (GET)', async () => {
-    const response = await request(app.getHttpServer()).get('/articles/unpublished');
+    const response = await request(app.getHttpServer()).get(
+      '/articles/unpublished',
+    );
 
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
@@ -102,27 +106,35 @@ describe('Articles E2E Test', () => {
 
   it('/articles/unpublished/:articleId (GET)', async () => {
     // get an unpublished article from seeds
-    const allUnpublished = await request(app.getHttpServer()).get('/articles/unpublished');
+    const allUnpublished = await request(app.getHttpServer()).get(
+      '/articles/unpublished',
+    );
 
     expect(allUnpublished.status).toBe(200);
     expect(Array.isArray(allUnpublished.body)).toBe(true);
 
     if (allUnpublished.body.length === 0) {
       // if none unpublished, create one and then fetch
-      const created = await request(app.getHttpServer()).post('/articles').send({
-        title: 'Temp Unpublished',
-        content: 'Temp',
-        publicAuthor: 'E2E',
-      });
+      const created = await request(app.getHttpServer())
+        .post('/articles')
+        .send({
+          title: 'Temp Unpublished',
+          content: 'Temp',
+          publicAuthor: 'E2E',
+        });
       expect(created.status).toBe(201);
       const id = created.body.id;
-      const response = await request(app.getHttpServer()).get(`/articles/unpublished/${id}`);
+      const response = await request(app.getHttpServer()).get(
+        `/articles/unpublished/${id}`,
+      );
       expect(response.status).toBe(200);
       expect(response.body).toBeDefined();
       expect(response.body.id).toBe(id);
     } else {
       const id = allUnpublished.body[0].id;
-      const response = await request(app.getHttpServer()).get(`/articles/unpublished/${id}`);
+      const response = await request(app.getHttpServer()).get(
+        `/articles/unpublished/${id}`,
+      );
       expect(response.status).toBe(200);
       expect(response.body).toBeDefined();
       expect(response.body.id).toBe(id);
@@ -161,7 +173,9 @@ describe('Articles E2E Test', () => {
 
     const articleId = allResponse.body[0].id;
 
-    const response = await request(app.getHttpServer()).delete(`/articles/${articleId}`);
+    const response = await request(app.getHttpServer()).delete(
+      `/articles/${articleId}`,
+    );
 
     expect(response.status).toBe(200);
   });
