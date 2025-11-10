@@ -93,6 +93,18 @@ describe('ArticlesController', () => {
 
       expect(await controller.findOne(articleId)).toBe(result);
     });
+
+    it('should throw NotFoundException if article not found', async () => {
+      const articleId = 999;
+
+      jest
+        .spyOn(mockArticlesService, 'findOne')
+        .mockImplementation(async () => null);
+
+      await expect(controller.findOne(articleId)).rejects.toThrow(
+        'Article not found',
+      );
+    });
   });
 
   describe('/:id (PATCH)', () => {
