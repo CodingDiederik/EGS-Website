@@ -1,7 +1,10 @@
+import { Exclude } from 'class-transformer';
+import { User } from '../../users/user.entity';
 import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -9,14 +12,29 @@ import {
 @Entity()
 export class BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @CreateDateColumn()
-  createdAt: Date;
+  @Exclude()
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  @Exclude()
+  updatedAt!: Date;
 
   @DeleteDateColumn()
+  @Exclude()
   deletedDate?: Date;
+
+  @OneToOne(() => User, (user) => user.id)
+  @Exclude()
+  createdBy!: User;
+
+  @OneToOne(() => User, (user) => user.id)
+  @Exclude()
+  updatedBy!: User;
+
+  @OneToOne(() => User, (user) => user.id)
+  @Exclude()
+  deletedBy!: User;
 }

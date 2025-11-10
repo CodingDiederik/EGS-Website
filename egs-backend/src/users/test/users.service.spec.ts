@@ -1,7 +1,8 @@
 import { UsersService } from '../users.service';
 import { User } from '../user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserRequest, UpdateUserRequest } from '../dto/users.dto';
+import { CreateUserRequest } from '../dto/create-user.dto';
+import { UpdateUserRequest } from '../dto/update-user.dto';
 
 type UsersRepository = Repository<User>;
 let mockUsersRepository: Partial<UsersRepository>;

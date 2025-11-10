@@ -1,4 +1,3 @@
-import { PartialType } from '@nestjs/swagger';
 import {
   IsAlphanumeric,
   IsEmail,
@@ -27,5 +26,3 @@ export class CreateUserRequest {
   @MaxLength(64)
   password: string;
 }
-
-export class UpdateUserRequest extends PartialType(CreateUserRequest) {}

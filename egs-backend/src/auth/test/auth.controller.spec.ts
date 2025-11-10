@@ -7,8 +7,12 @@ describe('AuthController', () => {
     logout: jest.fn(),
   };
 
+  let mockUsersService: any = {
+    getUser: jest.fn(),
+  };
+
   beforeEach(() => {
-    authController = new AuthController(mockAuthService);
+    authController = new AuthController(mockAuthService, mockUsersService);
   });
 
   describe('login', () => {
@@ -63,6 +67,17 @@ describe('AuthController', () => {
 
       expect(mockAuthService.logout).toHaveBeenCalledWith(1);
       expect(res.clearCookie).toHaveBeenCalled();
+    });
+  });
+
+  describe('me', () => {
+    it('should return the currently authenticated user', async () => {
+      const req: any = { user: { sub: 1 } };
+      const user = { id: 1, email: 'user@example.com' };
+      mockUsersService.getUser = jest.fn().mockResolvedValue(user);
+
+      expect(await authController.me(req)).toEqual(user);
+      expect(mockUsersService.getUser).toHaveBeenCalledWith(1);
     });
   });
 });

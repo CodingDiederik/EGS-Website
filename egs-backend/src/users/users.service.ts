@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserRequest, UpdateUserRequest } from './dto/users.dto';
+import { CreateUserRequest } from './dto/create-user.dto';
+import { UpdateUserRequest } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -54,7 +55,7 @@ export class UsersService {
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
-    newUser.hashedPassword = hashedPassword;
+    newUser.password = hashedPassword;
 
     return await this.userRepository.save(newUser);
   }
@@ -78,7 +79,7 @@ export class UsersService {
     if (userData.password) {
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
-      user.hashedPassword = hashedPassword;
+      user.password = hashedPassword;
     }
     return await this.userRepository.save(user);
   }

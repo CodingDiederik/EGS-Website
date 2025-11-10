@@ -7,13 +7,17 @@ import {
   ParseIntPipe,
   Param,
   Body,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { User } from './user.entity';
 import { UserRole } from './users.enum';
 import { UsersService } from './users.service';
-import { CreateUserRequest, UpdateUserRequest } from './dto/users.dto';
+import { CreateUserRequest } from './dto/create-user.dto';
+import { UpdateUserRequest } from './dto/update-user.dto';
 import { Roles } from '../common/decorators/roles.decorator';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
