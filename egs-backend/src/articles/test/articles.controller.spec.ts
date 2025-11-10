@@ -8,6 +8,7 @@ describe('ArticlesController', () => {
     create: jest.fn(),
     findAll: jest.fn(),
     findAllUnpublished: jest.fn(),
+    findOneUnpublished: jest.fn(),
     findOne: jest.fn(),
     update: jest.fn(),
     remove: jest.fn(),

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
+import { CreateArticleRequest } from './dto/create-article.dto';
+import { UpdateArticleRequest } from './dto/update-article.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from './article.entity';
 import { LessThanOrEqual, MoreThan, Repository, IsNull } from 'typeorm';
@@ -17,13 +17,13 @@ export class ArticlesService {
    * @param createArticleDto
    * @returns the created article
    */
-  async create(createArticleDto: CreateArticleDto) {
+  async create(createArticleDto: CreateArticleRequest) {
     const article = new Article();
     article.title = createArticleDto.title;
     article.content = createArticleDto.content;
     article.publicAuthor = createArticleDto.publicAuthor;
     if (createArticleDto.publicationDate) {
-      article.publicationDate = new Date(createArticleDto.publicationDate);
+      article.publicationDate = createArticleDto.publicationDate;
     }
 
     await this.articleRepository.save(article);
@@ -87,7 +87,7 @@ export class ArticlesService {
    */
   async update(
     id: number,
-    updateArticleDto: UpdateArticleDto,
+    updateArticleDto: UpdateArticleRequest,
   ): Promise<Article> {
     const article = await this.articleRepository.findOneByOrFail({ id });
 

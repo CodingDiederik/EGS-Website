@@ -11,8 +11,8 @@ import {
   ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
-import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
+import { CreateArticleRequest } from './dto/create-article.dto';
+import { UpdateArticleRequest } from './dto/update-article.dto';
 import { Public } from '../common/decorators/public.decorator';
 
 @Controller('articles')
@@ -26,7 +26,7 @@ export class ArticlesController {
    * @returns
    */
   @Post()
-  async create(@Body() createArticleDto: CreateArticleDto) {
+  async create(@Body() createArticleDto: CreateArticleRequest) {
     return await this.articlesService.create(createArticleDto);
   }
 
@@ -79,7 +79,7 @@ export class ArticlesController {
   @Patch(':articleId')
   async update(
     @Param('articleId', ParseIntPipe) articleId: number,
-    @Body() updateArticleDto: UpdateArticleDto,
+    @Body() updateArticleDto: UpdateArticleRequest,
   ) {
     return await this.articlesService.update(articleId, updateArticleDto);
   }
