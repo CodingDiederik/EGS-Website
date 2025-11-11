@@ -3,7 +3,6 @@ import './login.css';
 import { useState } from 'react';
 import { SpinnerCircular } from 'spinners-react';
 
-
 function checkFields(email: string, password: string) {
   if (!email || !password) {
     return 'Vul zowel email als wachtwoord in';
@@ -61,7 +60,7 @@ function LoginButton({
 }>) {
   async function handleLogin(email: string, password: string) {
     const error = checkFields(email, password);
-    
+
     if (error) {
       setError(error);
       return;
