@@ -51,20 +51,51 @@ header {
   z-index: 100;
 }
 
-header nav {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-large);
-}
-
 header .logo {
   height: 40px; /* Adjust as needed */
 }
 
+header nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-large);
+  width: 100%;
+}
+
+/* make the outer list a flex row and align items */
 header nav ul {
   list-style: none;
   display: flex;
   gap: var(--spacing-medium);
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+header nav ul .admin-links {
+  margin-left: auto;
+}
+
+header nav ul .admin-links a {
+  background-color: var(--text-accent);
+  color: var(--background-accent);
+  padding: calc(var(--spacing-small) / 2) var(--spacing-medium);
+  border-radius: calc(var(--border-radius) - 4px);
+  box-shadow: var(--shadow);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  text-decoration: none;
+}
+
+header nav ul .admin-links ul {
+  list-style: none;
+  display: flex;
+  gap: var(--spacing-medium);
+  margin: 0;
+  padding: 0;
 }
 
 header nav a {
