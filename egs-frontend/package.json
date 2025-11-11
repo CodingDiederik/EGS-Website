@@ -10,7 +10,8 @@
     "lint:check": "eslint \"{src,apps,libs,test}/**/*.{ts,tsx}\"",
     "format": "prettier --write \"**/*.{js,ts,tsx,json,css,md}\"",
     "format:check": "prettier --check \"**/*.{js,ts,tsx,json,css,md}\"",
-    "copy:env": "cp .env.example .env"
+    "copy:env": "cp .env.example .env",
+    "sonar:scan": "dotenv sonar-scanner -Dsonar.projectKey=egs-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=local-org"
   },
   "dependencies": {
     "next": "16.0.1",
@@ -20,11 +21,13 @@
     "spinners-react": "^1.0.11"
   },
   "devDependencies": {
+    "@sonar/scan": "^4.3.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
     "tailwindcss": "^4",

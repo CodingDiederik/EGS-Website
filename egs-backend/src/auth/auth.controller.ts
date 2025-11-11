@@ -9,14 +9,13 @@ import {
   ClassSerializerInterceptor,
   UseInterceptors,
 } from '@nestjs/common';
-import type { Response } from 'express';
+import type { Response, Request } from 'express';
 import { AuthService } from './auth.service';
 import { LoginRequest } from './dto/auth.dto';
 import { JwtPayload } from './jwtPayload.interface';
 import { Public } from '../common/decorators/public.decorator';
 import { AUTH_COOKIE_NAME } from './auth.constants';
 import { ApiCreatedResponse, ApiForbiddenResponse } from '@nestjs/swagger';
-import type { Request } from 'express';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 
@@ -24,8 +23,8 @@ import { UsersService } from '../users/users.service';
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
   constructor(
-    private authService: AuthService,
-    private usersService: UsersService,
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
   ) {}
 
   /**

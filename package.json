@@ -13,7 +13,9 @@
     "format": "pnpm -r format",
     "format:check": "pnpm -r format:check",
     "lint": "pnpm -r lint",
-    "lint:check": "pnpm -r lint:check"
+    "lint:check": "pnpm -r lint:check",
+    "sonar:scan": "pnpm test:cov && pnpm sonar:scannow",
+    "sonar:scannow": "dotenv sonar-scanner -Dsonar.projectKey=EGS -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=local-org"
   },
   "keywords": [],
   "author": "",
@@ -23,5 +25,9 @@
     "@nestjs/cli": "^11.0.10",
     "concurrently": "^9.2.1"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@sonar/scan": "^4.3.2",
+    "dotenv-cli": "^11.0.0"
+  }
 }
