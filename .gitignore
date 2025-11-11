@@ -8,6 +8,8 @@
 /egs-backend/build
 /egs-backend/coverage
 
+.vscode
+
 # Logs
 logs
 *.log
