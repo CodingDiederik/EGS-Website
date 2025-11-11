@@ -10,9 +10,9 @@ import { UsersService } from '../../users/users.service';
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
-    private jwtService: JwtService,
-    private reflector: Reflector,
-    private usersService: UsersService,
+    private readonly jwtService: JwtService,
+    private readonly reflector: Reflector,
+    private readonly usersService: UsersService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       context.getClass(),
     ]);
 
-    if (isPublic == true) {
+    if (isPublic) {
       // always allow access to public routes
       return true;
     }
@@ -50,9 +50,7 @@ export class AuthGuard implements CanActivate {
         // Check user roles
         const userRole = payload.role;
 
-        const hasRole = requiredRoles.some(
-          (role: UserRole) => userRole === role,
-        );
+        const hasRole = requiredRoles.includes(userRole);
         if (!hasRole && userRole !== UserRole.ADMIN) {
           return false;
         }
@@ -60,7 +58,7 @@ export class AuthGuard implements CanActivate {
 
       // Verify token against user's token
       const user = await this.usersService.getUser(Number(payload.sub));
-      if (!user || user.JTI !== token) {
+      if (user?.JTI !== token) {
         return false;
       }
     } catch {

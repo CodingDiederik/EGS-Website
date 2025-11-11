@@ -3,6 +3,47 @@ import './login.css';
 import { useState } from 'react';
 import { SpinnerCircular } from 'spinners-react';
 
+
+function checkFields(email: string, password: string) {
+  if (!email || !password) {
+    return 'Vul zowel email als wachtwoord in';
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return 'Ongeldig email formaat';
+  }
+
+  if (password.length < 8) {
+    return 'Wachtwoord moet minstens 8 tekens lang zijn';
+  }
+
+  if (password.length > 64) {
+    return 'Wachtwoord mag maximaal 64 tekens lang zijn';
+  }
+
+  return null;
+}
+
+function extractFail(data: { message: string[]; statusCode: number }): string {
+  console.info('Login mislukte:', data);
+  if (data.statusCode === 401) {
+    return 'Onjuiste email of wachtwoord';
+  }
+
+  if (Array.isArray(data.message)) {
+    for (const msg of data.message) {
+      // check if email is valid input format
+      if (msg.includes('email')) {
+        return 'Ongeldig email formaat';
+      } else if (msg.includes('password')) {
+        return 'Ongeldig wachtwoord formaat';
+      }
+    }
+  }
+
+  return 'Onjuiste email of wachtwoord';
+}
+
 function LoginButton({
   setError,
   setIsLoggedIn,
@@ -10,32 +51,19 @@ function LoginButton({
   password,
   isLoading,
   setIsLoading,
-}: {
+}: Readonly<{
   setError: (message: string) => void;
   setIsLoggedIn: (value: boolean) => void;
   email: string;
   password: string;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
-}) {
+}>) {
   async function handleLogin(email: string, password: string) {
-    if (!email || !password) {
-      setError('Vul zowel email als wachtwoord in');
-      return;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Ongeldig email formaat');
-      return;
-    }
-
-    if (password.length < 8) {
-      setError('Wachtwoord moet minstens 8 tekens lang zijn');
-      return;
-    }
-
-    if (password.length > 64) {
-      setError('Wachtwoord mag maximaal 64 tekens lang zijn');
+    const error = checkFields(email, password);
+    
+    if (error) {
+      setError(error);
       return;
     }
 
@@ -61,26 +89,7 @@ function LoginButton({
         console.info('Login successful:', data);
         setIsLoggedIn(true);
       } else {
-        console.info('Login mislukte:', data);
-        if (data.statusCode === 401) {
-          setError('Onjuiste email of wachtwoord');
-          return;
-        }
-
-        if (Array.isArray(data.message)) {
-          for (const msg of data.message) {
-            // check if email is valid input format
-            if (msg.includes('email')) {
-              setError('Ongeldig email formaat');
-              return;
-            } else if (msg.includes('password')) {
-              setError('Ongeldig wachtwoord formaat');
-              return;
-            }
-          }
-        }
-
-        setError('Onjuiste email of wachtwoord');
+        setError(extractFail(data));
         return;
       }
     } catch (error) {
@@ -103,10 +112,10 @@ function LoginButton({
 function EmailInput({
   email,
   setEmail,
-}: {
+}: Readonly<{
   email: string;
   setEmail: (value: string) => void;
-}) {
+}>) {
   return (
     <input
       type="email"
@@ -120,10 +129,10 @@ function EmailInput({
 function PasswordInput({
   password,
   setPassword,
-}: {
+}: Readonly<{
   password: string;
   setPassword: (value: string) => void;
-}) {
+}>) {
   return (
     <input
       type="password"
@@ -144,7 +153,7 @@ function LoginForm({
   setPassword,
   isLoading,
   setIsLoading,
-}: {
+}: Readonly<{
   error: string;
   setError: (message: string) => void;
   setIsLoggedIn: (value: boolean) => void;
@@ -154,7 +163,7 @@ function LoginForm({
   setPassword: (value: string) => void;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
-}) {
+}>) {
   return (
     <div className="loginContainer">
       <h2>Inloggen op de beheerpagina</h2>
@@ -218,7 +227,7 @@ export default function BeheerPage() {
     <>
       <main>{content}</main>
       {isLoading && (
-        <div
+        <output
           style={{
             position: 'fixed',
             top: 0,
@@ -231,7 +240,6 @@ export default function BeheerPage() {
             alignItems: 'center',
             zIndex: 9999,
           }}
-          role="status"
           aria-label="Loading"
         >
           <SpinnerCircular
@@ -240,7 +248,7 @@ export default function BeheerPage() {
             speed={100}
             color="var(--accent-primary)"
           />
-        </div>
+        </output>
       )}
     </>
   );

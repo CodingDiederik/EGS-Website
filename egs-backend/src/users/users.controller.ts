@@ -20,7 +20,7 @@ import { Roles } from '../common/decorators/roles.decorator';
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   /**
    * Gets all users. (Admin only)
