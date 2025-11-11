@@ -26,7 +26,9 @@
     "migration:generate": "node -r ts-node/register ./node_modules/typeorm/cli.js migration:generate Migration -d src/data-source.ts -p",
     "migration:run": "node -r ts-node/register ./node_modules/typeorm/cli.js migration:run -d src/data-source.ts",
     "migration:revert": "node -r ts-node/register ./node_modules/typeorm/cli.js migration:revert -d src/data-source.ts",
-    "copy:env": "cp .env.example .env"
+    "copy:env": "cp .env.example .env",
+    "sonar:scan": "pnpm test:cov && pnpm sonar:scannow",
+    "sonar:scannow": "dotenv sonar-scanner -Dsonar.projectKey=egs-backend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info -Dsonar.organization=local-org"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.8",
@@ -57,6 +59,7 @@
     "@nestjs/cli": "^11.0.10",
     "@nestjs/schematics": "^11.0.9",
     "@nestjs/testing": "^11.1.8",
+    "@sonar/scan": "^4.3.2",
     "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.10",
     "@types/express": "^5.0.5",
@@ -65,6 +68,7 @@
     "@types/passport-jwt": "^4.0.1",
     "@types/passport-local": "^1.0.38",
     "@types/supertest": "^6.0.3",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",

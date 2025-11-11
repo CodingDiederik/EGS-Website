@@ -7,6 +7,7 @@
 /egs-backend/node_modules
 /egs-backend/build
 /egs-backend/coverage
+/*/.scannerwork
 
 .vscode
 
