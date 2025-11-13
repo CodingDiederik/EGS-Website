@@ -1,5 +1,4 @@
 'use client';
-import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,8 +7,6 @@ interface HeaderProps {
 }
 
 const Header = ({ LoggedIn }: HeaderProps) => {
-  useEffect(() => {}, [LoggedIn]);
-
   return (
     <header>
       <nav aria-label="Main navigation">

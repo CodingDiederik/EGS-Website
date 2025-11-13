@@ -4,7 +4,7 @@ import './login.css';
 import { useState, useEffect } from 'react';
 import { SpinnerCircular } from 'spinners-react';
 import { LoginForm } from './loginpage';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 async function checkLoggedIn() {
   const response = await fetch(
@@ -21,6 +21,7 @@ async function checkLoggedIn() {
 }
 
 export default function BeheerPage() {
+  const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
@@ -28,19 +29,25 @@ export default function BeheerPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    let mounted = true;
     async function fetchLoginStatus() {
       if (await checkLoggedIn()) {
-        setIsLoggedIn(true);
+        if (mounted) {
+          setIsLoggedIn(true);
+        }
       }
     }
     fetchLoginStatus();
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   let content;
 
   if (isLoggedIn) {
     // redirect to dashboard
-    redirect('/beheer/dashboard');
+    router.push('/beheer/dashboard');
   } else {
     content = (
       <LoginForm

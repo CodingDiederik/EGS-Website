@@ -1,8 +1,9 @@
 'use client';
-import { redirect } from 'next/navigation';
-import './dashboard.css';
+
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { SpinnerCircular } from 'spinners-react';
+import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 function AdminUserPanel() {
   return <div>Welcome to the admin panel!</div>;
@@ -12,7 +13,7 @@ function UserPanel() {
   return <div>Welcome to the user panel!</div>;
 }
 
-async function fetchUserRole() {
+async function fetchUserRole(router: AppRouterInstance) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/me`,
     {
@@ -27,7 +28,7 @@ async function fetchUserRole() {
   if (!response.ok) {
     if (response.status === 403) {
       // Not logged in
-      redirect('/beheer');
+      router.push('/beheer');
     }
   }
 
@@ -38,10 +39,11 @@ async function fetchUserRole() {
 export default function AdminPanel() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     async function checkUserRole() {
-      const role = await fetchUserRole();
+      const role = await fetchUserRole(router);
       if (role === 'admin') {
         setIsAdmin(true);
       }
@@ -49,7 +51,7 @@ export default function AdminPanel() {
     }
 
     checkUserRole();
-  }, []);
+  }, [router]);
 
   if (isLoading) {
     return (

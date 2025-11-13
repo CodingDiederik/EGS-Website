@@ -22,19 +22,24 @@ export default function BeheerPage() {
   const isLoading = true; // Always show loading for logout page
 
   useEffect(() => {
+    let mounted = true;
     async function performLogout() {
       await logout();
-      // After logout, redirect to home or login page
-      redirect('/beheer');
+
+      if (mounted) {
+        // After logout, redirect to home or login page
+        redirect('/beheer');
+      }
     }
     performLogout();
+    return () => {
+      mounted = false;
+    };
   }, []);
-
-  let content;
 
   return (
     <>
-      <main>{content}</main>
+      <main></main>
       {isLoading && (
         <output
           style={{

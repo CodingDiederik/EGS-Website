@@ -28,7 +28,6 @@ export default function HeaderSwitcher() {
         } else {
           setIsLoggedIn(Boolean(res.ok));
         }
-
       } catch {
         if (!mounted) return;
         setIsLoggedIn(false);

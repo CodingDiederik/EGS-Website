@@ -3,7 +3,7 @@ function checkFields(email: string, password: string) {
     return 'Vul zowel email als wachtwoord in';
   }
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!email.includes('@') || !email.includes('.')) {
     return 'Ongeldig email formaat';
   }
 
