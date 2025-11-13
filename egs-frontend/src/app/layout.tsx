@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Merriweather, Merriweather_Sans } from 'next/font/google';
 import './globals.css';
-import HeaderSwitcher from './components/HeaderSwitcher';
+import HeaderSwitcher from '../components/Header/HeaderSwitcher';
 
 const merriweather = Merriweather({
   variable: '--font-merriweather',
