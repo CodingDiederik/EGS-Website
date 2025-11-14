@@ -94,14 +94,16 @@
 
 /* make the main/news area overlap softly */
 .main-content {
-  margin-top: -54px;              
+  margin-top: -54px;
   border-radius: 20px 20px 0 0;
   background: var(--bg-main, #fff);
   box-shadow: 0 -12px 30px rgba(7, 20, 40, 0.12);
   position: relative;
   z-index: 3;
-  padding: 56px 24px 72px;        /* add top padding so content isn't flush with curve */
-  transition: box-shadow 240ms ease, transform 240ms ease;
+  padding: 56px 24px 72px; /* add top padding so content isn't flush with curve */
+  transition:
+    box-shadow 240ms ease,
+    transform 240ms ease;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;

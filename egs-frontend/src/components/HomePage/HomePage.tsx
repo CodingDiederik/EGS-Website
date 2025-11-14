@@ -3,7 +3,6 @@ import './HomePage.css';
 import NewsSection from './News/NewsSection';
 
 const HomePage: React.FC = async () => {
-
   return (
     <div className="home-container">
       <div className="photo-overview">

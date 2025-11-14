@@ -1,96 +1,53 @@
-'use client';
-
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import LoginForm from './loginpage';
+import { AUTH_COOKIE_NAME } from '@/data/constants';
 import './login.css';
-import { useState, useEffect } from 'react';
-import { SpinnerCircular } from 'spinners-react';
-import { LoginForm } from './loginpage';
-import { useRouter } from 'next/navigation';
 
+/**
+ * This function now runs on the SERVER.
+ * It reads the cookie from the incoming request and forwards it to the backend.
+ */
 async function checkLoggedIn() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/me`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    },
-  );
-  return response.ok;
-}
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get(AUTH_COOKIE_NAME);
 
-export default function BeheerPage() {
-  const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [error, setError] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    let mounted = true;
-    async function fetchLoginStatus() {
-      if (await checkLoggedIn()) {
-        if (mounted) {
-          setIsLoggedIn(true);
-        }
-      }
-    }
-    fetchLoginStatus();
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  let content;
-
-  if (isLoggedIn) {
-    // redirect to dashboard
-    router.push('/beheer/dashboard');
-  } else {
-    content = (
-      <LoginForm
-        error={error}
-        setError={setError}
-        setIsLoggedIn={setIsLoggedIn}
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-      />
-    );
+  if (!sessionCookie) {
+    return false;
   }
 
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/me`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          // Forward the cookie to the backend
+          Cookie: `${sessionCookie.name}=${sessionCookie.value}`,
+        },
+      },
+    );
+    return response.ok;
+  } catch (error) {
+    console.error('Failed to connect to backend for auth check:', error);
+    return false;
+  }
+}
+
+export default async function BeheerPage() {
+  // 1. Check login status on the server
+  if (await checkLoggedIn()) {
+    // 2. Redirect on the server if already logged in
+    redirect('/beheer/dashboard');
+  }
+
+  // 3. If not logged in, render the Client Component
   return (
-    <>
-      <main>{content}</main>
-      {isLoading && (
-        <output
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(200, 200, 200, 0.5)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 9999,
-          }}
-          aria-label="Loading"
-        >
-          <SpinnerCircular
-            size={50}
-            thickness={100}
-            speed={100}
-            color="var(--accent-primary)"
-          />
-        </output>
-      )}
-    </>
+    <main>
+      <div className="LoginFormContainer">
+        <LoginForm />
+      </div>
+    </main>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Merriweather, Merriweather_Sans } from 'next/font/google';
 import './globals.css';
 import HeaderSwitcher from '../components/Header/HeaderSwitcher';
+import Footer from '@/components/Footer/Footer';
 
 const merriweather = Merriweather({
   variable: '--font-merriweather',
@@ -32,6 +33,7 @@ export default function RootLayout({
       >
         <HeaderSwitcher />
         {children}
+        <Footer />
       </body>
     </html>
   );

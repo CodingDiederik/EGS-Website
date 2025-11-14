@@ -1,20 +1,24 @@
+'use client'; // This component MUST be a client component
+
+import './login.css';
+import { useState } from 'react';
+import { SpinnerCircular } from 'spinners-react';
+import { useRouter } from 'next/navigation';
+
+// All helper functions (checkFields, extractFail) are moved here
 function checkFields(email: string, password: string) {
   if (!email || !password) {
     return 'Vul zowel email als wachtwoord in';
   }
-
   if (!email.includes('@') || !email.includes('.')) {
     return 'Ongeldig email formaat';
   }
-
   if (password.length < 8) {
     return 'Wachtwoord moet minstens 8 tekens lang zijn';
   }
-
   if (password.length > 64) {
     return 'Wachtwoord mag maximaal 64 tekens lang zijn';
   }
-
   return null;
 }
 
@@ -23,10 +27,8 @@ function extractFail(data: { message: string[]; statusCode: number }): string {
   if (data.statusCode === 401) {
     return 'Onjuiste email of wachtwoord';
   }
-
   if (Array.isArray(data.message)) {
     for (const msg of data.message) {
-      // check if email is valid input format
       if (msg.includes('email')) {
         return 'Ongeldig email formaat';
       } else if (msg.includes('password')) {
@@ -34,33 +36,31 @@ function extractFail(data: { message: string[]; statusCode: number }): string {
       }
     }
   }
-
   return 'Onjuiste email of wachtwoord';
 }
 
+// All sub-components (LoginButton, EmailInput, PasswordInput) are moved here
 function LoginButton({
   setError,
-  setIsLoggedIn,
   email,
   password,
   isLoading,
   setIsLoading,
+  onLoginSuccess,
 }: Readonly<{
   setError: (message: string) => void;
-  setIsLoggedIn: (value: boolean) => void;
   email: string;
   password: string;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
+  onLoginSuccess: () => void; // Callback for success
 }>) {
   async function handleLogin(email: string, password: string) {
     const error = checkFields(email, password);
-
     if (error) {
       setError(error);
       return;
     }
-
     setIsLoading(true);
 
     try {
@@ -81,10 +81,9 @@ function LoginButton({
 
       if (response.ok) {
         console.info('Login successful:', data);
-        setIsLoggedIn(true);
+        onLoginSuccess(); // Trigger the success callback
       } else {
         setError(extractFail(data));
-        return;
       }
     } catch (error) {
       console.error('Error connecting to the backend:', error);
@@ -137,51 +136,76 @@ function PasswordInput({
   );
 }
 
-export function LoginForm({
-  error,
-  setError,
-  setIsLoggedIn,
-  email,
-  setEmail,
-  password,
-  setPassword,
-  isLoading,
-  setIsLoading,
-}: Readonly<{
-  error: string;
-  setError: (message: string) => void;
-  setIsLoggedIn: (value: boolean) => void;
-  email: string;
-  setEmail: (value: string) => void;
-  password: string;
-  setPassword: (value: string) => void;
-  isLoading: boolean;
-  setIsLoading: (value: boolean) => void;
-}>) {
+/**
+ * This is the main Client Component, which now manages all its own state.
+ */
+export function LoginForm() {
+  const router = useRouter();
+  const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  // This function will be called by LoginButton on success
+  const handleLoginSuccess = () => {
+    // Redirect the user to the dashboard
+    router.push('/beheer/dashboard');
+  };
+
   return (
-    <div className="loginContainer">
-      <h2>Inloggen op de beheerpagina</h2>
-      <p className="merriweather" aria-label="email">
-        Email:
-      </p>
-      <EmailInput email={email} setEmail={setEmail} />
-      <p className="merriweather" aria-label="password">
-        Wachtwoord:
-      </p>
-      <PasswordInput password={password} setPassword={setPassword} />
-      {error && (
-        <div className="errorMessage" role="alert">
-          {error}
-        </div>
+    <>
+      <div className="loginContainer">
+        <h2>Inloggen op de beheerpagina</h2>
+        <p className="merriweather" aria-label="email">
+          Email:
+        </p>
+        <EmailInput email={email} setEmail={setEmail} />
+        <p className="merriweather" aria-label="password">
+          Wachtwoord:
+        </p>
+        <PasswordInput password={password} setPassword={setPassword} />
+        {error && (
+          <div className="errorMessage" role="alert">
+            {error}
+          </div>
+        )}
+        <LoginButton
+          setError={setError}
+          onLoginSuccess={handleLoginSuccess} // Pass the success handler
+          email={email}
+          password={password}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
+      </div>
+
+      {/* The loading spinner logic is also moved here */}
+      {isLoading && (
+        <output
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(200, 200, 200, 0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 9999,
+          }}
+          aria-label="Loading"
+        >
+          <SpinnerCircular
+            size={50}
+            thickness={100}
+            speed={100}
+            color="var(--accent-primary)"
+          />
+        </output>
       )}
-      <LoginButton
-        setError={setError}
-        setIsLoggedIn={setIsLoggedIn}
-        email={email}
-        password={password}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-      />
-    </div>
+    </>
   );
 }
+
+export default LoginForm;

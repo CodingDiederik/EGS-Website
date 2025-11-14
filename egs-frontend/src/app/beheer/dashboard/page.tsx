@@ -81,8 +81,16 @@ export default function AdminPanel() {
   }
 
   if (isAdmin) {
-    return <AdminUserPanel />;
+    return (
+      <main>
+        <AdminUserPanel />
+      </main>
+    );
   } else {
-    return <UserPanel />;
+    return (
+      <main>
+        <UserPanel />
+      </main>
+    );
   }
 }

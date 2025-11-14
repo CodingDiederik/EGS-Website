@@ -63,33 +63,33 @@ const NewsSection: React.FC = async () => {
   const newsItems = await fetchNewsData();
 
   return (
-        <section id="news" className="content-section">
-          <h2>Recent nieuws</h2>
-          <div className="news-grid">
-            {newsItems.map((item) => (
-              <article key={item.id} className="news-card">
-                <span className="news-date">
-                  {convertDate(item.publicationDate)}
-                </span>
-                <h3>{item.title}</h3>
-                <span className="news-separator">
-                  <span className="news-author">{item.publicAuthor}</span>
-                </span>
-                <p>{convertContent(item.content)}</p>
-                <a
-                  href={
-                    process.env.NEXT_PUBLIC_FRONTEND_URL +
-                    '/articles/' +
-                    item.id.toString()
-                  }
-                  className="read-more"
-                >
-                  Lees verder &rarr;
-                </a>
-              </article>
-            ))}
-          </div>
-        </section>
+    <section id="news" className="content-section">
+      <h2>Recent nieuws</h2>
+      <div className="news-grid">
+        {newsItems.map((item) => (
+          <article key={item.id} className="news-card">
+            <span className="news-date">
+              {convertDate(item.publicationDate)}
+            </span>
+            <h3>{item.title}</h3>
+            <span className="news-separator">
+              <span className="news-author">{item.publicAuthor}</span>
+            </span>
+            <p>{convertContent(item.content)}</p>
+            <a
+              href={
+                process.env.NEXT_PUBLIC_FRONTEND_URL +
+                '/articles/' +
+                item.id.toString()
+              }
+              className="read-more"
+            >
+              Lees verder &rarr;
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 };
 

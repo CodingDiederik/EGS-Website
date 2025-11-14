@@ -99,9 +99,9 @@ const HeroGallery: React.FC = () => {
             <h1>Welkom bij schaakclub EGS</h1>
             <p className={styles.subtitle}>
               De gezelligste schaakclub van Goirle! <br />
-              Wij zijn een actieve vereniging met leden van jong tot oud en van beginner tot gevorderde.
-              Naast de wekelijkse competitie organiseren we tal van leuke activiteiten. <br />
-
+              Wij zijn een actieve vereniging met leden van jong tot oud en van
+              beginner tot gevorderde. Naast de wekelijkse competitie
+              organiseren we tal van leuke activiteiten. <br />
               Kom je snel een keer de sfeer proeven?
             </p>
           </div>

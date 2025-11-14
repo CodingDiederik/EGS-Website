@@ -39,13 +39,15 @@
 
 /* subtle gradient overlay above background tracks to improve contrast */
 .heroGallery::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg,
-    rgba(0,0,0,0.18) 0%,
-    rgba(0,0,0,0.04) 55%,
-    rgba(0,0,0,0.00) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.04) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
   pointer-events: none;
   z-index: 1;
 }
@@ -84,16 +86,24 @@
 
 .imageTrack::before,
 .imageTrack::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 8px;
   right: 8px;
   height: 1px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
   pointer-events: none;
 }
-.imageTrack::before { top: 0; }
-.imageTrack::after { bottom: 0; }
+.imageTrack::before {
+  top: 0;
+}
+.imageTrack::after {
+  bottom: 0;
+}
 
 .scrollLeftToRight {
   animation-name: scrollLtr;
@@ -113,7 +123,9 @@
   /* remove rounded corners per request */
   border-radius: 0;
   box-shadow: 0 8px 20px rgba(8, 30, 60, 0.35);
-  transition: transform 300ms ease, box-shadow 300ms ease;
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease;
   transform-origin: center;
   overflow: hidden;
 }
@@ -148,7 +160,7 @@
   text-align: left;
   background-color: rgba(13, 71, 161, 0.65);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 12px 30px rgba(7, 20, 40, 0.45);
   /* keep gap from the right edge */
   margin-right: 64px;
@@ -163,7 +175,7 @@
   overflow: hidden;
   background-size: cover;
   background-position: center;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
   border: none;
   transition: transform 220ms ease;
 }
@@ -203,13 +215,13 @@
   font-size: clamp(1.6rem, 2.8vw, 2.6rem);
   font-weight: 700;
   line-height: 1.05;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 /* supporting text */
 .textBox p {
   margin: 0;
-  color: rgba(255,255,255,0.92);
+  color: rgba(255, 255, 255, 0.92);
   font-size: clamp(0.95rem, 1.6vw, 1.05rem);
   line-height: 1.4;
 }
