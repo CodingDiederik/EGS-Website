@@ -11,10 +11,10 @@
 }
 
 /* If your form itself had fixed positioning, change it too */
-.login-form, .LoginForm {
+.login-form,
+.LoginForm {
   position: relative; /* remove any `position: fixed` or `position: sticky` */
 }
-
 
 .loginContainer {
   width: 400px;
