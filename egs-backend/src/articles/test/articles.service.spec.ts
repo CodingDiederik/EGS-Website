@@ -79,6 +79,32 @@ describe('ArticlesService', () => {
     });
   });
 
+  describe('findRecent', () => {
+    it('should return an array of the 6 most recent published articles', async () => {
+      const articles = [
+        {
+          id: 1,
+          title: 'Recent Article 1',
+          content: 'This is a recent article.',
+          publicAuthor: 'Author Name',
+          publicationDate: new Date('2024-01-01T00:00:00Z'),
+        },
+        {
+          id: 2,
+          title: 'Recent Article 2',
+          content: 'This is another recent article.',
+          publicAuthor: 'Author Name',
+          publicationDate: new Date('2024-01-01T00:00:00Z'),
+        },
+      ];
+
+      mockArticlesRepository.find.mockResolvedValue(articles);
+
+      const result = await service.findRecent();
+      expect(result).toEqual(articles);
+    });
+  });
+
   describe('findAllUnpublished', () => {
     it('should return an array of articles which are unpublished', async () => {
       const articles = [
