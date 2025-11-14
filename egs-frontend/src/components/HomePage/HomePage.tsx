@@ -43,14 +43,14 @@ function convertDate(dateString: Date): string {
  */
 async function fetchNewsData(): Promise<NewsItem[]> {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/articles`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/articles/recent`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      next: { revalidate: 300 }, // Revalidate every 300 seconds
+      next: { revalidate: 60 }, // Revalidate every 60 seconds
     },
   );
   if (!response.ok) {
