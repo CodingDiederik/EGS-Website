@@ -84,6 +84,15 @@ describe('Articles E2E Test', () => {
     expect(response.body.id).toBe(articleId);
   });
 
+  it('/articles/recent (GET)', async () => {
+    const response = await request(app.getHttpServer()).get('/articles/recent');
+
+    expect(response.status).toBe(200);
+    expect(Array.isArray(response.body)).toBe(true);
+    expect(response.body.length).toBeGreaterThan(0);
+    expect(response.body.length).toBeLessThanOrEqual(6);
+  });
+
   it('/articles/:articleId (GET) - not found', async () => {
     const response = await request(app.getHttpServer()).get('/articles/999');
 
