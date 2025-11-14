@@ -2,7 +2,10 @@ import type { NextConfig } from 'next';
 import path from 'node:path';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  reactStrictMode: true,
+  images: {
+    remotePatterns: [{ protocol: 'https', hostname: 'images.pexels.com' }],
+  },
   reactCompiler: true,
   turbopack: {
     root: path.join(__dirname, '..'),
