@@ -22,12 +22,12 @@
 
 .heroGallery {
   position: relative;
-  height: 80vh;
+  height: 85vh;
   width: 100%;
   overflow: hidden;
   /* give extra bottom room so blurred tracks and shadows aren't clipped */
   padding-bottom: 72px;
-  background: var(--background-primary, #0d47a1);
+  background: var(--background-primary);
   color: var(--text-primary, #fff);
   display: flex;
   align-items: center;
@@ -42,7 +42,10 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.28));
+  background: linear-gradient(180deg,
+    rgba(0,0,0,0.18) 0%,
+    rgba(0,0,0,0.04) 55%,
+    rgba(0,0,0,0.00) 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -74,10 +77,8 @@
   animation-duration: 80s;
   gap: 12px;
   position: relative;
-  /* darker background for the gaps between images */
-  background: rgba(28, 28, 30, 0.72);
+  background: var(--background-primary);
   padding: 10px 12px;
-  /* slight rounded track to separate from background */
   border-radius: 6px;
 }
 

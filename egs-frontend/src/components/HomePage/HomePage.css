@@ -3,12 +3,6 @@
   width: 100%;
 }
 
-.main-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-}
-
 /* Content Section */
 .content-section {
   margin-bottom: 3rem;
@@ -90,6 +84,36 @@
 
 .news-card .news-author {
   text-align: right;
+}
+
+/* ensure the hero/gallery area doesn't get hidden under the overlapping card */
+.photo-overview {
+  position: relative;
+  z-index: 1;
+}
+
+/* make the main/news area overlap softly */
+.main-content {
+  margin-top: -54px;              
+  border-radius: 20px 20px 0 0;
+  background: var(--bg-main, #fff);
+  box-shadow: 0 -12px 30px rgba(7, 20, 40, 0.12);
+  position: relative;
+  z-index: 3;
+  padding: 56px 24px 72px;        /* add top padding so content isn't flush with curve */
+  transition: box-shadow 240ms ease, transform 240ms ease;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* small responsive tweak */
+@media (max-width: 880px) {
+  .main-content {
+    margin-top: -40px;
+    border-radius: 12px 12px 0 0;
+    padding-top: 36px;
+  }
 }
 
 @media (max-width: 850px) {
