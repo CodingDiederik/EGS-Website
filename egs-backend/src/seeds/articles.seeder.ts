@@ -5,15 +5,13 @@ export default class ArticleSeeder {
   public async run(dataSource: DataSource): Promise<any> {
     const repository = dataSource.getRepository(Article);
 
-    const content = `Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.`;
+    const content = `Lorem ipsum dolor sit amet consectetur adipiscing elit. 
+    Quisque faucibus ex sapien vitae pellentesque sem placerat. 
+    In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. 
+    Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. 
+    Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.`.repeat(
+      5,
+    );
 
     const seeds = [
       {
@@ -32,31 +30,31 @@ export default class ArticleSeeder {
         title: 'Article 3',
         content: content,
         publicAuthor: 'Toernooicommissie',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // 1 week ago
+        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 8), // 8 days ago
       },
       {
         title: 'Article 4',
         content: content,
         publicAuthor: 'Toernooicommissie',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // 1 week ago
+        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 9), // 9 days ago
       },
       {
         title: 'Article 5',
         content: content,
         publicAuthor: 'Toernooicommissie',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // 1 week ago
+        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10), // 10 days ago
       },
       {
         title: 'Article 6',
         content: content,
         publicAuthor: 'Toernooicommissie',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // 1 week ago
+        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 11 * 7), // 11 weeks ago
       },
       {
         title: 'Article 7',
         content: content,
         publicAuthor: 'Toernooicommissie',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // 1 week ago
+        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 12 * 7), // 12 weeks ago
       },
       {
         title: 'Article 8',

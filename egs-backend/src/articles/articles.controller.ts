@@ -28,7 +28,9 @@ export class ArticlesController {
    * @returns The created article
    */
   @Post()
-  async create(@Body() createArticleDto: CreateArticleRequest): Promise<Article> {
+  async create(
+    @Body() createArticleDto: CreateArticleRequest,
+  ): Promise<Article> {
     return await this.articlesService.create(createArticleDto);
   }
 
@@ -82,7 +84,9 @@ export class ArticlesController {
    */
   @Get(':articleId')
   @Public()
-  async findOne(@Param('articleId', ParseIntPipe) articleId: number): Promise<Article> {
+  async findOne(
+    @Param('articleId', ParseIntPipe) articleId: number,
+  ): Promise<Article> {
     const article = await this.articlesService.findOne(articleId);
     if (!article) {
       throw new NotFoundException('Article not found');
@@ -111,7 +115,9 @@ export class ArticlesController {
    * @returns nothing
    */
   @Delete(':articleId')
-  async remove(@Param('articleId', ParseIntPipe) articleId: number): Promise<void> {
+  async remove(
+    @Param('articleId', ParseIntPipe) articleId: number,
+  ): Promise<void> {
     return await this.articlesService.remove(articleId);
   }
 }
