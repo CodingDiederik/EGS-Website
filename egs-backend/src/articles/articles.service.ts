@@ -36,6 +36,22 @@ export class ArticlesService {
   }
 
   /**
+   * Gets the 6 most recent published articles.
+   * @returns an array of recent published articles
+   */
+  async findRecent(): Promise<Article[]> {
+    return await this.articleRepository.find({
+      where: {
+        publicationDate: LessThanOrEqual(new Date()),
+      },
+      order: {
+        publicationDate: 'DESC',
+      },
+      take: 6,
+    });
+  }
+
+  /**
    * Finds all unpublished articles.
    * @returns an array of unpublished articles
    */

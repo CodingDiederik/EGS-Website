@@ -9,6 +9,7 @@ describe('ArticlesController', () => {
     findAll: jest.fn(),
     findAllUnpublished: jest.fn(),
     findOneUnpublished: jest.fn(),
+    findRecent: jest.fn(),
     findOne: jest.fn(),
     update: jest.fn(),
     remove: jest.fn(),
@@ -55,6 +56,25 @@ describe('ArticlesController', () => {
         .mockImplementation(async () => result);
 
       expect(await controller.findAll()).toBe(result);
+    });
+  });
+
+  describe('/recent (GET)', () => {
+    it('should return an array of recent published articles', async () => {
+      const result = [
+        {
+          id: 3,
+          title: 'Recent Article',
+          content: 'This is a recent published article.',
+          publicAuthor: 'Alice Smith',
+        },
+      ];
+
+      jest
+        .spyOn(mockArticlesService, 'findRecent')
+        .mockImplementation(async () => result);
+
+      expect(await controller.findRecent()).toBe(result);
     });
   });
 

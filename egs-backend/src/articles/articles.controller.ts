@@ -42,6 +42,16 @@ export class ArticlesController {
   }
 
   /**
+   * Gets the 6 most recent published articles. (Public)
+   * @returns
+   */
+  @Get('/recent')
+  @Public()
+  async findRecent() {
+    return await this.articlesService.findRecent();
+  }
+
+  /**
    * Gets all unpublished articles.
    * @returns
    */
