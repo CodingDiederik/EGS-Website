@@ -26,37 +26,37 @@ export default class ArticleSeeder {
         title: 'Article 2',
         content: content,
         publicAuthor: 'Toernooicommissie',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30), // 1 week ago
+        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // 1 week ago
       },
       {
         title: 'Article 3',
         content: content,
         publicAuthor: 'Toernooicommissie',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30), // 1 week ago
+        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // 1 week ago
       },
       {
         title: 'Article 4',
         content: content,
         publicAuthor: 'Toernooicommissie',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30), // 1 week ago
+        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // 1 week ago
       },
       {
         title: 'Article 5',
         content: content,
         publicAuthor: 'Toernooicommissie',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30), // 1 week ago
+        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // 1 week ago
       },
       {
         title: 'Article 6',
         content: content,
         publicAuthor: 'Toernooicommissie',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30), // 1 week ago
+        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // 1 week ago
       },
       {
         title: 'Article 7',
         content: content,
         publicAuthor: 'Toernooicommissie',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30), // 1 week ago
+        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // 1 week ago
       },
       {
         title: 'Article 8',
