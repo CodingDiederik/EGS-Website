@@ -60,7 +60,7 @@ async function fetchNewsData(): Promise<NewsItem[]> {
     console.error('Error fetching news data:', error);
     return [];
   }
-  
+
   return response.json();
 }
 
