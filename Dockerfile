@@ -28,21 +28,22 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Create a non-root user (Best Practice)
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
-# Copy the standalone folder
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+# --- THE FIX IS HERE ---
+# We added "/app" to the end of the source path to copy the contents 
+# from inside the nested folder directly to your WORKDIR.
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone/app ./
+
+# The static files copy remains the same
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
 EXPOSE 3000
 
-# --- DEBUGGING FIX ---
-# Instead of assuming server.js is at root, we find it.
-# Once you see the logs, you can switch back to CMD ["node", "path/to/server.js"]
-CMD ["sh", "-c", "echo 'Current directory contents:' && ls -R && node server.js"]
+# Revert the CMD to the standard one
+CMD ["node", "server.js"]
