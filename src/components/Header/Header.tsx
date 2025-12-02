@@ -2,11 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface HeaderProps {
-  LoggedIn?: boolean;
-}
-
-const Header = ({ LoggedIn }: HeaderProps) => {
+const Header = () => {
   return (
     <header>
       <nav aria-label="Main navigation">
@@ -35,19 +31,6 @@ const Header = ({ LoggedIn }: HeaderProps) => {
           <li>
             <Link href="/archief">Archief</Link>
           </li>
-
-          {LoggedIn === true ? (
-            <li className="admin-links">
-              <ul>
-                <li>
-                  <Link href="/beheer/dashboard">Beheer</Link>
-                </li>
-                <li>
-                  <Link href="/beheer/logout">Uitloggen</Link>
-                </li>
-              </ul>
-            </li>
-          ) : null}
         </ul>
       </nav>
     </header>

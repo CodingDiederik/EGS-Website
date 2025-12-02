@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Merriweather, Merriweather_Sans } from 'next/font/google';
 import './globals.css';
-import HeaderSwitcher from '../components/Header/HeaderSwitcher';
 import Footer from '@/components/Footer/Footer';
+import Header from '@/components/Header/Header';
 
 const merriweather = Merriweather({
   variable: '--font-merriweather',
@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${merriweather.variable} ${merriweatherSans.variable} antialiased`}
       >
-        <HeaderSwitcher />
+        <Header />
         {children}
         <Footer />
       </body>
