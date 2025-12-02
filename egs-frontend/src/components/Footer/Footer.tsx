@@ -6,7 +6,7 @@ import styles from './Footer.module.css';
 const navLinks = [
   { href: '/agenda', label: 'Agenda' },
   { href: '/jeugd', label: 'Jeugd' },
-  { href: '/over-ons', label: 'Over' },
+  { href: '/over', label: 'Over' },
   { href: '/contact', label: 'Contact' },
   { href: '/archief', label: 'Archief' },
   { href: '/beheer', label: 'Beheer' },
@@ -36,7 +36,7 @@ const Footer = () => {
         <div className={styles.contactSection}>
           <h3 className={styles.footerHeading}>Contact</h3>
           <address className={styles.address}>
-            <p>Wijkcentrum `De Wildacker`</p>
+            <p>Wijkcentrum &apos;De Wildacker&apos;</p>
             <p>van Hogendorpplein 73</p>
             <p>5051 ST Goirle</p>
             <a href="mailto:egs@schaakclubegs.nl" className={styles.link}>

@@ -15,7 +15,7 @@ export default class ArticleSeeder {
 
     const seeds = [
       {
-        title: 'Een redelijk lange titel met speciale tekens !@ article 1',
+        title: 'Een redelijk lange titel met speciale tekens!@ article',
         content: content,
         publicAuthor: 'Secretaris Jeugd',
         publicationDate: new Date(Date.now() - 1000), // 1 second ago

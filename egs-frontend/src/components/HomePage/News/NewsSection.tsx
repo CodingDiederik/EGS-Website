@@ -18,9 +18,6 @@ function convertContent(content: string): string {
   if (content.length <= MAXLENGTH) {
     return content;
   }
-  if (content.charAt(MAXLENGTH) === ' ') {
-    return content.slice(0, MAXLENGTH) + '...';
-  }
   return content.slice(0, MAXLENGTH) + '...';
 }
 
@@ -78,9 +75,7 @@ const NewsSection: React.FC = async () => {
             <p>{convertContent(item.content)}</p>
             <a
               href={
-                process.env.NEXT_PUBLIC_FRONTEND_URL +
-                '/articles/' +
-                item.id.toString()
+                `/articles/${item.id}`
               }
               className="read-more"
             >
