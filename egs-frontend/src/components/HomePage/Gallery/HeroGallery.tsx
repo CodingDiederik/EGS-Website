@@ -43,9 +43,9 @@ const HeroGallery: React.FC = () => {
         <div
           className={`${styles.imageTrack} ${styles.scrollRightToLeft} ${styles.track1}`}
         >
-          {allTrack1Images.map((src, index) => (
+          {allTrack1Images.map((src) => (
             <div
-              key={`track1-${index}`}
+              key={`track1-${src}`}
               className={styles.imageWrapper}
               style={{ backgroundImage: `url(${src})` }}
               aria-hidden="true"
@@ -57,9 +57,9 @@ const HeroGallery: React.FC = () => {
         <div
           className={`${styles.imageTrack} ${styles.scrollLeftToRight} ${styles.track2}`}
         >
-          {allTrack2Images.map((src, index) => (
+          {allTrack2Images.map((src) => (
             <div
-              key={`track2-${index}`}
+              key={`track2-${src}`}
               className={styles.imageWrapper}
               style={{ backgroundImage: `url(${src})` }}
               aria-hidden="true"
@@ -71,9 +71,9 @@ const HeroGallery: React.FC = () => {
         <div
           className={`${styles.imageTrack} ${styles.scrollRightToLeft} ${styles.track3}`}
         >
-          {allTrack3Images.map((src, index) => (
+          {allTrack3Images.map((src) => (
             <div
-              key={`track3-${index}`}
+              key={`track3-${src}`}
               className={styles.imageWrapper}
               style={{ backgroundImage: `url(${src})` }}
               aria-hidden="true"
