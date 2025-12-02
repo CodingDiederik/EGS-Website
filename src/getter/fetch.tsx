@@ -7,9 +7,11 @@ export async function fetchAPI(query: string) {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
   if (!process.env.WP_USERNAME || !process.env.WP_PASSWORD) {
-  throw new Error('Missing WordPress credentials: WP_USERNAME and WP_PASSWORD must be set');
+    throw new Error(
+      'Missing WordPress credentials: WP_USERNAME and WP_PASSWORD must be set',
+    );
   }
-  
+
   if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
     throw new Error('Missing NEXT_PUBLIC_BACKEND_URL environment variable');
   }

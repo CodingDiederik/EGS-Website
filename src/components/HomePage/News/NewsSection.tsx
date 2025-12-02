@@ -84,7 +84,9 @@ const NewsSection: React.FC = async () => {
             <span className="news-date">{convertDate(item.date)}</span>
             <h3>{item.title}</h3>
             <span className="news-separator">
-              <span className="news-author">{item.author?.node?.lastName ?? ' '}</span>
+              <span className="news-author">
+                {item.author?.node?.lastName ?? ' '}
+              </span>
             </span>
             <p>{convertContent(item.excerpt)}</p>
             <a href={`/articles/${item.id}`} className="read-more">
