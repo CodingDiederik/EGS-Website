@@ -1,11 +1,16 @@
 import './NewsSection.css';
+import { fetchAPI } from '@/getter/fetch';
 
 interface NewsItem {
   id: number;
   title: string;
-  content: string;
-  publicationDate: Date;
-  publicAuthor: string;
+  excerpt: string;
+  date: Date;
+  author: {
+    node: {
+      lastName: string;
+    };
+  } | null;
 }
 
 /**
@@ -15,6 +20,8 @@ interface NewsItem {
  */
 function convertContent(content: string): string {
   const MAXLENGTH = 200; // Maximum length of the preview
+  // The string contains <p> and </p> tags from Wordpress, so we need to remove them
+  content = content.replaceAll(/<[^>]*>/g, '').trim();
   if (content.length <= MAXLENGTH) {
     return content;
   }
@@ -39,29 +46,30 @@ function convertDate(dateString: Date): string {
  * @returns the news data as an array of NewsItem objects
  */
 async function fetchNewsData(): Promise<NewsItem[]> {
-  let response;
   try {
-    response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/articles/recent`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        next: { revalidate: 60 }, // Revalidate every 60 seconds
-      },
-    );
+    const query = `
+      query {
+        posts(first: 6) {
+          nodes {
+            id
+            title
+            excerpt
+            date
+            author {
+              node {
+                lastName
+              }
+            }
+          }
+        }
+      }
+    `;
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch news data');
-    }
-  } catch (error) {
-    console.error('Error fetching news data:', error);
+    const data = await fetchAPI(query);
+    return data.posts.nodes;
+  } catch {
     return [];
   }
-
-  return response.json();
 }
 
 const NewsSection: React.FC = async () => {
@@ -73,14 +81,14 @@ const NewsSection: React.FC = async () => {
       <div className="news-grid">
         {newsItems.map((item) => (
           <article key={item.id} className="news-card">
-            <span className="news-date">
-              {convertDate(item.publicationDate)}
-            </span>
+            <span className="news-date">{convertDate(item.date)}</span>
             <h3>{item.title}</h3>
             <span className="news-separator">
-              <span className="news-author">{item.publicAuthor}</span>
+              <span className="news-author">
+                {item.author?.node?.lastName ?? ' '}
+              </span>
             </span>
-            <p>{convertContent(item.content)}</p>
+            <p>{convertContent(item.excerpt)}</p>
             <a href={`/articles/${item.id}`} className="read-more">
               Lees verder &rarr;
             </a>

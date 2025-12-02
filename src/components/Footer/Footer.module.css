@@ -5,7 +5,6 @@
   font-family: var(--font-secondary);
   color: var(--text-dark);
   padding: var(--spacing-large) var(--spacing-medium) 0;
-  margin-top: var(--spacing-large);
   border-top: 2px solid var(--accent-primary);
   box-shadow: var(--shadow);
 }
@@ -70,12 +69,16 @@
 
 /* Copyright balk */
 .copyrightBar {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
   text-align: center;
-  padding: var(--spacing-medium);
+  padding: var(--spacing-medium) 0;
   margin-top: var(--spacing-large);
-  /* Gebruik de donkerste accentkleur voor de achtergrond van de balk */
   background-color: var(--background-accent);
-  /* Witte tekst op de donkere balk */
   color: var(--text-accent);
   opacity: 0.9;
 }
