@@ -39,20 +39,28 @@ function convertDate(dateString: Date): string {
  * @returns the news data as an array of NewsItem objects
  */
 async function fetchNewsData(): Promise<NewsItem[]> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/articles/recent`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
+  let response;
+  try {
+    response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/articles/recent`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        next: { revalidate: 60 }, // Revalidate every 60 seconds
       },
-      credentials: 'include',
-      next: { revalidate: 60 }, // Revalidate every 60 seconds
-    },
-  );
-  if (!response.ok) {
-    throw new Error('Failed to fetch news data');
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch news data');
+    }
+  } catch (error) {
+    console.error('Error fetching news data:', error);
+    return [];
   }
+  
   return response.json();
 }
 

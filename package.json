@@ -1,33 +1,38 @@
 {
-  "name": "website",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "egs-frontend",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "pnpm --filter egs-backend test",
-    "test:e2e": "pnpm --filter egs-backend test:e2e",
-    "test:cov": "pnpm --filter egs-backend test:cov",
-    "dev:be": "pnpm --filter egs-backend dev",
-    "dev:fe": "pnpm --filter egs-frontend dev",
-    "dev": "concurrently \"pnpm dev:be\" \"pnpm dev:fe\"",
-    "format": "pnpm -r format",
-    "format:check": "pnpm -r format:check",
-    "lint": "pnpm -r lint",
-    "lint:check": "pnpm -r lint:check",
-    "sonar:scan": "pnpm test:cov && pnpm sonar:scannow",
-    "sonar:scannow": "dotenv sonar-scanner -Dsonar.projectKey=EGS -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=local-org"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.{ts,tsx}\" --fix",
+    "lint:check": "eslint \"{src,apps,libs,test}/**/*.{ts,tsx}\"",
+    "format": "prettier --write \"**/*.{js,ts,tsx,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{js,ts,tsx,json,css,md}\"",
+    "copy:env": "cp .env.example .env",
+    "sonar:scan": "dotenv sonar-scanner -Dsonar.projectKey=egs-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=local-org"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.19.0",
   "dependencies": {
-    "@nestjs/cli": "^11.0.10",
-    "concurrently": "^9.2.1"
+    "next": "16.0.1",
+    "prettier": "^3.6.2",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-placeholder": "^4.1.0",
+    "spinners-react": "^1.0.11",
+    "yet-another-react-lightbox": "^3.25.0"
   },
-  "type": "module",
   "devDependencies": {
     "@sonar/scan": "^4.3.2",
-    "dotenv-cli": "^11.0.0"
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "babel-plugin-react-compiler": "1.0.0",
+    "dotenv-cli": "^11.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
