@@ -73,12 +73,7 @@ const NewsSection: React.FC = async () => {
               <span className="news-author">{item.publicAuthor}</span>
             </span>
             <p>{convertContent(item.content)}</p>
-            <a
-              href={
-                `/articles/${item.id}`
-              }
-              className="read-more"
-            >
+            <a href={`/articles/${item.id}`} className="read-more">
               Lees verder &rarr;
             </a>
           </article>
