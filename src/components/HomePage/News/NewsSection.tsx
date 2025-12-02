@@ -4,13 +4,13 @@ import { fetchAPI } from '@/getter/fetch';
 interface NewsItem {
   id: number;
   title: string;
-  content: string;
+  excerpt: string;
   date: Date;
   author: {
     node: {
       lastName: string;
     };
-  };
+  } | null;
 }
 
 /**
@@ -21,7 +21,7 @@ interface NewsItem {
 function convertContent(content: string): string {
   const MAXLENGTH = 200; // Maximum length of the preview
   // The string contains <p> and </p> tags from Wordpress, so we need to remove them
-  content = content.replace(/<\/?p>/g, '').trim();
+  content = content.replaceAll(/<[^>]*>/g, '').trim();
   if (content.length <= MAXLENGTH) {
     return content;
   }
@@ -53,7 +53,7 @@ async function fetchNewsData(): Promise<NewsItem[]> {
           nodes {
             id
             title
-            content
+            excerpt
             date
             author {
               node {
@@ -84,9 +84,9 @@ const NewsSection: React.FC = async () => {
             <span className="news-date">{convertDate(item.date)}</span>
             <h3>{item.title}</h3>
             <span className="news-separator">
-              <span className="news-author">{item.author.node.lastName}</span>
+              <span className="news-author">{item.author?.node?.lastName ?? ' '}</span>
             </span>
-            <p>{convertContent(item.content)}</p>
+            <p>{convertContent(item.excerpt)}</p>
             <a href={`/articles/${item.id}`} className="read-more">
               Lees verder &rarr;
             </a>
