@@ -4,6 +4,7 @@ import './globals.css';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const merriweather = Merriweather({
   variable: '--font-merriweather',
@@ -35,6 +36,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Analytics />
+        <SpeedInsights />
         <Footer />
       </body>
     </html>
