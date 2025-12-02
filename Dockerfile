@@ -1,21 +1,21 @@
 # 1. Base image
 FROM node:24-alpine AS base
 
-# 2. Dependencies
+# Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# 2. Dependencies
 FROM base AS deps
 WORKDIR /app
 
+# Copy package.json and pnpm-lock.yaml
 COPY package.json pnpm-lock.yaml ./
 
-RUN pnpm install --prod --frozen-lockfile
+# Install dependencies using pnpm
+RUN pnpm install --frozen-lockfile
 
-FROM base AS build
-WORKDIR /app
-RUN pnpm run build
-
-# 4. Production Image
-FROM base AS runner
+# 3. Builder
+FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -29,8 +29,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
