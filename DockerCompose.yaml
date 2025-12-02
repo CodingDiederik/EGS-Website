@@ -1,0 +1,6 @@
+services:
+  egssite:
+    image: ghcr.io/CodingDiederik/EGS-Website:latest
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
