@@ -1,0 +1,129 @@
+/* General Layout */
+.home-container {
+  width: 100%;
+}
+
+/* Content Section */
+.content-section {
+  margin-bottom: 3rem;
+}
+
+.content-section h2 {
+  font-size: 2.25rem;
+  text-align: left;
+  margin-bottom: 0.75rem;
+  color: var(--dark-text);
+}
+
+/* News Grid */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* News Card */
+.news-card {
+  position: relative;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-hover-shadow);
+}
+
+.news-card p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4; /* Limit to 4 lines */
+  line-clamp: 4;
+  color: var(--text-dark);
+  margin-bottom: auto;
+}
+
+.news-card .read-more {
+  display: inline-block;
+  margin-top: 1rem;
+  text-decoration: none;
+  color: var(--primary-color);
+  font-weight: bold;
+  align-self: flex-start;
+}
+
+.news-card .read-more:hover {
+  text-decoration: underline;
+}
+
+/* News Metadata */
+.news-date {
+  font-size: 0.8rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  color: var(--secondary-color);
+}
+
+.news-separator {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+  font-style: italic;
+}
+
+.news-card .news-author {
+  text-align: right;
+}
+
+/* ensure the hero/gallery area doesn't get hidden under the overlapping card */
+.photo-overview {
+  position: relative;
+  z-index: 1;
+}
+
+/* make the main/news area overlap softly */
+.main-content {
+  margin-top: -54px;
+  border-radius: 20px 20px 0 0;
+  background: var(--bg-main, #fff);
+  box-shadow: 0 -12px 30px rgba(7, 20, 40, 0.12);
+  position: relative;
+  z-index: 3;
+  padding: 56px 24px 72px; /* add top padding so content isn't flush with curve */
+  transition:
+    box-shadow 240ms ease,
+    transform 240ms ease;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* small responsive tweak */
+@media (max-width: 880px) {
+  .main-content {
+    margin-top: -40px;
+    border-radius: 12px 12px 0 0;
+    padding-top: 36px;
+  }
+}
+
+@media (max-width: 850px) {
+  .content-section h2 {
+    font-size: 1.75rem;
+  }
+
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+}

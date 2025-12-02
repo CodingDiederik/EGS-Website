@@ -15,10 +15,10 @@ export default class ArticleSeeder {
 
     const seeds = [
       {
-        title: 'Article 1',
+        title: 'Een redelijk lange titel met speciale tekens!@ article',
         content: content,
         publicAuthor: 'Secretaris Jeugd',
-        publicationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30), // 30 days ago
+        publicationDate: new Date(Date.now() - 1000), // 1 second ago
       },
       {
         title: 'Article 2',

@@ -1,0 +1,81 @@
+.footer {
+  /* Gebruik de lichte achtergrondkleur voor de footer */
+  background-color: var(--background-secondary);
+  /* Gebruik de sans-serif voor betere leesbaarheid in de UI */
+  font-family: var(--font-secondary);
+  color: var(--text-dark);
+  padding: var(--spacing-large) var(--spacing-medium) 0;
+  margin-top: var(--spacing-large);
+  border-top: 2px solid var(--accent-primary);
+  box-shadow: var(--shadow);
+}
+
+.footerContainer {
+  display: flex;
+  flex-wrap: wrap; /* Zorgt dat de kolommen onder elkaar vallen op mobiel */
+  justify-content: space-between;
+  gap: var(--spacing-large);
+  max-width: 1200px;
+  margin: 0 auto; /* Centreert de content */
+}
+
+/* Algemene stijlen voor de secties */
+.linkSection,
+.contactSection {
+  flex: 1; /* Zorgt dat ze de ruimte verdelen */
+  min-width: 250px; /* Voorkomt dat ze te smal worden */
+}
+
+.footerHeading {
+  /* Gebruik de serif (Merriweather) voor koppen, zoals gedefinieerd */
+  font-family: var(--font-primary);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-medium);
+  border-bottom: 1px solid var(--background-accent);
+  padding-bottom: var(--spacing-small);
+}
+
+/* Navigatie links */
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.linkList li {
+  margin-bottom: var(--spacing-small);
+}
+
+.link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.link:hover {
+  color: var(--accent-highlight);
+  text-decoration: underline;
+}
+
+/* Contact sectie */
+.address {
+  font-style: normal; /* Reset de standaard italic van <address> */
+  line-height: 1.6;
+}
+
+.address p {
+  margin: 0 0 var(--spacing-small) 0;
+}
+
+/* Copyright balk */
+.copyrightBar {
+  text-align: center;
+  padding: var(--spacing-medium);
+  margin-top: var(--spacing-large);
+  /* Gebruik de donkerste accentkleur voor de achtergrond van de balk */
+  background-color: var(--background-accent);
+  /* Witte tekst op de donkere balk */
+  color: var(--text-accent);
+  opacity: 0.9;
+}

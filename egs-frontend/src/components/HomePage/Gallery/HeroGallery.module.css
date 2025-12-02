@@ -1,0 +1,276 @@
+/* --- Keyframes for Animation --- */
+
+/* Animation for the right-to-left track */
+@keyframes scrollRtl {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Animation for the left-to-right track */
+@keyframes scrollLtr {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.heroGallery {
+  position: relative;
+  height: 85vh;
+  width: 100%;
+  overflow: hidden;
+  /* give extra bottom room so blurred tracks and shadows aren't clipped */
+  padding-bottom: 72px;
+  background: var(--background-primary);
+  color: var(--text-primary, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* smoother rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* subtle gradient overlay above background tracks to improve contrast */
+.heroGallery::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.04) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.backgroundContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* keep an inner gap from the bottom so images don't get cut off */
+  bottom: 72px;
+  filter: blur(2px);
+  opacity: 0.45;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  z-index: 0;
+  transform: translate3d(0, 0, 0);
+  mix-blend-mode: normal;
+  will-change: transform;
+}
+
+.imageTrack {
+  display: flex;
+  flex-shrink: 0;
+  width: min-content;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 80s;
+  gap: 12px;
+  position: relative;
+  background: var(--background-primary);
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+
+.imageTrack::before,
+.imageTrack::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  pointer-events: none;
+}
+.imageTrack::before {
+  top: 0;
+}
+.imageTrack::after {
+  bottom: 0;
+}
+
+.scrollLeftToRight {
+  animation-name: scrollLtr;
+}
+
+.scrollRightToLeft {
+  animation-name: scrollRtl;
+}
+
+.imageWrapper {
+  width: 380px;
+  height: 240px;
+  margin: 0;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  /* remove rounded corners per request */
+  border-radius: 0;
+  box-shadow: 0 8px 20px rgba(8, 30, 60, 0.35);
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease;
+  transform-origin: center;
+  overflow: hidden;
+}
+
+/* Foreground content sits above tracks */
+.foregroundContent {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  /* move content to the right side */
+  justify-content: flex-end;
+  pointer-events: none;
+  padding: var(--spacing-large, 24px);
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Text box with floating image */
+.textBox {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  /* narrower box, taller look */
+  max-width: 520px;
+  width: auto;
+  padding: 28px 32px;
+  min-height: 220px;
+  border-radius: calc(var(--border-radius, 12px) + 4px);
+  text-align: left;
+  background-color: rgba(13, 71, 161, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 12px 30px rgba(7, 20, 40, 0.45);
+  /* keep gap from the right edge */
+  margin-right: 64px;
+}
+
+/* Floating image next to the text */
+.featureImage {
+  width: 180px;
+  height: 180px;
+  flex-shrink: 0;
+  border-radius: 0;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  border: none;
+  transition: transform 220ms ease;
+}
+
+/* remove rounded corners for the floating feature image to match gallery */
+/* small logo wrapper used inside the text box */
+.logoWrapper {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* small accent rounded container for text */
+.textContent {
+  color: var(--text-accent, #fff);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* When logo is left and text is right-aligned, ensure spacing looks good */
+.textBox > .logoWrapper {
+  margin-left: -6px;
+}
+
+/* headline */
+.textBox h1 {
+  margin: 0;
+  font-family: var(--font-merriweather, Georgia, serif);
+  color: var(--text-accent, #fff);
+  font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.05;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* supporting text */
+.textBox p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  line-height: 1.4;
+}
+
+/* CTA layout area (if you have buttons inside) */
+.textBox .ctaRow {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* responsive: stack image above text on small screens */
+@media (max-width: 880px) {
+  .foregroundContent {
+    padding: 16px;
+    justify-content: center;
+  }
+  .textBox {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 18px;
+    margin-right: 0;
+  }
+  .featureImage {
+    width: 100%;
+    height: 220px;
+    border-radius: 10px;
+  }
+  .textContent {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* tighter mobile adjustments */
+@media (max-width: 480px) {
+  .imageWrapper {
+    width: 260px;
+    height: 160px;
+  }
+  .heroGallery {
+    height: 64vh;
+  }
+  .backgroundContainer {
+    opacity: 0.32;
+    filter: blur(2px);
+    /* slightly smaller bottom gap on narrow screens */
+    bottom: 48px;
+  }
+}

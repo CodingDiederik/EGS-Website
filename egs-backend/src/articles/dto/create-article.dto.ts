@@ -9,7 +9,7 @@ import {
 export class CreateArticleRequest {
   @IsNotEmpty()
   @IsString()
-  @MaxLength(255)
+  @MaxLength(57)
   title!: string;
 
   @IsNotEmpty()
@@ -19,7 +19,7 @@ export class CreateArticleRequest {
 
   @IsNotEmpty()
   @IsString()
-  @MaxLength(30)
+  @MaxLength(60)
   publicAuthor!: string;
 
   @IsOptional()
