@@ -1,6 +1,6 @@
-'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import './Header.css';
 
 const Header = () => {
   return (
@@ -28,8 +28,11 @@ const Header = () => {
           <li>
             <Link href="/contact">Contact</Link>
           </li>
-          <li>
+          {/*<li>
             <Link href="/archief">Archief</Link>
+          </li>*/}
+          <li className= "back-to-main-site">
+            <Link href="https://www.schaakclubegs.nl">Terug naar de hoofdsite</Link>
           </li>
         </ul>
       </nav>

@@ -76,7 +76,7 @@
   width: min-content;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-duration: 80s;
+  animation-duration: 160s;
   gap: 12px;
   position: relative;
   background: var(--background-primary);
