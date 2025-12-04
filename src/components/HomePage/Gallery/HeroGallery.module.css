@@ -142,7 +142,7 @@
   pointer-events: none;
   padding: var(--spacing-large, 24px);
   width: 100%;
-  max-width: 1200px;
+  max-width: 1500px;
 }
 
 /* Text box with floating image */
@@ -152,7 +152,7 @@
   align-items: center;
   gap: 20px;
   /* narrower box, taller look */
-  max-width: 520px;
+  max-width: 700px;
   width: auto;
   padding: 28px 32px;
   min-height: 220px;
