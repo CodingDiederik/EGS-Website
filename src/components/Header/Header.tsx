@@ -8,11 +8,11 @@ const Header = () => {
       <nav aria-label="Main navigation">
         <Link href="/">
           <Image
-            src="/EGS-logo.svg"
+            src="/EGS-logo.png"
             alt="EGS Logo"
             className="logo"
-            width={40}
-            height={40}
+            width={60}
+            height={60}
           />
         </Link>
         <ul>
@@ -40,8 +40,10 @@ const Header = () => {
           {/*<li>
             <Link href="/archief">Archief</Link>
           </li>*/}
-          <li className= "back-to-main-site">
-            <Link href="https://www.schaakclubegs.nl">Terug naar de hoofdsite</Link>
+          <li className="back-to-main-site">
+            <Link href="https://www.schaakclubegs.nl">
+              Terug naar de hoofdsite
+            </Link>
           </li>
         </ul>
       </nav>

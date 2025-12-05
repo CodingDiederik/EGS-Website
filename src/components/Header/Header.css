@@ -1,6 +1,5 @@
 header {
   background-color: var(--background-accent);
-  color: var(--text-accent);
   padding: var(--spacing-medium);
   box-shadow: var(--shadow);
   display: flex;
@@ -12,7 +11,9 @@ header {
 }
 
 header .logo {
-  height: 40px; /* Adjust as needed */
+  height: 60px;
+  margin-left: 20px;
+  border: 1px solid var(--accent-primary);
 }
 
 header nav {
@@ -60,7 +61,7 @@ header nav ul .admin-links ul {
 }
 
 header nav a {
-  color: var(--text-accent);
+  color: var(--text-secondary);
   text-decoration: none;
   font-family: var(--font-secondary);
   font-weight: 500;
