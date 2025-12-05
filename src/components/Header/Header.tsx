@@ -35,7 +35,9 @@ const Header = () => {
               <Link
                 href={href}
                 className={pathname === href ? 'current-page' : ''}
-                onClick={pathname === href ? (e) => e.preventDefault() : undefined}
+                onClick={
+                  pathname === href ? (e) => e.preventDefault() : undefined
+                }
               >
                 {label}
               </Link>
