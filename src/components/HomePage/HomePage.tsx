@@ -7,14 +7,14 @@ const HomePage: React.FC = async () => {
   return (
     <div className="home-container">
       <div className="photo-overview">
-          <HeroGallery />
-        </div>
-        <MainContentWrapper >
-          {/* Recent Nieuws sectie */}
-          <main className="main-content">
-            <NewsSection />
-          </main>
-        </MainContentWrapper>
+        <HeroGallery />
+      </div>
+      <MainContentWrapper>
+        {/* Recent Nieuws sectie */}
+        <main className="main-content">
+          <NewsSection />
+        </main>
+      </MainContentWrapper>
     </div>
   );
 };

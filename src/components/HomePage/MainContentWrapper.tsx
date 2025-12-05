@@ -1,22 +1,24 @@
 'use client';
 import React, { useEffect, useRef, useState, ReactNode } from 'react';
 
-const MainContentWrapper: React.FC<{ children: ReactNode }> = ({ children }) => {
+const MainContentWrapper: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [offset, setOffset] = useState(0);
   const ticking = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
       if (!ticking.current) {
-        window.requestAnimationFrame(() => {
+        globalThis.requestAnimationFrame(() => {
           setOffset(Math.min(window.scrollY, 150));
           ticking.current = false;
         });
         ticking.current = true;
       }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    globalThis.addEventListener('scroll', handleScroll);
+    return () => globalThis.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
