@@ -6,6 +6,7 @@
   padding: var(--spacing-large) var(--spacing-medium) 0;
   border-top: 2px solid var(--accent-primary);
   box-shadow: var(--shadow);
+  z-index: 3;
 }
 
 .footerContainer {

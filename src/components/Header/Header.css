@@ -36,30 +36,6 @@ header nav ul {
   min-width: 0;
 }
 
-header nav ul .admin-links {
-  margin-left: auto;
-}
-
-header nav ul .admin-links a {
-  background-color: var(--text-accent);
-  color: var(--background-accent);
-  padding: calc(var(--spacing-small) / 2) var(--spacing-medium);
-  border-radius: calc(var(--border-radius) - 4px);
-  box-shadow: var(--shadow);
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-  text-decoration: none;
-}
-
-header nav ul .admin-links ul {
-  list-style: none;
-  display: flex;
-  gap: var(--spacing-medium);
-  margin: 0;
-  padding: 0;
-}
-
 header nav a {
   color: var(--text-secondary);
   text-decoration: none;
