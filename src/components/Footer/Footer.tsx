@@ -50,6 +50,7 @@ const Footer = () => {
       <div className={styles.copyrightBar}>
         <small>
           Copyright &copy; {currentYear} EGS Goirle. Alle rechten voorbehouden.
+          Website gemaakt door Diederik Webster.
         </small>
       </div>
     </footer>

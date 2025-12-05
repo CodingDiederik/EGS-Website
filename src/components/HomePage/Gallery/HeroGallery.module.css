@@ -76,7 +76,7 @@
   width: min-content;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-duration: 80s;
+  animation-duration: 160s;
   gap: 12px;
   position: relative;
   background: var(--background-primary);
@@ -142,7 +142,7 @@
   pointer-events: none;
   padding: var(--spacing-large, 24px);
   width: 100%;
-  max-width: 1200px;
+  max-width: 1700px;
 }
 
 /* Text box with floating image */
@@ -152,18 +152,18 @@
   align-items: center;
   gap: 20px;
   /* narrower box, taller look */
-  max-width: 520px;
+  max-width: 750px;
   width: auto;
   padding: 28px 32px;
   min-height: 220px;
   border-radius: calc(var(--border-radius, 12px) + 4px);
   text-align: left;
-  background-color: rgba(13, 71, 161, 0.65);
+  background-color: var(--background-transparent);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 12px 30px rgba(7, 20, 40, 0.45);
   /* keep gap from the right edge */
-  margin-right: 64px;
+  margin-right: 50px;
 }
 
 /* Floating image next to the text */
@@ -175,7 +175,6 @@
   overflow: hidden;
   background-size: cover;
   background-position: center;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
   border: none;
   transition: transform 220ms ease;
 }
@@ -183,8 +182,8 @@
 /* remove rounded corners for the floating feature image to match gallery */
 /* small logo wrapper used inside the text box */
 .logoWrapper {
-  width: 64px;
-  height: 64px;
+  width: 190px;
+  height: 190px;
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
@@ -193,7 +192,6 @@
 
 /* small accent rounded container for text */
 .textContent {
-  color: var(--text-accent, #fff);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -211,7 +209,7 @@
 .textBox h1 {
   margin: 0;
   font-family: var(--font-merriweather, Georgia, serif);
-  color: var(--text-accent, #fff);
+  color: var(--text-secondary);
   font-size: clamp(1.6rem, 2.8vw, 2.6rem);
   font-weight: 700;
   line-height: 1.05;
@@ -221,7 +219,7 @@
 /* supporting text */
 .textBox p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--text-tertiary);
   font-size: clamp(0.95rem, 1.6vw, 1.05rem);
   line-height: 1.4;
 }

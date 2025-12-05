@@ -87,22 +87,20 @@ const HeroGallery: React.FC = () => {
         <div className={styles.textBox}>
           <div className={styles.logoWrapper}>
             <Image
-              src="/EGS-logo.svg"
+              src="/EGS-logo.png"
               alt="Schaakclub EGS Logo"
-              width={72}
-              height={72}
+              width={180}
+              height={180}
               className={styles.logo}
             />
           </div>
 
           <div className={styles.textContent}>
-            <h1>Welkom bij schaakclub EGS</h1>
+            <h1>
+              Welkom bij de jeugd pagina van de Eerste Goirlese Schaakclub!
+            </h1>
             <p className={styles.subtitle}>
               De gezelligste schaakclub van Goirle! <br />
-              Wij zijn een actieve vereniging met leden van jong tot oud en van
-              beginner tot gevorderde. Naast de wekelijkse competitie
-              organiseren we tal van leuke activiteiten. <br />
-              Kom je snel een keer de sfeer proeven?
             </p>
           </div>
         </div>

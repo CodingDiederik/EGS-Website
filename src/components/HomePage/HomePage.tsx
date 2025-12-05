@@ -1,6 +1,7 @@
 import HeroGallery from './Gallery/HeroGallery';
 import './HomePage.css';
 import NewsSection from './News/NewsSection';
+import MainContentWrapper from './MainContentWrapper';
 
 const HomePage: React.FC = async () => {
   return (
@@ -8,11 +9,12 @@ const HomePage: React.FC = async () => {
       <div className="photo-overview">
         <HeroGallery />
       </div>
-
-      {/* Recent Nieuws sectie */}
-      <main className="main-content">
-        <NewsSection />
-      </main>
+      <MainContentWrapper>
+        {/* Recent Nieuws sectie */}
+        <main className="main-content">
+          <NewsSection />
+        </main>
+      </MainContentWrapper>
     </div>
   );
 };

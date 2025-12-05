@@ -89,7 +89,7 @@ const NewsSection: React.FC = async () => {
               </span>
             </span>
             <p>{convertContent(item.excerpt)}</p>
-            <a href={`/articles/${item.id}`} className="read-more">
+            <a href={`/nieuws/${item.id}`} className="read-more">
               Lees verder &rarr;
             </a>
           </article>

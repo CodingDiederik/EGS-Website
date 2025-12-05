@@ -1,0 +1,62 @@
+header {
+  background-color: var(--background-accent);
+  padding: var(--spacing-medium);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header .logo {
+  height: 60px;
+  margin-left: 20px;
+  border: 1px solid var(--accent-primary);
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-large);
+  width: 100%;
+}
+
+/* make the outer list a flex row and align items */
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: var(--spacing-medium);
+  align-items: center;
+
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+header nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-family: var(--font-secondary);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+header nav a:hover {
+  color: var(--accent-secondary);
+}
+
+header nav ul .back-to-main-site {
+  margin-left: auto;
+  background-color: var(--accent-primary);
+  color: var(--background-secondary);
+  padding: calc(var(--spacing-small) / 2) var(--spacing-medium);
+  border-radius: calc(var(--border-radius) - 4px);
+  box-shadow: var(--shadow);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  text-decoration: none;
+}
