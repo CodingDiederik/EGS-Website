@@ -1,22 +1,22 @@
 :root {
   --background-primary: #f0f8ff;
   --background-secondary: #e3f2fd;
-  --background-accent: #1565c0;
+  --background-accent: #000000;
 
-  --text-primary: #0d47a1;
-  --text-secondary: #1976d2;
+  --text-primary: #000000;
+  --text-secondary: #000000;
   --text-accent: #ffffff;
   --text-dark: #333333;
 
-  --accent-primary: #1976d2;
-  --accent-secondary: #42a5f5;
-  --accent-highlight: #0288d1;
+  --accent-primary: #000000;
+  --accent-secondary: #54585c;
+  --accent-highlight: #909496;
 
   --accent-error: #d32f2f;
 
   --font-primary: 'Merriweather', serif;
   --font-secondary: 'Merriweather Sans', sans-serif;
-
+  
   --spacing-small: 8px;
   --spacing-medium: 16px;
   --spacing-large: 24px;

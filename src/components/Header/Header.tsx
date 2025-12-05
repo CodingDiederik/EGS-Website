@@ -17,10 +17,19 @@ const Header = () => {
         </Link>
         <ul>
           <li>
+            <Link href="/">Home</Link>
+          </li>
+          <li>
             <Link href="/agenda">Agenda</Link>
           </li>
           <li>
-            <Link href="/jeugd">Jeugd</Link>
+            <Link href="/proefles">Proeflessen</Link>
+          </li>
+          <li>
+            <Link href="/nieuws">Nieuws</Link>
+          </li>
+          <li>
+            <Link href="/fotos">Foto&apos;s</Link>
           </li>
           <li>
             <Link href="/over">Over</Link>
