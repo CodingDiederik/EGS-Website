@@ -4,12 +4,13 @@ import styles from './Footer.module.css';
 
 // Definitie van de links voor eenvoudige aanpassing
 const navLinks = [
+  { href: '/', label: 'Home' },
   { href: '/agenda', label: 'Agenda' },
-  { href: '/jeugd', label: 'Jeugd' },
+  { href: '/proeflessen', label: 'Proeflessen' },
+  { href: '/nieuws', label: 'Nieuws' },
+  { href: '/fotos', label: "Foto's" },
   { href: '/over', label: 'Over' },
   { href: '/contact', label: 'Contact' },
-  { href: '/archief', label: 'Archief' },
-  { href: '/beheer', label: 'Beheer' },
 ];
 
 const Footer = () => {
@@ -20,7 +21,7 @@ const Footer = () => {
       <div className={styles.footerContainer}>
         {/* Sectie 1: Navigatie Links */}
         <div className={styles.linkSection}>
-          <h3 className={styles.footerHeading}>Links</h3>
+          <h3 className={styles.footerHeading}>Snel naar</h3>
           <ul className={styles.linkList}>
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -44,9 +45,38 @@ const Footer = () => {
             </a>
           </address>
         </div>
+
+        {/* Sectie 3: Social Media Links */}
+        <div className={styles.socialSection}>
+          <h3 className={styles.footerHeading}>Volg ons op</h3>
+          <ul className={styles.linkList}>
+            <li>
+              <a
+                href="https://www.facebook.com/schaakclubegs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                {/* TODO: IMAGE ICON */}
+                Facebook
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.instagram.com/schaakclubegs/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                {/* TODO: IMAGE ICON */}
+                Instagram
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      {/* Sectie 3: Copyright */}
+      {/*Copyright */}
       <div className={styles.copyrightBar}>
         <small>
           Copyright &copy; {currentYear} EGS Goirle. Alle rechten voorbehouden.
