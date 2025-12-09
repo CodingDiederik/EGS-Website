@@ -1,9 +1,14 @@
 # 1. Base image
 FROM node:22-alpine AS base
 
+ARG NEXT_PUBLIC_BACKEND_URL
+ARG NEXT_PUBLIC_FRONTEND_URL
+
+ENV NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
+ENV NEXT_PUBLIC_FRONTEND_URL=$NEXT_PUBLIC_FRONTEND_URL
+
 # Install libc6-compat (Required for Next.js/SWC binaries)
-RUN apk add --no-cache libc6-compat
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN apk add --no-cache libc6-compat && corepack enable && corepack prepare pnpm@latest --activate
 
 # 2. Dependencies
 FROM base AS deps
@@ -28,14 +33,9 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
-
-# --- THE FIX IS HERE ---
-# We added "/app" to the end of the source path to copy the contents 
-# from inside the nested folder directly to your WORKDIR.
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone/app ./
 
 # The static files copy remains the same
