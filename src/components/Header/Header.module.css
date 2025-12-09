@@ -1,4 +1,4 @@
-header {
+.header {
   background-color: var(--background-accent);
   padding: var(--spacing-medium);
   box-shadow: var(--shadow);
@@ -10,33 +10,31 @@ header {
   z-index: 100;
 }
 
-header .logo {
+.logo {
   height: 60px;
   margin-left: 20px;
   border: 1px solid var(--accent-primary);
 }
 
-header nav {
+.nav {
   display: flex;
   align-items: center;
   gap: var(--spacing-large);
   width: 100%;
 }
 
-/* make the outer list a flex row and align items */
-header nav ul {
+.navList {
   list-style: none;
   display: flex;
   gap: var(--spacing-medium);
   align-items: center;
-
   margin: 0;
   padding: 0;
   flex: 1;
   min-width: 0;
 }
 
-header nav a {
+.navLink {
   color: var(--text-secondary);
   text-decoration: none;
   font-family: var(--font-secondary);
@@ -44,11 +42,11 @@ header nav a {
   transition: color 0.3s ease;
 }
 
-header nav a:hover {
+.navLink:hover {
   color: var(--accent-secondary);
 }
 
-header nav ul .back-to-main-site {
+.backToMainSite {
   margin-left: auto;
   background-color: var(--accent-primary);
   color: var(--background-secondary);

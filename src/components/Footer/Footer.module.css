@@ -20,6 +20,7 @@
 
 /* Algemene stijlen voor de secties */
 .linkSection,
+.socialSection,
 .contactSection {
   flex: 1; /* Zorgt dat ze de ruimte verdelen */
   min-width: 250px; /* Voorkomt dat ze te smal worden */

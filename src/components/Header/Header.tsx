@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import './Header.css';
+import styles from './Header.module.css';
 import { usePathname } from 'next/navigation';
 
 const navLinks = [
@@ -18,23 +18,26 @@ const Header = () => {
   const pathname = usePathname();
 
   return (
-    <header>
-      <nav aria-label="Main navigation">
+    <header className={styles.header}>
+      <nav className={styles.nav} aria-label="Main navigation">
         <Link href="/">
           <Image
             src="/EGS-logo.png"
             alt="EGS Logo"
-            className="logo"
+            className={styles.logo}
             width={60}
             height={60}
           />
         </Link>
-        <ul>
+        <ul className={styles.navList}>
           {navLinks.map(({ href, label }) => (
             <li key={href}>
               <Link
                 href={href}
-                className={pathname === href ? 'current-page' : ''}
+                className={
+                  styles.navLink +
+                  (pathname === href ? ' ' + styles['current-page'] : '')
+                }
                 onClick={
                   pathname === href ? (e) => e.preventDefault() : undefined
                 }
@@ -43,8 +46,11 @@ const Header = () => {
               </Link>
             </li>
           ))}
-          <li className="back-to-main-site">
-            <Link href="https://www.schaakclubegs.nl">
+          <li className={styles.backToMainSite}>
+            <Link
+              href="https://www.schaakclubegs.nl"
+              className={styles.navLink}
+            >
               Terug naar de hoofdsite
             </Link>
           </li>
