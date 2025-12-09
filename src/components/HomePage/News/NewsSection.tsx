@@ -1,4 +1,5 @@
-import './NewsSection.css';
+import Link from 'next/link';
+import styles from './NewsSection.module.css';
 import { fetchAPI } from '@/getter/fetch';
 
 interface NewsItem {
@@ -21,7 +22,7 @@ interface NewsItem {
 function convertContent(content: string): string {
   const MAXLENGTH = 200; // Maximum length of the preview
   // The string contains <p> and </p> tags from Wordpress, so we need to remove them
-  content = content.replaceAll(/<[^>]*>/g, '').trim();
+  content = content.replaceAll(/<[^>]*>?/gm, '').trim();
   if (content.length <= MAXLENGTH) {
     return content;
   }
@@ -76,22 +77,22 @@ const NewsSection: React.FC = async () => {
   const newsItems = await fetchNewsData();
 
   return (
-    <section id="news" className="content-section">
+    <section id="news" className={styles['content-section']}>
       <h2>Recent nieuws</h2>
-      <div className="news-grid">
+      <div className={styles['news-grid']}>
         {newsItems.map((item) => (
-          <article key={item.id} className="news-card">
-            <span className="news-date">{convertDate(item.date)}</span>
+          <article key={item.id} className={styles['news-card']}>
+            <span className={styles['news-date']}>{convertDate(item.date)}</span>
             <h3>{item.title}</h3>
-            <span className="news-separator">
-              <span className="news-author">
+            <span className={styles['news-separator']}>
+              <span className={styles['news-author']}>
                 {item.author?.node?.lastName ?? ' '}
               </span>
             </span>
             <p>{convertContent(item.excerpt)}</p>
-            <a href={`/nieuws/${item.id}`} className="read-more">
+            <Link href={`/nieuws/${item.id}`} className={styles['read-more']}>
               Lees verder &rarr;
-            </a>
+            </Link>
           </article>
         ))}
       </div>

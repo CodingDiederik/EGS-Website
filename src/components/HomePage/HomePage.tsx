@@ -1,17 +1,17 @@
 import HeroGallery from './Gallery/HeroGallery';
-import './HomePage.css';
+import styles from './HomePage.module.css';
 import NewsSection from './News/NewsSection';
 import MainContentWrapper from './MainContentWrapper';
 
 const HomePage: React.FC = async () => {
   return (
-    <div className="home-container">
-      <div className="photo-overview">
+    <div className={styles['home-container']}>
+      <div className={styles['photo-overview']}>
         <HeroGallery />
       </div>
       <MainContentWrapper>
         {/* Recent Nieuws sectie */}
-        <main className="main-content">
+        <main className={styles['main-content']}>
           <NewsSection />
         </main>
       </MainContentWrapper>

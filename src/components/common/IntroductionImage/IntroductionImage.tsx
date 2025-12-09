@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import './IntroductionImage.css';
+import styles from './IntroductionImage.module.css';
 
 const IntroductionImage: React.FC<{ text: string }> = ({ text }) => {
   return (
-    <div className="imagecard">
+    <div className={styles.imagecard}>
       <Image
-        src="https://placehold.co/1920x500/png"
+        src="/1920x500.jpg"
         alt="Proefles bij EGS Goirle"
         width={1920}
         height={500}

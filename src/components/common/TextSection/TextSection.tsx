@@ -1,10 +1,10 @@
 
-import './TextSection.css';
+import styles from './TextSection.module.css';
 
 const TextSection: React.FC<{ text: React.ReactNode }> = ({ text }) => {
   return (
-    <section className="content-section">
-      <div className="text-section">{text}</div>
+    <section className={styles['content-section']}>
+      <div className={styles['text-section']}>{text}</div>
     </section>
   );
 };

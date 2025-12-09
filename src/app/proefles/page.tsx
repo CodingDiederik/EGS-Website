@@ -1,9 +1,10 @@
 import Introduction from '@/components/common/IntroductionImage/IntroductionImage';
 import TextSection from '@/components/common/TextSection/TextSection';
+import './page.css';
 
 export default function Proefles() {
   return (
-    <div>
+    <div className='image-text'>
       {/* Default introduction component*/}
       <Introduction text="Proeflessen" />
 

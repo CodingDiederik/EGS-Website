@@ -2,6 +2,11 @@
   position: relative;
   text-align: center;
   color: white;
+  height: 400px;
+  width: 1200px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: var(--spacing-large);
 }
 
 .imagecard h1 {
@@ -12,11 +17,11 @@
   font-size: 5rem;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 1rem 2rem;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
 }
 
 .imagecard img {
-  width: 100%;
-  height: auto;
-  display: block;
+  height: 400px;
+  width: 1200px;
+  border-radius: var(--border-radius);
 }
