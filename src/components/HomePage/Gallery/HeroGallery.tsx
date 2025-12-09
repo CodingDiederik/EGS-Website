@@ -97,7 +97,7 @@ const HeroGallery: React.FC = () => {
 
           <div className={styles.textContent}>
             <h1>
-              Welkom bij de jeugd pagina van de Eerste Goirlese Schaakclub!
+              Welkom bij de jeugdafdeling van de Eerste Goirlese Schaakclub!
             </h1>
             <p className={styles.subtitle}>
               De gezelligste schaakclub van Goirle! <br />

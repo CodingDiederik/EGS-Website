@@ -54,7 +54,7 @@ main {
 
 button {
   background-color: var(--accent-primary);
-  color: var(--text-accent);
+  color: var(--text-secondary);
   border: none;
   padding: var(--spacing-small) var(--spacing-medium);
   border-radius: var(--border-radius);

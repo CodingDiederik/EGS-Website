@@ -13,3 +13,22 @@
 .text-section {
   margin-bottom: var(--spacing-large);
 }
+
+.text-section p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+}
+
+.text-section h2 {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-medium);
+  color: var(--text-primary);
+}
+
+.text-section h3 {
+  font-size: 1.5rem;
+  margin-top: var(--spacing-medium);
+  margin-bottom: var(--spacing-medium);
+  color: var(--text-primary);
+}

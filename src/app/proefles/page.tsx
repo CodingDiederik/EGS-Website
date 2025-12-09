@@ -1,10 +1,11 @@
 import Introduction from '@/components/common/IntroductionImage/IntroductionImage';
 import TextSection from '@/components/common/TextSection/TextSection';
 import './page.css';
+import Forms from '@/components/proefles/Forms';
 
 export default function Proefles() {
   return (
-    <div className='image-text'>
+    <div className="image-text">
       {/* Default introduction component*/}
       <Introduction text="Proeflessen" />
 
@@ -32,9 +33,11 @@ export default function Proefles() {
               sessie. We kijken ernaar uit je te verwelkomen bij EGS Goirle en
               je te laten zien wat we te bieden hebben!
             </p>
+            <h3>Aanmeldingsformulier Proefles</h3>
           </>
         }
       />
+      <Forms />
     </div>
   );
 }

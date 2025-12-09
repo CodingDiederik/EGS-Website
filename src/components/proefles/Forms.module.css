@@ -1,0 +1,44 @@
+.container {
+  max-width: 600px;
+  margin: -50px auto 40px auto;
+  padding: var(--spacing-medium);
+  background-color: var(--background-light);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--border-radius);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-small);
+}
+
+.label {
+  font-family: var(--font-secondary);
+  font-weight: 500;
+  margin-bottom: calc(var(--spacing-small) / 2);
+}
+
+.input,
+.select,
+.textarea {
+  padding: var(--spacing-small);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--border-radius);
+  font-family: var(--font-primary);
+  font-size: 1rem;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent-secondary);
+  box-shadow: 0 0 0 3px var(--accent-secondary-light);
+}
+
+.textarea {
+  resize: none;
+  overflow: auto;
+  min-height: 100px;
+}

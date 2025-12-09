@@ -1,4 +1,3 @@
-
 import styles from './TextSection.module.css';
 
 const TextSection: React.FC<{ text: React.ReactNode }> = ({ text }) => {

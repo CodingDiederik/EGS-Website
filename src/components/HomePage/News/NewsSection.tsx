@@ -82,7 +82,9 @@ const NewsSection: React.FC = async () => {
       <div className={styles['news-grid']}>
         {newsItems.map((item) => (
           <article key={item.id} className={styles['news-card']}>
-            <span className={styles['news-date']}>{convertDate(item.date)}</span>
+            <span className={styles['news-date']}>
+              {convertDate(item.date)}
+            </span>
             <h3>{item.title}</h3>
             <span className={styles['news-separator']}>
               <span className={styles['news-author']}>

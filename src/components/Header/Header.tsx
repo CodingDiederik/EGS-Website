@@ -34,7 +34,10 @@ const Header = () => {
             <li key={href}>
               <Link
                 href={href}
-                className={styles.navLink + (pathname === href ? ' ' + styles['current-page'] : '')}
+                className={
+                  styles.navLink +
+                  (pathname === href ? ' ' + styles['current-page'] : '')
+                }
                 onClick={
                   pathname === href ? (e) => e.preventDefault() : undefined
                 }
@@ -44,7 +47,10 @@ const Header = () => {
             </li>
           ))}
           <li className={styles.backToMainSite}>
-            <Link href="https://www.schaakclubegs.nl" className={styles.navLink}>
+            <Link
+              href="https://www.schaakclubegs.nl"
+              className={styles.navLink}
+            >
               Terug naar de hoofdsite
             </Link>
           </li>
