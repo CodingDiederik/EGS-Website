@@ -6,9 +6,9 @@ const IntroductionImage: React.FC<{ text: string }> = ({ text }) => {
     <div className={styles.imagecard}>
       <Image
         src="/1920x500.jpg"
-        alt="Proefles bij EGS Goirle"
-        width={1920}
-        height={500}
+        alt={`${text} bij EGS Goirle`}
+        fill
+        style={{ objectFit: 'cover', objectPosition: 'center' }}
       />
       <h1>{text}</h1>
     </div>

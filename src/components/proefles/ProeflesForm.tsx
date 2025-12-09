@@ -1,7 +1,7 @@
 'use client';
-import styles from './Forms.module.css';
+import styles from './ProeflesForm.module.css';
 
-const Forms = () => {
+const ProeflesForm = () => {
   return (
     <div className={styles.container}>
       <form className={styles.form}>
@@ -42,12 +42,11 @@ const Forms = () => {
           }}
         ></textarea>
 
-        <button type="submit" className={styles.button}>
-          Indienen
-        </button>
+        <button type="submit">Indienen</button>
+        {/* TODO, add handler */}
       </form>
     </div>
   );
 };
 
-export default Forms;
+export default ProeflesForm;

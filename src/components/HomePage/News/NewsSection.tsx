@@ -22,7 +22,7 @@ interface NewsItem {
 function convertContent(content: string): string {
   const MAXLENGTH = 200; // Maximum length of the preview
   // The string contains <p> and </p> tags from Wordpress, so we need to remove them
-  content = content.replaceAll(/<[^>]*>?/gm, '').trim();
+  content = content.replaceAll(/<[^>]*>/g, '').trim();
   if (content.length <= MAXLENGTH) {
     return content;
   }

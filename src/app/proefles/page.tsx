@@ -1,7 +1,7 @@
 import Introduction from '@/components/common/IntroductionImage/IntroductionImage';
 import TextSection from '@/components/common/TextSection/TextSection';
 import './page.css';
-import Forms from '@/components/proefles/Forms';
+import ProeflesForm from '@/components/proefles/ProeflesForm';
 
 export default function Proefles() {
   return (
@@ -9,7 +9,7 @@ export default function Proefles() {
       {/* Default introduction component*/}
       <Introduction text="Proeflessen" />
 
-      {/* Explaination about proeflessen */}
+      {/* Explanation about proeflessen */}
       <TextSection
         text={
           <>
@@ -37,7 +37,7 @@ export default function Proefles() {
           </>
         }
       />
-      <Forms />
+      <ProeflesForm />
     </div>
   );
 }

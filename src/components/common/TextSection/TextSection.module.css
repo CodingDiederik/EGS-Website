@@ -6,7 +6,6 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: var(--background--transparent);
   padding: var(--spacing-large) var(--spacing-medium);
 }
 
