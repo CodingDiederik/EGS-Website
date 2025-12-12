@@ -116,11 +116,3 @@
   color: #991b1b; /* Dark red */
   border: 1px solid #fecaca;
 }
-
-.captchaContainer {
-  display: flex;
-  justify-content: center; /* Center the widget */
-  margin-top: var(--spacing-small);
-  margin-bottom: var(--spacing-small);
-  min-height: 65px; /* Prevent layout shift while loading */
-}

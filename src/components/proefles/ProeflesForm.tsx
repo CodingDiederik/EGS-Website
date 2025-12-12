@@ -1,8 +1,6 @@
 'use client';
 import styles from './ProeflesForm.module.css';
-import { useState, useRef } from 'react';
-// Import the Turnstile component
-import { Turnstile, TurnstileInstance } from '@marsidev/react-turnstile';
+import { useState } from 'react';
 
 const ProeflesForm = () => {
   const [status, setStatus] = useState<
@@ -10,12 +8,6 @@ const ProeflesForm = () => {
   >('idle');
   const [statusMessage, setStatusMessage] = useState<string>('');
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
-
-  // State to hold the Turnstile token
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-
-  // Ref to control the Turnstile widget (to reset it later)
-  const turnstileRef = useRef<TurnstileInstance>(null);
 
   const validateForm = (formData: FormData) => {
     const errors: { [key: string]: string } = {};
@@ -41,17 +33,10 @@ const ProeflesForm = () => {
     setStatus('loading');
     setStatusMessage('');
 
-    // 1. Check if Turnstile is completed
-    if (!turnstileToken) {
-      setStatus('error');
-      setStatusMessage('Bevestig a.u.b. dat u geen robot bent.');
-      return;
-    }
-
     const form = event.currentTarget;
     const body = new FormData(form);
 
-    // 2. Client-side Validation
+    // 1. Client-side Validation
     const validationErrors = validateForm(body);
     if (Object.keys(validationErrors).length > 0) {
       setFieldErrors(validationErrors);
@@ -60,9 +45,8 @@ const ProeflesForm = () => {
       return;
     }
 
-    // 3. Add Necessary Hidden Fields
+    // 2. Add Necessary Hidden Fields
     body.append('_wpcf7_unit_tag', 'wpcf7-f78-p1-o1'); // CF7 Unit Tag
-    body.append('cf-turnstile-response', turnstileToken); // Turnstile Token
 
     try {
       const response = await fetch(form.action, {
@@ -80,14 +64,11 @@ const ProeflesForm = () => {
         setStatus('success');
         setStatusMessage('Bedankt! Uw aanvraag is succesvol verzonden.');
         form.reset();
-        setTurnstileToken(null);
-        turnstileRef.current?.reset(); // Reset the captcha for a new try
       } else if (data.status === 'spam') {
         setStatus('error');
         setStatusMessage(
           'Uw bericht is gemarkeerd als spam. Probeer het later opnieuw.',
         );
-        turnstileRef.current?.reset();
       } else if (data.status === 'validation_failed') {
         setStatus('error');
         setStatusMessage(data.message || 'Er zijn validatiefouten.');
@@ -100,7 +81,6 @@ const ProeflesForm = () => {
           );
           setFieldErrors(serverErrors);
         }
-        turnstileRef.current?.reset();
       } else {
         setStatus('error');
         setStatusMessage(
@@ -134,7 +114,9 @@ const ProeflesForm = () => {
             type="text"
             id="person-name"
             name="person-name"
-            className={`${styles.input} ${fieldErrors['person-name'] ? styles.inputError : ''}`}
+            className={`${styles.input} ${
+              fieldErrors['person-name'] ? styles.inputError : ''
+            }`}
             disabled={status === 'loading'}
           />
           {fieldErrors['person-name'] && (
@@ -153,7 +135,9 @@ const ProeflesForm = () => {
             type="email"
             id="email"
             name="email"
-            className={`${styles.input} ${fieldErrors['email'] ? styles.inputError : ''}`}
+            className={`${styles.input} ${
+              fieldErrors['email'] ? styles.inputError : ''
+            }`}
             disabled={status === 'loading'}
           />
           {fieldErrors['email'] && (
@@ -175,24 +159,12 @@ const ProeflesForm = () => {
           ></textarea>
         </div>
 
-        {/* TURNSTILE WIDGET */}
-        <div className={styles.captchaContainer}>
-          <Turnstile
-            ref={turnstileRef}
-            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
-            onSuccess={(token) => setTurnstileToken(token)}
-            onError={() => setStatusMessage('Fout bij laden van verificatie.')}
-            options={{
-              theme: 'light',
-              size: 'normal',
-            }}
-          />
-        </div>
-
         {/* STATUS & BUTTON */}
         {statusMessage && (
           <div
-            className={`${styles.statusMessage} ${status === 'success' ? styles.success : styles.error}`}
+            className={`${styles.statusMessage} ${
+              status === 'success' ? styles.success : styles.error
+            }`}
           >
             {statusMessage}
           </div>
@@ -201,7 +173,6 @@ const ProeflesForm = () => {
         <button
           type="submit"
           className={styles.submitButton}
-          // Disable button if loading OR if turnstile is not yet done
           disabled={status === 'loading'}
         >
           {status === 'loading'
