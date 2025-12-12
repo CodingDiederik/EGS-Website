@@ -12,8 +12,8 @@ export async function fetchAPI(query: string) {
     );
   }
 
-  if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
-    throw new Error('Missing NEXT_PUBLIC_BACKEND_URL environment variable');
+  if (!process.env.BACKEND_URL) {
+    throw new Error('Missing BACKEND_URL environment variable');
   }
 
   try {
@@ -21,7 +21,7 @@ export async function fetchAPI(query: string) {
       `${process.env.WP_USERNAME}:${process.env.WP_PASSWORD}`,
     ).toString('base64');
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}`, {
+    const response = await fetch(`${process.env.BACKEND_URL}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,12 +1,6 @@
 # 1. Base image
 FROM node:22-alpine AS base
 
-ARG NEXT_PUBLIC_BACKEND_URL
-ARG NEXT_PUBLIC_FRONTEND_URL
-
-ENV NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
-ENV NEXT_PUBLIC_FRONTEND_URL=$NEXT_PUBLIC_FRONTEND_URL
-
 # Install libc6-compat (Required for Next.js/SWC binaries)
 RUN apk add --no-cache libc6-compat && corepack enable && corepack prepare pnpm@latest --activate
 
@@ -21,6 +15,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
 # Ensure environment is set during build
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm run build
