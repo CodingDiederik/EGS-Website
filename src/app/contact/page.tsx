@@ -20,8 +20,8 @@ export default function Agenda() {
             <p>
               Of u nu meer wilt weten over onze lesprogramma&apos;s, speciale
               evenementen of lidmaatschapsopties, ons team is beschikbaar om uw
-              vragen te beantwoorden. U kunt ons bereiken via telefoon, e-mail of
-              door het contactformulier op deze pagina in te vullen.
+              vragen te beantwoorden. U kunt ons bereiken via telefoon, e-mail
+              of door het contactformulier op deze pagina in te vullen.
             </p>
           </>
         }

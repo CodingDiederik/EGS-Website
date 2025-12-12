@@ -58,7 +58,13 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className={styles.link}
               >
-                <Image src="/facebook.png" alt="Facebook Logo" width={32} height={32} className={styles.imageFacebook}/>
+                <Image
+                  src="/facebook.png"
+                  alt="Facebook Logo"
+                  width={32}
+                  height={32}
+                  className={styles.imageFacebook}
+                />
                 Facebook
               </a>
             </li>
@@ -69,7 +75,13 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className={styles.link}
               >
-                <Image src="/instagram.png" alt="Instagram Logo" width={28} height={28} className={styles.imageInstagram}/>
+                <Image
+                  src="/instagram.png"
+                  alt="Instagram Logo"
+                  width={28}
+                  height={28}
+                  className={styles.imageInstagram}
+                />
                 Instagram
               </a>
             </li>

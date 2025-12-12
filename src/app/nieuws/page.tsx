@@ -19,10 +19,10 @@ export default function Agenda() {
               houden over alles wat er speelt binnen onze gemeenschap.
             </p>
             <p>
-              Of het nu gaat om nieuwe lesprogramma&apos;s, bijzondere evenementen of
-              andere belangrijke informatie, ons nieuwsoverzicht is uw bron voor
-              alles wat er bij EGS Goirle gebeurt. Kom regelmatig terug om niets
-              te missen!
+              Of het nu gaat om nieuwe lesprogramma&apos;s, bijzondere
+              evenementen of andere belangrijke informatie, ons nieuwsoverzicht
+              is uw bron voor alles wat er bij EGS Goirle gebeurt. Kom
+              regelmatig terug om niets te missen!
             </p>
           </>
         }
