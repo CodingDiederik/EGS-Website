@@ -53,7 +53,7 @@
 .textarea:focus {
   outline: none;
   border-color: var(--accent-secondary);
-  box-shadow: 0 0 0 3px rgba(var(--accent-secondary-rgb), 0.1);
+  box-shadow: 0 0 0 3px rgba(237, 211, 99, 0.1);
 }
 
 /* Error State for Inputs */

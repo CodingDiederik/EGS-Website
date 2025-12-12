@@ -18,7 +18,7 @@ const ProeflesForm = () => {
       errors['person-name'] = 'Voer a.u.b. een geldige naam in.';
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!email || !emailRegex.test(email)) {
       errors['email'] = 'Voer a.u.b. een geldig emailadres in.';
     }
@@ -100,7 +100,12 @@ const ProeflesForm = () => {
 
       <form
         className={styles.form}
-        action={process.env.NEXT_PUBLIC_FORMS_URL}
+        action={
+          process.env.NEXT_PUBLIC_FORMS_URL ||
+          (() => {
+            throw new Error('FORMS_URL not defined');
+          })()
+        }
         method="post"
         onSubmit={handleSubmit}
         noValidate
@@ -141,7 +146,12 @@ const ProeflesForm = () => {
             disabled={status === 'loading'}
           />
           {fieldErrors['email'] && (
-            <span className={styles.errorText}>{fieldErrors['email']}</span>
+            <span
+              className={styles.errorText}
+              aria-describedby="Email is geen geldig formaat"
+            >
+              {fieldErrors['email']}
+            </span>
           )}
         </div>
 
