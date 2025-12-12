@@ -2,7 +2,7 @@ import Introduction from '@/components/common/IntroductionImage/IntroductionImag
 import TextSection from '@/components/common/TextSection/TextSection';
 import './page.css';
 
-export default function Agenda() {
+export default function Fotos() {
   return (
     <div className="image-text">
       {/* Default introduction component*/}

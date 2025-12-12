@@ -41,7 +41,7 @@ const ClockIcon = () => (
 async function getTimeFrame(): Promise<string> {
   const now = new Date();
 
-  if (now.getMonth() > 6) {
+  if (now.getMonth() >= 6) {
     return `${now.getFullYear()} - ${now.getFullYear() + 1}`;
   }
   return `${now.getFullYear() - 1} - ${now.getFullYear()}`;
