@@ -1,7 +1,7 @@
 import Introduction from '@/components/common/IntroductionImage/IntroductionImage';
 import TextSection from '@/components/common/TextSection/TextSection';
 import './page.css';
-import ProeflesForm from '@/components/proefles/ProeflesForm';
+import ProeflesForm from '@/components/Proefles/ProeflesForm';
 
 export default function Proefles() {
   return (

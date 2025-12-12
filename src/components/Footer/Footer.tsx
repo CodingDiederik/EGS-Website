@@ -1,12 +1,13 @@
 // src/components/Footer/Footer.tsx
 import Link from 'next/link';
 import styles from './Footer.module.css';
+import Image from 'next/image';
 
 // Definitie van de links voor eenvoudige aanpassing
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/agenda', label: 'Agenda' },
-  { href: '/proeflessen', label: 'Proeflessen' },
+  { href: '/proefles', label: 'Proeflessen' },
   { href: '/nieuws', label: 'Nieuws' },
   { href: '/fotos', label: "Foto's" },
   { href: '/over', label: 'Over' },
@@ -57,7 +58,13 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className={styles.link}
               >
-                {/* TODO: IMAGE ICON */}
+                <Image
+                  src="/facebook.png"
+                  alt="Facebook Logo"
+                  width={32}
+                  height={32}
+                  className={styles.imageFacebook}
+                />
                 Facebook
               </a>
             </li>
@@ -68,7 +75,13 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className={styles.link}
               >
-                {/* TODO: IMAGE ICON */}
+                <Image
+                  src="/instagram.png"
+                  alt="Instagram Logo"
+                  width={28}
+                  height={28}
+                  className={styles.imageInstagram}
+                />
                 Instagram
               </a>
             </li>

@@ -68,6 +68,26 @@
   margin: 0 0 var(--spacing-small) 0;
 }
 
+/* Social media sectie */
+.socialList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: var(--spacing-medium);
+}
+
+.imageInstagram {
+  margin-right: calc(var(--spacing-small) + 2px);
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+.imageFacebook {
+  margin-right: var(--spacing-small);
+  vertical-align: middle;
+}
+
 /* Copyright balk */
 .copyrightBar {
   width: 100vw;
