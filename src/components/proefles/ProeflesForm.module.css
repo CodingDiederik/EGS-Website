@@ -1,44 +1,126 @@
 .container {
   max-width: 600px;
-  margin: -50px auto 40px auto;
+  margin: 0px auto 60px auto;
   padding: var(--spacing-medium);
   background-color: var(--background-light);
   border: 1px solid var(--accent-primary);
   border-radius: var(--border-radius);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.heading {
+  margin-bottom: var(--spacing-medium);
+  text-align: center;
+  font-family: var(--font-secondary);
+  color: var(--accent-primary);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-small);
+  gap: var(--spacing-medium);
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .label {
   font-family: var(--font-secondary);
-  font-weight: 500;
-  margin-bottom: calc(var(--spacing-small) / 2);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
 }
 
 .input,
-.select,
 .textarea {
-  padding: var(--spacing-small);
-  border: 1px solid var(--accent-primary);
+  padding: 0.75rem;
+  border: 1px solid #ccc;
   border-radius: var(--border-radius);
   font-family: var(--font-primary);
   font-size: 1rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box; /* Important for padding */
 }
 
+/* Focus State */
 .input:focus,
-.select:focus,
 .textarea:focus {
   outline: none;
   border-color: var(--accent-secondary);
-  box-shadow: 0 0 0 3px var(--accent-secondary-light);
+  box-shadow: 0 0 0 3px rgba(var(--accent-secondary-rgb), 0.1);
+}
+
+/* Error State for Inputs */
+.inputError {
+  border-color: #e53e3e !important;
+  background-color: #fff5f5;
+}
+
+.errorText {
+  color: #e53e3e;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
 }
 
 .textarea {
-  resize: none;
-  overflow: auto;
-  min-height: 100px;
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Button Styling */
+.submitButton {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: var(--accent-secondary);
+}
+
+.submitButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Status Messages */
+.statusMessage {
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.success {
+  background-color: #d1fae5; /* Light green */
+  color: #065f46; /* Dark green */
+  border: 1px solid #a7f3d0;
+}
+
+.error {
+  background-color: #fee2e2; /* Light red */
+  color: #991b1b; /* Dark red */
+  border: 1px solid #fecaca;
+}
+
+.captchaContainer {
+  display: flex;
+  justify-content: center; /* Center the widget */
+  margin-top: var(--spacing-small);
+  margin-bottom: var(--spacing-small);
+  min-height: 65px; /* Prevent layout shift while loading */
 }

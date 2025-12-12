@@ -33,7 +33,6 @@ export default function Proefles() {
               sessie. We kijken ernaar uit je te verwelkomen bij EGS Goirle en
               je te laten zien wat we te bieden hebben!
             </p>
-            <h3>Aanmeldingsformulier Proefles</h3>
           </>
         }
       />
