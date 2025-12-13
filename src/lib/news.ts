@@ -1,4 +1,6 @@
 import { fetchAPI } from '@/getter/fetch';
+import sanitizeHtml from 'sanitize-html';
+import { htmlToText } from 'html-to-text';
 
 export interface NewsItem {
   id: string;
@@ -21,7 +23,13 @@ export interface NewsResponse {
 }
 
 export function extractFirstImage(content: string): string | null {
-  const match = /<img[^>]+src=['"]([^'"]+)['"]/.exec(content);
+  const cleanContent = sanitizeHtml(content, {
+    allowedTags: ['img'],
+    allowedAttributes: {
+      img: ['src'],
+    },
+  });
+  const match = /<img[^>]+src=['"]([^'"]+)['"]/.exec(cleanContent);
   return match ? match[1] : null;
 }
 
@@ -41,12 +49,13 @@ export function getFillerImage(id: string): string {
 export function createExcerpt(content: string): string {
   const MAXLENGTH = 150;
   if (!content) return '';
-  const cleanText = content
-    .replaceAll(/<img[^>]*>/g, '')
-    .replaceAll(/<[^>]*>/g, '')
-    .replaceAll('&nbsp;', ' ')
-    .replaceAll('&amp;', '&')
-    .replaceAll(/\s+/g, ' ')
+  // Convert HTML to plain text, skipping images
+  const cleanText = htmlToText(content, {
+    wordwrap: false,
+    selectors: [{ selector: 'img', format: 'skip' }],
+    // decodeEntities is true by default
+  })
+    .replace(/\s+/g, ' ')
     .trim();
   if (cleanText.length <= MAXLENGTH) return cleanText;
   return cleanText.slice(0, MAXLENGTH) + '...';
@@ -68,23 +77,30 @@ export async function fetchNewsData(
   afterCursor: string | null = null,
 ): Promise<NewsResponse> {
   try {
-    const interpolatedQuery = `
-        query GetNewsItems {
-          posts(first: ${nrItems}, after: "${afterCursor || ''}", where: {categoryNotIn: "9"}) {
-            pageInfo {
-                endCursor
-                hasNextPage
-            }
-            nodes {
-              id, title, content, date
-              author { node { firstName } }
-            }
+    const query = `
+      query GetNewsItems($first: Int!, $after: String) {
+        posts(first: $first, after: $after, where: {categoryNotIn: "9"}) {
+          pageInfo {
+            endCursor
+            hasNextPage
+          }
+          nodes {
+            id
+            title
+            content
+            date
+            author { node { firstName } }
           }
         }
+      }
     `;
 
-    // Use the interpolated query
-    const result = await fetchAPI(interpolatedQuery);
+    const variables = {
+      first: nrItems,
+      after: afterCursor || null,
+    };
+
+    const result = await fetchAPI(query, variables);
     return result.posts;
   } catch (e) {
     console.error('Error fetching news:', e);

@@ -68,7 +68,7 @@ export default function NewsList({
               <div className={styles['card-image-wrapper']}>
                 <Image
                   src={displayImage}
-                  alt="Plaatje bij nieuwsartikel"
+                  alt={item.title || 'Nieuwsafbeelding'}
                   fill
                   className={styles['card-image']}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
