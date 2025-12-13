@@ -54,14 +54,15 @@
 }
 
 .link:hover {
-  color: var(--accent-secondary);
+  color: var(--accent-tertiary);
   text-decoration: underline;
 }
 
 /* Contact sectie */
 .address {
-  font-style: normal; /* Reset de standaard italic van <address> */
+  font-style: normal;
   line-height: 1.6;
+  color: var(--text-primary);
 }
 
 .address p {

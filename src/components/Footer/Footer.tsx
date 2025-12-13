@@ -41,8 +41,8 @@ const Footer = () => {
             <p>Wijkcentrum &apos;De Wildacker&apos;</p>
             <p>van Hogendorpplein 73</p>
             <p>5051 ST Goirle</p>
-            <a href="mailto:egs@schaakclubegs.nl" className={styles.link}>
-              egs@schaakclubegs.nl
+            <a href="mailto:egsjeugd@gmail.com" className={styles.link}>
+              egsjeugd@gmail.com
             </a>
           </address>
         </div>
