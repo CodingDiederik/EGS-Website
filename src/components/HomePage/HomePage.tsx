@@ -1,6 +1,6 @@
 import HeroGallery from './Gallery/HeroGallery';
 import styles from './HomePage.module.css';
-import NewsSection from './News/NewsSection';
+import NewsSection from '../common/News/NewsSection';
 import MainContentWrapper from './MainContentWrapper';
 
 const HomePage: React.FC = async () => {
@@ -12,7 +12,8 @@ const HomePage: React.FC = async () => {
       <MainContentWrapper>
         {/* Recent Nieuws sectie */}
         <main className={styles['main-content']}>
-          <NewsSection />
+          <h2>Recent nieuws</h2>
+          <NewsSection count={6} />
         </main>
       </MainContentWrapper>
     </div>

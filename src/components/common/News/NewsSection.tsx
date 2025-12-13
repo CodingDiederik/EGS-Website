@@ -4,13 +4,13 @@ import styles from './NewsSection.module.css';
 import { fetchAPI } from '@/getter/fetch';
 
 interface NewsItem {
-  id: string;
-  title: string;
-  content: string;
-  date: Date;
-  author: {
-    node: {
-      firstName: string;
+  id?: string;
+  title?: string;
+  content?: string;
+  date?: Date;
+  author?: {
+    node?: {
+      firstName?: string;
     };
   } | null;
 }
@@ -45,6 +45,9 @@ function getFillerImage(id: string): string {
 
 function createExcerpt(content: string): string {
   const MAXLENGTH = 150;
+
+  if (!content) return '';
+
   let cleanText = content
     .replaceAll(/<img[^>]*>/g, '')
     .replaceAll(/<[^>]*>/g, '');
@@ -69,18 +72,23 @@ function formatDate(dateString: Date): string {
     .replaceAll('/', '-');
 }
 
-async function fetchNewsData(): Promise<NewsItem[]> {
-  try {
-    const query = `
-      query GetNewsItems {
-        posts(first: 6, where: {categoryNotIn: "9"}) {
-          nodes {
-            id, title, content, date
-            author { node { firstName } }
+async function fetchNewsData(nrItems?: number): Promise<NewsItem[]> {
+  if (nrItems === undefined || nrItems > 12) {
+    nrItems = 12;
+  }
+
+  const query = `
+        query GetNewsItems {
+          posts(first: ${nrItems}, where: {categoryNotIn: "9"}) {
+            nodes {
+              id, title, content, date
+              author { node { firstName } }
+            }
           }
         }
-      }
     `;
+
+  try {
     const data = await fetchAPI(query);
     return data.posts.nodes;
   } catch (e) {
@@ -89,21 +97,25 @@ async function fetchNewsData(): Promise<NewsItem[]> {
   }
 }
 
-const NewsSection: React.FC = async () => {
-  const newsItems = await fetchNewsData();
+interface NewsSectionProps {
+  count?: number;
+}
+
+export default async function NewsSection({ count }: NewsSectionProps) {
+  const newsItems = await fetchNewsData(count);
 
   return (
     <section id="news" className={styles['content-section']}>
-      <h2>Recent nieuws</h2>
       <div className={styles['news-grid']}>
         {newsItems.map((item) => {
           // 1. Try to get image from content
-          const extractedUrl = extractFirstImage(item.content);
+          const extractedUrl = extractFirstImage(item.content || '');
 
           // 2. If no image found, use the filler function
-          const displayImage = extractedUrl || getFillerImage(item.id);
+          const displayImage =
+            extractedUrl || getFillerImage(item.id || 'default');
 
-          const excerpt = createExcerpt(item.content);
+          const excerpt = createExcerpt(item.content || '');
           const authorName = createExcerpt(
             item.author?.node?.firstName || 'Jeugdsecretaris',
           );
@@ -121,7 +133,7 @@ const NewsSection: React.FC = async () => {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 <span className={styles['news-date']}>
-                  {formatDate(item.date)}
+                  {formatDate(item.date || new Date())}
                 </span>
               </div>
 
@@ -144,6 +156,4 @@ const NewsSection: React.FC = async () => {
       </div>
     </section>
   );
-};
-
-export default NewsSection;
+}
