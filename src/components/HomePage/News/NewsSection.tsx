@@ -45,10 +45,12 @@ function getFillerImage(id: string): string {
 
 function createExcerpt(content: string): string {
   const MAXLENGTH = 150;
-  let cleanText = content.replace(/<img[^>]*>/g, '').replace(/<[^>]*>/g, '');
+  let cleanText = content
+    .replaceAll(/<img[^>]*>/g, '')
+    .replaceAll(/<[^>]*>/g, '');
   cleanText = cleanText
-    .replaceAll(/&nbsp;/g, ' ')
-    .replaceAll(/&amp;/g, '&')
+    .replaceAll('&nbsp;', ' ')
+    .replaceAll('&amp;', '&')
     .replaceAll(/\s+/g, ' ')
     .trim();
 
@@ -64,7 +66,7 @@ function formatDate(dateString: Date): string {
     year: 'numeric',
   })
     .format(date)
-    .replaceAll(/\//g, '-');
+    .replaceAll('/', '-');
 }
 
 async function fetchNewsData(): Promise<NewsItem[]> {
