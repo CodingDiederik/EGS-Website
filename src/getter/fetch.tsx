@@ -29,7 +29,7 @@ export async function fetchAPI(query: string) {
       },
       body: JSON.stringify({ query }),
       credentials: 'include',
-      //next: { revalidate: 60 },
+      next: { revalidate: 60 },
     });
 
     if (!response.ok) {

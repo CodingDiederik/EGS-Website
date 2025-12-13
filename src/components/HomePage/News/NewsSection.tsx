@@ -19,7 +19,7 @@ interface NewsItem {
  * Extract the first image src from HTML content string
  */
 function extractFirstImage(content: string): string | null {
-  const match = content.match(/<img[^>]+src=['"]([^'"]+)['"]/);
+  const match = /<img[^>]+src=['"]([^'"]+)['"]/.exec(content);
   return match ? match[1] : null;
 }
 
@@ -36,10 +36,9 @@ function getFillerImage(id: string): string {
   // Convert string hash to a number
   let sum = 0;
   for (let i = 0; i < id.length; i++) {
-    sum += id.charCodeAt(i);
+    sum += id.codePointAt(i) || 0;
   }
 
-  console.log('Using filler image for news item ID:', sum % fillers.length);
   // Modulo operator ensures we cycle through the 3 images endlessly
   return fillers[sum % fillers.length];
 }
@@ -48,9 +47,9 @@ function createExcerpt(content: string): string {
   const MAXLENGTH = 150;
   let cleanText = content.replace(/<img[^>]*>/g, '').replace(/<[^>]*>/g, '');
   cleanText = cleanText
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/\s+/g, ' ')
+    .replaceAll(/&nbsp;/g, ' ')
+    .replaceAll(/&amp;/g, '&')
+    .replaceAll(/\s+/g, ' ')
     .trim();
 
   if (cleanText.length <= MAXLENGTH) return cleanText;
@@ -65,7 +64,7 @@ function formatDate(dateString: Date): string {
     year: 'numeric',
   })
     .format(date)
-    .replace(/\//g, '-');
+    .replaceAll(/\//g, '-');
 }
 
 async function fetchNewsData(): Promise<NewsItem[]> {
@@ -112,7 +111,7 @@ const NewsSection: React.FC = async () => {
               <div className={styles['card-image-wrapper']}>
                 <Image
                   src={displayImage}
-                  alt={item.title}
+                  alt="Plaatje bij nieuwsartikel"
                   fill
                   className={styles['card-image']}
                   // Important: If using external WP images + local fillers,
