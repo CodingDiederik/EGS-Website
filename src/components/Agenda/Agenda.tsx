@@ -51,7 +51,7 @@ async function fetchAgendaTable(): Promise<string | null> {
   try {
     const query = `
       query GetAgenda {
-        posts(where: {id: 90}) {
+        posts(where: {categoryName: "agenda"}, first: 1) {
           edges {
             node {
               content
