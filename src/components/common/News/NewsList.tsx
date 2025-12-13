@@ -25,7 +25,7 @@ export default function NewsList({
   initialCursor,
   initialHasNext,
   displayLoadMore,
-}: NewsListProps) {
+}: Readonly<NewsListProps>) {
   const [posts, setPosts] = useState<NewsItem[]>(initialPosts);
   const [cursor, setCursor] = useState<string | null>(initialCursor);
   const [hasNext, setHasNext] = useState<boolean>(initialHasNext);

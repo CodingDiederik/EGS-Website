@@ -55,7 +55,7 @@ export function createExcerpt(content: string): string {
     selectors: [{ selector: 'img', format: 'skip' }],
     // decodeEntities is true by default
   })
-    .replace(/\s+/g, ' ')
+    .replaceAll(/\s+/g, ' ')
     .trim();
   if (cleanText.length <= MAXLENGTH) return cleanText;
   return cleanText.slice(0, MAXLENGTH) + '...';

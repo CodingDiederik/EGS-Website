@@ -10,7 +10,7 @@ interface NewsSectionProps {
 export default async function NewsSection({
   count,
   displayLoadMore,
-}: NewsSectionProps) {
+}: Readonly<NewsSectionProps>) {
   // Fetch initial data on the server (SEO friendly)
   const data = await fetchNewsData(count);
 
