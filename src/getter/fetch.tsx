@@ -3,7 +3,10 @@
  * @param query GraphQL query string
  * @returns
  */
-export async function fetchAPI(query: string) {
+export async function fetchAPI(
+  query: string,
+  variables?: Record<string, unknown>,
+) {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
   if (!process.env.WP_USERNAME || !process.env.WP_PASSWORD) {
@@ -21,13 +24,23 @@ export async function fetchAPI(query: string) {
       `${process.env.WP_USERNAME}:${process.env.WP_PASSWORD}`,
     ).toString('base64');
 
+    type GraphQLRequestBody = {
+      query: string;
+      variables?: Record<string, unknown>;
+    };
+
+    const body: GraphQLRequestBody = { query };
+    if (variables && Object.keys(variables).length > 0) {
+      body.variables = variables;
+    }
+
     const response = await fetch(`${process.env.BACKEND_URL}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Basic ${auth}`,
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify(body),
       credentials: 'include',
       next: { revalidate: 60 },
     });
