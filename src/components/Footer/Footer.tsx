@@ -59,7 +59,7 @@ const Footer = () => {
                 className={styles.link}
               >
                 <Image
-                  src="/facebook.png"
+                  src="/common/facebook.png"
                   alt="Facebook Logo"
                   width={32}
                   height={32}
@@ -76,7 +76,7 @@ const Footer = () => {
                 className={styles.link}
               >
                 <Image
-                  src="/instagram.png"
+                  src="/common/instagram.png"
                   alt="Instagram Logo"
                   width={28}
                   height={28}

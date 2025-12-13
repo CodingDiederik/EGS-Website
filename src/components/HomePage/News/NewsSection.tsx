@@ -1,74 +1,90 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './NewsSection.module.css';
 import { fetchAPI } from '@/getter/fetch';
 
 interface NewsItem {
-  id: number;
+  id: string;
   title: string;
-  excerpt: string;
+  content: string;
   date: Date;
   author: {
     node: {
-      lastName: string;
+      firstName: string;
     };
   } | null;
 }
 
 /**
- * Function to convert the content to show only the first part
- * @param content
- * @returns
+ * Extract the first image src from HTML content string
  */
-function convertContent(content: string): string {
-  const MAXLENGTH = 200; // Maximum length of the preview
-  // The string contains <p> and </p> tags from Wordpress, so we need to remove them
-  content = content.replaceAll(/<[^>]*>/g, '').trim();
-  if (content.length <= MAXLENGTH) {
-    return content;
+function extractFirstImage(content: string): string | null {
+  const match = /<img[^>]+src=['"]([^'"]+)['"]/.exec(content);
+  return match ? match[1] : null;
+}
+
+/**
+ * Select a filler image based on ID (deterministic)
+ */
+function getFillerImage(id: string): string {
+  const fillers = [
+    '/fillers/filler1.jpg',
+    '/fillers/filler2.jpg',
+    '/fillers/filler3.jpg',
+  ];
+
+  // Convert string hash to a number
+  let sum = 0;
+  for (let i = 0; i < id.length; i++) {
+    sum += id.codePointAt(i) || 0;
   }
-  return content.slice(0, MAXLENGTH) + '...';
+
+  // Modulo operator ensures we cycle through the 3 images endlessly
+  return fillers[sum % fillers.length];
 }
 
-/**
- * Function to convert the data format to only show dd-mm-yyyy
- * @param dateString
- * @returns string in format dd-mm-yyyy
- */
-function convertDate(dateString: Date): string {
+function createExcerpt(content: string): string {
+  const MAXLENGTH = 150;
+  let cleanText = content
+    .replaceAll(/<img[^>]*>/g, '')
+    .replaceAll(/<[^>]*>/g, '');
+  cleanText = cleanText
+    .replaceAll('&nbsp;', ' ')
+    .replaceAll('&amp;', '&')
+    .replaceAll(/\s+/g, ' ')
+    .trim();
+
+  if (cleanText.length <= MAXLENGTH) return cleanText;
+  return cleanText.slice(0, MAXLENGTH) + '...';
+}
+
+function formatDate(dateString: Date): string {
   const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-  const year = date.getFullYear();
-  return `${day}-${month}-${year}`;
+  return new Intl.DateTimeFormat('nl-NL', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+    .format(date)
+    .replaceAll('/', '-');
 }
 
-/**
- * Function to fetch news data from the backend
- * @returns the news data as an array of NewsItem objects
- */
 async function fetchNewsData(): Promise<NewsItem[]> {
   try {
     const query = `
-      query {
-        posts(first: 6) {
+      query GetNewsItems {
+        posts(first: 6, where: {categoryNotIn: "9"}) {
           nodes {
-            id
-            title
-            excerpt
-            date
-            author {
-              node {
-                lastName
-              }
-            }
+            id, title, content, date
+            author { node { firstName } }
           }
         }
       }
     `;
-
     const data = await fetchAPI(query);
     return data.posts.nodes;
-  } catch {
+  } catch (e) {
+    console.error('Error fetching news:', e);
     return [];
   }
 }
@@ -80,23 +96,51 @@ const NewsSection: React.FC = async () => {
     <section id="news" className={styles['content-section']}>
       <h2>Recent nieuws</h2>
       <div className={styles['news-grid']}>
-        {newsItems.map((item) => (
-          <article key={item.id} className={styles['news-card']}>
-            <span className={styles['news-date']}>
-              {convertDate(item.date)}
-            </span>
-            <h3>{item.title}</h3>
-            <span className={styles['news-separator']}>
-              <span className={styles['news-author']}>
-                {item.author?.node?.lastName ?? ' '}
-              </span>
-            </span>
-            <p>{convertContent(item.excerpt)}</p>
-            <Link href={`/nieuws/${item.id}`} className={styles['read-more']}>
-              Lees verder &rarr;
-            </Link>
-          </article>
-        ))}
+        {newsItems.map((item) => {
+          // 1. Try to get image from content
+          const extractedUrl = extractFirstImage(item.content);
+
+          // 2. If no image found, use the filler function
+          const displayImage = extractedUrl || getFillerImage(item.id);
+
+          const excerpt = createExcerpt(item.content);
+          const authorName = createExcerpt(
+            item.author?.node?.firstName || 'Jeugdsecretaris',
+          );
+
+          return (
+            <article key={item.id} className={styles['news-card']}>
+              <div className={styles['card-image-wrapper']}>
+                <Image
+                  src={displayImage}
+                  alt="Plaatje bij nieuwsartikel"
+                  fill
+                  className={styles['card-image']}
+                  // Important: If using external WP images + local fillers,
+                  // Next.js handles optimization automatically for both.
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                <span className={styles['news-date']}>
+                  {formatDate(item.date)}
+                </span>
+              </div>
+
+              <div className={styles['card-content']}>
+                <h3>{item.title}</h3>
+                <span className={styles['news-meta']}>
+                  <span className={styles['news-author']}>{authorName}</span>
+                </span>
+                <p>{excerpt}</p>
+                <Link
+                  href={`/nieuws/${item.id}`}
+                  className={styles['read-more']}
+                >
+                  Lees verder &rarr;
+                </Link>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
