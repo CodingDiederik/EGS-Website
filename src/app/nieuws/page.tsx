@@ -9,7 +9,7 @@ export default function Nieuws() {
       <Introduction text="Nieuws" />
       <div className="content-wrapper">
         <div className="spacer" />
-        <NewsSection />
+        <NewsSection displayLoadMore={true} />
       </div>
     </div>
   );
