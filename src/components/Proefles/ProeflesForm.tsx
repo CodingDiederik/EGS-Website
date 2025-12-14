@@ -1,96 +1,42 @@
 'use client';
 import styles from './ProeflesForm.module.css';
 import { useState } from 'react';
+import { validateProeflesForm, submitProeflesForm, ProeflesFormData, FieldErrors } from '@/lib/proeflesFormLogic';
+
 
 const ProeflesForm = () => {
-  const [status, setStatus] = useState<
-    'idle' | 'loading' | 'success' | 'error'
-  >('idle');
-  const [statusMessage, setStatusMessage] = useState<string>('');
-  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
+  const [formData, setFormData] = useState<ProeflesFormData>({
+    name: '',
+    email: '',
+    optionalMessage: '',
+  });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
-  const validateForm = (formData: FormData) => {
-    const errors: { [key: string]: string } = {};
-    const name = formData.get('person-name') as string;
-    const email = formData.get('email') as string;
-
-    if (!name || name.trim().length < 2) {
-      errors['person-name'] = 'Voer a.u.b. een geldige naam in.';
-    }
-
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!email || !emailRegex.test(email)) {
-      errors['email'] = 'Voer a.u.b. een geldig emailadres in.';
-    }
-
-    return errors;
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    setFieldErrors({});
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setStatus('loading');
-    setStatusMessage('');
+    setStatusMessage(null);
+    setFieldErrors({});
 
-    const form = event.currentTarget;
-    const body = new FormData(form);
-
-    // 1. Client-side Validation
-    const validationErrors = validateForm(body);
-    if (Object.keys(validationErrors).length > 0) {
-      setFieldErrors(validationErrors);
+    // Use centralized validation
+    const errors = validateProeflesForm(formData);
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       setStatus('error');
-      setStatusMessage('Controleer de rood gemarkeerde velden.');
       return;
     }
 
-    // 2. Add Necessary Hidden Fields
-    body.append('_wpcf7_unit_tag', 'wpcf7-f78-p1-o1'); // CF7 Unit Tag
-
-    try {
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: body,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data.status === 'mail_sent') {
-        setStatus('success');
-        setStatusMessage('Bedankt! Uw aanvraag is succesvol verzonden.');
-        form.reset();
-      } else if (data.status === 'spam') {
-        setStatus('error');
-        setStatusMessage(
-          'Uw bericht is gemarkeerd als spam. Probeer het later opnieuw.',
-        );
-      } else if (data.status === 'validation_failed') {
-        setStatus('error');
-        setStatusMessage(data.message || 'Er zijn validatiefouten.');
-        if (data.invalid_fields) {
-          const serverErrors: { [key: string]: string } = {};
-          data.invalid_fields.forEach(
-            (field: { field: string; message: string }) => {
-              serverErrors[field.field] = field.message;
-            },
-          );
-          setFieldErrors(serverErrors);
-        }
-      } else {
-        setStatus('error');
-        setStatusMessage(
-          data.message || 'Er is iets misgegaan bij het verzenden.',
-        );
-      }
-    } catch (error) {
-      console.error(error);
+    // Use centralized submit logic
+    const result = await submitProeflesForm(formData);
+    if (result.success) {
+      setStatus('success');
+      setStatusMessage(result.message);
+      setFormData({ name: '', email: '', optionalMessage: '' });
+    } else {
       setStatus('error');
-      setStatusMessage('Er is een technische fout opgetreden.');
+      setStatusMessage(result.message);
     }
   };
 
@@ -123,6 +69,8 @@ const ProeflesForm = () => {
               fieldErrors['person-name'] ? styles.inputError : ''
             }`}
             disabled={status === 'loading'}
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
           {fieldErrors['person-name'] && (
             <span className={styles.errorText}>
@@ -144,6 +92,8 @@ const ProeflesForm = () => {
               fieldErrors['email'] ? styles.inputError : ''
             }`}
             disabled={status === 'loading'}
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           />
           {fieldErrors['email'] && (
             <span
@@ -166,6 +116,8 @@ const ProeflesForm = () => {
             rows={4}
             className={styles.textarea}
             disabled={status === 'loading'}
+            value={formData.optionalMessage}
+            onChange={(e) => setFormData({ ...formData, optionalMessage: e.target.value })}
           ></textarea>
         </div>
 
