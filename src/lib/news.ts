@@ -1,4 +1,4 @@
-import { fetchAPI } from '@/getter/fetch';
+import { fetchAPI } from '@/lib/fetch';
 import sanitizeHtml from 'sanitize-html';
 import { htmlToText } from 'html-to-text';
 
