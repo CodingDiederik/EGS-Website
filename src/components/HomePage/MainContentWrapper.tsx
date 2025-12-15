@@ -5,6 +5,7 @@ const MainContentWrapper: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [offset, setOffset] = useState(0);
+  const [isSmall, setIsSmall] = useState(false);
   const ticking = useRef(false);
 
   useEffect(() => {
@@ -21,11 +22,25 @@ const MainContentWrapper: React.FC<{ children: ReactNode }> = ({
     return () => globalThis.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 880px)');
+    const update = () => setIsSmall(mq.matches);
+    update();
+    if (mq.addEventListener) mq.addEventListener('change', update);
+    else mq.onchange = update;
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', update);
+      else mq.onchange = null;
+    };
+  }, []);
+
   return (
     <div
       style={{
-        transform: `translateY(-${offset}px)`,
-        transition: 'transform 480ms cubic-bezier(0.22, 1, 0.36, 1)',
+        transform: isSmall ? 'none' : `translateY(-${offset}px)`,
+        transition: isSmall
+          ? 'none'
+          : 'transform 480ms cubic-bezier(0.22, 1, 0.36, 1)',
       }}
     >
       {children}
