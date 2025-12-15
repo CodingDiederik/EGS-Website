@@ -1,8 +1,12 @@
 'use client';
 import styles from './ProeflesForm.module.css';
 import { useState } from 'react';
-import { validateProeflesForm, submitProeflesForm, ProeflesFormData, FieldErrors } from '@/lib/proeflesFormLogic';
-
+import {
+  validateProeflesForm,
+  submitProeflesForm,
+  ProeflesFormData,
+  FieldErrors,
+} from '@/lib/proeflesFormLogic';
 
 const ProeflesForm = () => {
   const [formData, setFormData] = useState<ProeflesFormData>({
@@ -10,7 +14,9 @@ const ProeflesForm = () => {
     email: '',
     optionalMessage: '',
   });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<
+    'idle' | 'loading' | 'success' | 'error'
+  >('idle');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
@@ -93,7 +99,9 @@ const ProeflesForm = () => {
             }`}
             disabled={status === 'loading'}
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
           />
           {fieldErrors['email'] && (
             <span
@@ -117,7 +125,9 @@ const ProeflesForm = () => {
             className={styles.textarea}
             disabled={status === 'loading'}
             value={formData.optionalMessage}
-            onChange={(e) => setFormData({ ...formData, optionalMessage: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, optionalMessage: e.target.value })
+            }
           ></textarea>
         </div>
 

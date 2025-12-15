@@ -9,9 +9,10 @@ export async function POST(req: Request) {
     googleFormData.append('entry.2005620554', body.name);
     googleFormData.append('entry.1045781291', body.email);
     googleFormData.append('entry.839337160', body.optionalMessage || '');
-    
+
     // 2. The Form Action URL
-    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSf_ncE9_px-CPOuRNFVppNpPrTxZHT2SYs6xl6Dln6p89BwlQ/formResponse';
+    const GOOGLE_FORM_URL =
+      'https://docs.google.com/forms/u/0/d/e/1FAIpQLSf_ncE9_px-CPOuRNFVppNpPrTxZHT2SYs6xl6Dln6p89BwlQ/formResponse';
 
     // 3. Send the data to Google
     const response = await fetch(GOOGLE_FORM_URL, {
@@ -26,11 +27,19 @@ export async function POST(req: Request) {
     console.log('Google Form response body:', await response.text());
 
     if (response.ok) {
-      return NextResponse.json({ message: 'Je proefles aanvraag is succesvol verzonden!' });
+      return NextResponse.json({
+        message: 'Je proefles aanvraag is succesvol verzonden!',
+      });
     } else {
-      return NextResponse.json({ message: 'Er is iets mis gegaan' }, { status: 500 });
+      return NextResponse.json(
+        { message: 'Er is iets mis gegaan' },
+        { status: 500 },
+      );
     }
   } catch {
-    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Internal Server Error' },
+      { status: 500 },
+    );
   }
 }

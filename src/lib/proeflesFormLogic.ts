@@ -19,7 +19,9 @@ export function validateProeflesForm(data: ProeflesFormData): FieldErrors {
 }
 
 // Submit form data to API
-export async function submitProeflesForm(data: ProeflesFormData): Promise<{ success: boolean; message: string }> {
+export async function submitProeflesForm(
+  data: ProeflesFormData,
+): Promise<{ success: boolean; message: string }> {
   try {
     console.log('Submitting form data:', data);
     const response = await fetch('/api/submitform', {
@@ -30,18 +32,24 @@ export async function submitProeflesForm(data: ProeflesFormData): Promise<{ succ
       body: JSON.stringify(data),
     });
     if (response.ok) {
-      return { success: true, message: 'Je proefles aanvraag is succesvol verzonden!' };
+      return {
+        success: true,
+        message: 'Je proefles aanvraag is succesvol verzonden!',
+      };
     } else {
       const result = await response.json().catch(() => ({}));
       return {
         success: false,
-        message: result.message || 'Er is een fout opgetreden bij het verzenden van je aanvraag. Probeer het later opnieuw.',
+        message:
+          result.message ||
+          'Er is een fout opgetreden bij het verzenden van je aanvraag. Probeer het later opnieuw.',
       };
     }
   } catch {
     return {
       success: false,
-      message: 'Er is een interne serverfout opgetreden. Probeer het later opnieuw.',
+      message:
+        'Er is een interne serverfout opgetreden. Probeer het later opnieuw.',
     };
   }
 }
