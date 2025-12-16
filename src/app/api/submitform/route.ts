@@ -12,8 +12,12 @@ export async function POST(req: Request) {
     googleFormData.append('entry.839337160', body.optionalMessage || '');
 
     // 2. The Form Action URL
-    const GOOGLE_FORM_URL =
-      'https://docs.google.com/forms/u/0/d/e/1FAIpQLSf_ncE9_px-CPOuRNFVppNpPrTxZHT2SYs6xl6Dln6p89BwlQ/formResponse';
+    if (!process.env.GOOGLE_FORMS_URL) {
+      throw new Error(
+        'GOOGLE_FORMS_URL is not defined in environment variables',
+      );
+    }
+    const GOOGLE_FORM_URL = process.env.GOOGLE_FORMS_URL as string;
 
     // 3. Send the data to Google
     const response = await fetch(GOOGLE_FORM_URL, {
@@ -30,14 +34,17 @@ export async function POST(req: Request) {
       });
     } else {
       return NextResponse.json(
-        { message: 'Er is iets mis gegaan' },
+        {
+          message:
+            'Er is een fout opgetreden bij het verzenden van je aanvraag. Controleer je gegevens en probeer het later opnieuw.',
+        },
         { status: 500 },
       );
     }
   } catch (error) {
     console.error('Error submitting form:', error);
     return NextResponse.json(
-      { message: 'Internal Server Error' },
+      { message: 'Interne serverfout. Probeer het later opnieuw.' },
       { status: 500 },
     );
   }
