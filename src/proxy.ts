@@ -8,20 +8,15 @@ export const config = {
 
 export default async function proxy(request: NextRequest) {
   // Get the User's IP to use as the unique identifier
-  let ip = request.ip ?? '127.0.0.1';
+  let ip = '127.0.0.1';
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  const realIp = request.headers.get('x-real-ip');
 
-  // 2. If valid IP wasn't found (common in local dev or some proxies), check headers
-  if (ip === '127.0.0.1') {
-    const forwardedFor = request.headers.get('x-forwarded-for');
-    const realIp = request.headers.get('x-real-ip');
-
-    if (forwardedFor) {
-      // x-forwarded-for can be a list (e.g. "client, proxy1, proxy2").
-      // The first one is the client.
-      ip = forwardedFor.split(',')[0].trim();
-    } else if (realIp) {
-      ip = realIp.trim();
-    }
+  if (forwardedFor) {
+    // The first one is the client.
+    ip = forwardedFor.split(',')[0].trim();
+  } else if (realIp) {
+    ip = realIp.trim();
   }
 
   // Rate Limit check
