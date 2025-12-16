@@ -6,7 +6,7 @@ export const config = {
   matcher: '/api/:path*',
 };
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   // Get the User's IP to use as the unique identifier
   let ip = request.ip ?? '127.0.0.1';
 
