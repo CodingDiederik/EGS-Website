@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { checkOkayResponse } from '@/lib/proeflesFormLogic';
 
 export async function POST(req: Request) {
   try {
@@ -23,10 +24,7 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log('Google Form response status:', response.status);
-    console.log('Google Form response body:', await response.text());
-
-    if (response.ok) {
+    if (response.ok && checkOkayResponse(await response.text())) {
       return NextResponse.json({
         message: 'Je proefles aanvraag is succesvol verzonden!',
       });
@@ -36,7 +34,8 @@ export async function POST(req: Request) {
         { status: 500 },
       );
     }
-  } catch {
+  } catch (error) {
+    console.error('Error submitting form:', error);
     return NextResponse.json(
       { message: 'Internal Server Error' },
       { status: 500 },
