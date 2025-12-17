@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { checkOkayResponse } from '@/lib/proeflesFormLogic';
 
 export async function POST(req: Request) {
   try {
@@ -11,8 +12,12 @@ export async function POST(req: Request) {
     googleFormData.append('entry.839337160', body.optionalMessage || '');
 
     // 2. The Form Action URL
-    const GOOGLE_FORM_URL =
-      'https://docs.google.com/forms/u/0/d/e/1FAIpQLSf_ncE9_px-CPOuRNFVppNpPrTxZHT2SYs6xl6Dln6p89BwlQ/formResponse';
+    if (!process.env.GOOGLE_FORMS_URL) {
+      throw new Error(
+        'GOOGLE_FORMS_URL is not defined in environment variables',
+      );
+    }
+    const GOOGLE_FORM_URL = process.env.GOOGLE_FORMS_URL as string;
 
     // 3. Send the data to Google
     const response = await fetch(GOOGLE_FORM_URL, {
@@ -23,22 +28,23 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log('Google Form response status:', response.status);
-    console.log('Google Form response body:', await response.text());
-
-    if (response.ok) {
+    if (response.ok && checkOkayResponse(await response.text())) {
       return NextResponse.json({
         message: 'Je proefles aanvraag is succesvol verzonden!',
       });
     } else {
       return NextResponse.json(
-        { message: 'Er is iets mis gegaan' },
+        {
+          message:
+            'Er is een fout opgetreden bij het verzenden van je aanvraag. Controleer je gegevens en probeer het later opnieuw.',
+        },
         { status: 500 },
       );
     }
-  } catch {
+  } catch (error) {
+    console.error('Error submitting form:', error);
     return NextResponse.json(
-      { message: 'Internal Server Error' },
+      { message: 'Interne serverfout. Probeer het later opnieuw.' },
       { status: 500 },
     );
   }

@@ -52,12 +52,6 @@ const ProeflesForm = () => {
 
       <form
         className={styles.form}
-        action={
-          process.env.NEXT_PUBLIC_FORMS_URL ||
-          (() => {
-            throw new Error('FORMS_URL not defined');
-          })()
-        }
         method="post"
         onSubmit={handleSubmit}
         noValidate
