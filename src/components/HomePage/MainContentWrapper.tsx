@@ -5,7 +5,11 @@ const MainContentWrapper: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [offset, setOffset] = useState(0);
-  const [isSmall, setIsSmall] = useState(false);
+  const [isSmall, setIsSmall] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(max-width: 780px)').matches,
+  );
   const ticking = useRef(false);
 
   useEffect(() => {
@@ -23,7 +27,7 @@ const MainContentWrapper: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-    const mq = globalThis.matchMedia('(max-width: 880px)');
+    const mq = globalThis.matchMedia('(max-width: 780px)');
     const update = () => setIsSmall(mq.matches);
     update();
     if (mq.addEventListener) mq.addEventListener('change', update);
