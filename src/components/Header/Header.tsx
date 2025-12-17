@@ -89,14 +89,13 @@ const Header = () => {
             className={styles.hamburger}
             aria-label="Toggle navigation menu"
             aria-expanded={isOpen}
-            aria-pressed={isOpen}
             aria-controls="primary-navigation"
             data-open={isOpen}
             onClick={() => setIsOpen(!isOpen)}
           >
-            <span className={styles.hamburgerLine} data-open={isOpen}></span>
-            <span className={styles.hamburgerLine} data-open={isOpen}></span>
-            <span className={styles.hamburgerLine} data-open={isOpen}></span>
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
           </button>
         </div>
 

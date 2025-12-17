@@ -7,7 +7,7 @@ const MainContentWrapper: React.FC<{ children: ReactNode }> = ({
   const [offset, setOffset] = useState(0);
   const [isSmall, setIsSmall] = useState(
     () =>
-      typeof globalThis !== 'undefined' &&
+      typeof window !== 'undefined' &&
       globalThis.matchMedia('(max-width: 780px)').matches,
   );
   const ticking = useRef(false);

@@ -51,7 +51,7 @@ export async function fetchAgendaTable(): Promise<string | null> {
         'span',
       ],
       allowedAttributes: {
-        '*': ['class', 'style'],
+        '*': ['class'],
         td: ['colspan', 'rowspan'],
         th: ['colspan', 'rowspan'],
       },
