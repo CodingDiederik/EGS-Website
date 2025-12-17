@@ -156,12 +156,6 @@
     border-top: none;
   }
 
-  .tableWrapper table {
-    min-width: unset;
-    font-size: 0 ninerem;
-    min-width: 0;
-  }
-
   .tableWrapper td {
     padding: 12px 14px;
   }

@@ -23,7 +23,7 @@ const MainContentWrapper: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 880px)');
+    const mq = globalThis.matchMedia('(max-width: 880px)');
     const update = () => setIsSmall(mq.matches);
     update();
     if (mq.addEventListener) mq.addEventListener('change', update);
