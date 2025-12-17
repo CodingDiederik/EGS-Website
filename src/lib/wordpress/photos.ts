@@ -1,7 +1,20 @@
-type FileBirdFolder = {
+import { fetchAPI } from './articles';
+
+export type FileBirdFolder = {
   id: number;
   title: string;
   'data-count': number;
+};
+
+export type Photo = {
+  id: string;
+  sourceURL: string;
+  title: string;
+  mediaDetails: {
+    height: number;
+    width: number;
+  };
+  altText: string;
 };
 
 /**
@@ -47,4 +60,80 @@ export function removeEmptyFolders(
   }
 
   return newFolders;
+}
+
+export async function fetchPreviewPhotoId(
+  folderId: number,
+): Promise<null | number> {
+  try {
+    const response = await fetch(
+      `${process.env.WP_FILEBIRD_API_URL}/attachment-id/?folder_id=${folderId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
+        },
+        //next: { revalidate: 300 },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch photo IDs for folder ${folderId}: ${response.status}`,
+      );
+    }
+
+    const json = await response.json();
+
+    if (json.data == null) {
+      return null;
+    }
+
+    const ids = json.data.attachment_ids;
+
+    if (!ids.length) {
+      return null;
+    }
+
+    return ids[ids.length % 4];
+  } catch (error) {
+    console.error(`Failed to fetch preview for folder ${folderId}`, error);
+    return null;
+  }
+}
+
+export async function fetchPhoto(photoId: number | null) {
+  if (!photoId) {
+    return null;
+  }
+
+  const query = `
+    query GetPhoto {
+      mediaItem(id: ${photoId}, idType: DATABASE_ID) {
+        id
+        sourceUrl
+        altText
+        title
+        mediaDetails {
+          width
+          height
+        }
+      }
+    }
+  `;
+
+  const data = await fetchAPI(query);
+  if (data.mediaItem) {
+    return {
+      id: data.mediaItem.id,
+      src: data.mediaItem.sourceUrl,
+      alt: data.mediaItem.altText,
+      title: data.mediaItem.title,
+      width: data.mediaItem.mediaDetails.width,
+      height: data.mediaItem.mediaDetails.height,
+    };
+  }
+
+  return null;
 }
