@@ -11,7 +11,7 @@ import {
   createExcerpt,
   formatDate,
 } from '@/lib/news';
-import styles from './NewsSection.module.css'; // Make sure this path is correct
+import styles from './NewsSection.module.css';
 
 interface NewsListProps {
   initialPosts: NewsItem[];
