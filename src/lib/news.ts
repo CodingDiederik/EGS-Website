@@ -32,7 +32,7 @@ export function extractFirstImage(content: string): string | null {
   const match = /<img[^>]+src=['"]([^'"]+)['"]/.exec(cleanContent);
   const matchedImage = match ? match[1] : null;
   // force https for images from wordpress
-  if (matchedImage && matchedImage.startsWith('http://')) {
+  if (matchedImage?.startsWith('http://')) {
     return matchedImage.replaceAll('http://', 'https://');
   }
   return matchedImage;

@@ -71,14 +71,6 @@
   border-bottom: #000 3px solid;
 }
 
-.trackSeparator {
-  height: 3px;
-  width: 100%;
-  background-color: #000;
-  /* Ensure it doesn't shrink if flex space is tight */
-  flex-shrink: 0;
-}
-
 .imageTrack {
   display: flex;
   flex-shrink: 0;

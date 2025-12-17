@@ -37,8 +37,6 @@ const HeroGallery: React.FC = () => {
           ))}
         </div>
 
-        <div className={styles.trackSeparator} aria-hidden="true" />
-
         {/* Track 2: Scrolls Left-to-Right (Slow) */}
         <div
           className={`${styles.imageTrack} ${styles.scrollLeftToRight} ${styles.track2}`}
@@ -61,8 +59,6 @@ const HeroGallery: React.FC = () => {
           ))}
         </div>
 
-        <div className={styles.trackSeparator} aria-hidden="true" />
-
         {/* Track 3: Scrolls Right-to-Left (Medium) */}
         <div
           className={`${styles.imageTrack} ${styles.scrollRightToLeft} ${styles.track3}`}
@@ -84,8 +80,6 @@ const HeroGallery: React.FC = () => {
             </div>
           ))}
         </div>
-
-        <div className={styles.trackSeparator} aria-hidden="true" />
       </div>
 
       {/* Foreground content */}
