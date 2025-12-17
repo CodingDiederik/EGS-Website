@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchAPI } from '@/getter/fetch';
+import { fetchAPI } from '@/lib/wordpress/articles';
 import { load } from 'cheerio';
 import sanitizeHtml from 'sanitize-html';
 import styles from './Agenda.module.css';

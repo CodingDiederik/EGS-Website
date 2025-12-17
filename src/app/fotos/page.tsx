@@ -1,6 +1,7 @@
 import Introduction from '@/components/common/IntroductionImage/IntroductionImage';
 import TextSection from '@/components/common/TextSection/TextSection';
 import './page.css';
+import GalleryPage from '@/components/Fotos/Photogallery';
 
 export default function Fotos() {
   return (
@@ -28,6 +29,7 @@ export default function Fotos() {
           </>
         }
       />
+      <GalleryPage />
     </div>
   );
 }
