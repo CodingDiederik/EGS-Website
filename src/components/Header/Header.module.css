@@ -23,6 +23,38 @@
   width: 100%;
 }
 
+.hamburgerWrapper {
+  display: none;
+  align-items: center;
+  gap: var(--spacing-small);
+}
+
+.hamburgerLabel {
+  color: var(--text-secondary);
+  font-family: var(--font-secondary);
+  font-weight: 600;
+}
+
+.hamburger {
+  display: none; /* Hidden by default on desktop */
+  cursor: pointer;
+  background: none;
+  border: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px;
+  z-index: 101; /* Above the menu overlay */
+}
+
+.hamburgerLine {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-secondary);
+  transition: all 0.3s ease;
+  border-radius: 3px;
+}
+
 .navList {
   list-style: none;
   display: flex;
@@ -42,8 +74,35 @@
   transition: color 0.3s ease;
 }
 
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 90;
+}
+
+.backdropVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .navLink:hover {
   color: var(--accent-secondary);
+}
+
+.backToMainSiteLink {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-family: var(--font-primary);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.backToMainSiteLink:hover {
+  color: var(--accent-tertiary);
 }
 
 .backToMainSite {
@@ -57,4 +116,52 @@
     background-color 0.2s ease,
     color 0.2s ease;
   text-decoration: none;
+}
+
+@media (max-width: 780px) {
+  .hamburgerWrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-small);
+    margin-left: auto;
+  }
+  .hamburger {
+    display: flex; /* Show hamburger on mobile */
+  }
+
+  .navList {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 50%;
+    background-color: var(--background-accent);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--spacing-large);
+    gap: var(--spacing-large);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: var(--shadow);
+    z-index: 100;
+  }
+
+  /* add space above the first nav item so it isn't flush with the top */
+  .navList li:first-child {
+    margin-top: 10px;
+  }
+
+  .navLink {
+    font-size: 1.2rem;
+  }
+
+  .navList.open {
+    transform: translateX(0);
+  }
+
+  .backToMainSite {
+    margin-left: 0;
+    margin-top: auto;
+    text-align: center;
+  }
 }
