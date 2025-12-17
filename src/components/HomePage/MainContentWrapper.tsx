@@ -7,8 +7,8 @@ const MainContentWrapper: React.FC<{ children: ReactNode }> = ({
   const [offset, setOffset] = useState(0);
   const [isSmall, setIsSmall] = useState(
     () =>
-      typeof window !== 'undefined' &&
-      window.matchMedia('(max-width: 780px)').matches,
+      typeof globalThis !== 'undefined' &&
+      globalThis.matchMedia('(max-width: 780px)').matches,
   );
   const ticking = useRef(false);
 
@@ -16,7 +16,7 @@ const MainContentWrapper: React.FC<{ children: ReactNode }> = ({
     const handleScroll = () => {
       if (!ticking.current) {
         globalThis.requestAnimationFrame(() => {
-          setOffset(Math.min(window.scrollY, 150));
+          setOffset(Math.min(globalThis.scrollY, 150));
           ticking.current = false;
         });
         ticking.current = true;
