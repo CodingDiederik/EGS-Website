@@ -41,15 +41,12 @@ importers:
       react-dom:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
-      react-placeholder:
-        specifier: ^4.1.0
-        version: 4.1.0(react@19.2.3)
+      react-photo-album:
+        specifier: ^3.3.0
+        version: 3.3.0(@types/react@19.2.7)(react@19.2.3)
       sanitize-html:
         specifier: ^2.17.0
         version: 2.17.0
-      spinners-react:
-        specifier: ^1.0.11
-        version: 1.0.11(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       yet-another-react-lightbox:
         specifier: ^3.27.0
         version: 3.27.0(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -1946,10 +1943,15 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react-placeholder@4.1.0:
-    resolution: {integrity: sha512-z1HGD86NWJTYTQumHsmGH9jkozv4QHa9dju/vHVUd4f1svu23pf5v7QoBLBfs3kA1S9GLJaCeRMHLbO2SCdz5A==}
+  react-photo-album@3.3.0:
+    resolution: {integrity: sha512-2KvavqTjOgq+cgQDyewdEyOt9mIk4KO91Hq1mTXq8Jdpax7TYSV9ikySCfhlFOcfAC2vGQ7Femb626kJYovIAA==}
+    engines: {node: '>=18'}
     peerDependencies:
-      react: ^16.8.0 || ^17
+      '@types/react': ^18 || ^19
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   react@19.2.3:
     resolution: {integrity: sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA==}
@@ -2071,14 +2073,6 @@ packages:
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
-
-  spinners-react@1.0.11:
-    resolution: {integrity: sha512-CpQZixAI3dW+nLuJSrOTz4bDroSwLoIO5ljFt8wc1qy39yhK6MUubKnPD3z9/xIwNWFqy3mMRlW1mik/Fgqjow==}
-    peerDependencies:
-      '@types/react': ^16.x || ^17.x || ^18.x || ^19.x
-      '@types/react-dom': ^16.x || ^17.x || ^18.x || ^19.x
-      react: ^16.x || ^17.x || ^18.x || ^19.x
-      react-dom: ^16.x || ^17.x || ^18.x || ^19.x
 
   stable-hash@0.0.5:
     resolution: {integrity: sha512-+L3ccpzibovGXFK+Ap/f8LOS0ahMrHTf3xu7mMLSpEGU0EO9ucaysSylKo9eRDFNhWve/y275iPmIZ4z39a9iA==}
@@ -4255,9 +4249,11 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-placeholder@4.1.0(react@19.2.3):
+  react-photo-album@3.3.0(@types/react@19.2.7)(react@19.2.3):
     dependencies:
       react: 19.2.3
+    optionalDependencies:
+      '@types/react': 19.2.7
 
   react@19.2.3: {}
 
@@ -4436,13 +4432,6 @@ snapshots:
   slugify@1.6.6: {}
 
   source-map-js@1.2.1: {}
-
-  spinners-react@1.0.11(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
-    dependencies:
-      '@types/react': 19.2.7
-      '@types/react-dom': 19.2.3(@types/react@19.2.7)
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
 
   stable-hash@0.0.5: {}
 

@@ -17,6 +17,26 @@ export type Photo = {
   altText: string;
 };
 
+type PhotoData = {
+  id: string;
+  sourceUrl: string;
+  altText: string;
+  title: string;
+  mediaDetails: {
+    width: number;
+    height: number;
+  };
+};
+
+export type PhotoDetails = {
+  id: number;
+  src: string;
+  alt: string;
+  title: string;
+  width: number;
+  height: number;
+};
+
 /**
  * Function to fetch folders from the FileBird API.
  * @returns the list of folders
@@ -74,7 +94,7 @@ export async function fetchPreviewPhotoId(
           'Content-Type': 'application/json',
           Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
         },
-        //next: { revalidate: 300 },
+        next: { revalidate: 300 },
       },
     );
 
@@ -136,4 +156,85 @@ export async function fetchPhoto(photoId: number | null) {
   }
 
   return null;
+}
+
+export async function fetchPhotos(
+  photoIds: number[] | null,
+): Promise<null | PhotoDetails[]> {
+  if (!photoIds || photoIds.length === 0) {
+    return null;
+  }
+
+  const query = `
+    query GetPhotos {
+      mediaItems(where: { in: ${JSON.stringify(photoIds)} }) {
+        nodes {
+          id
+          sourceUrl
+          altText
+          title
+          mediaDetails {
+            width
+            height
+          }
+        }
+      }
+    }
+  `;
+
+  const data = await fetchAPI(query);
+
+  if (data.mediaItems) {
+    return data.mediaItems.nodes.map((item: PhotoData) => ({
+      id: item.id,
+      src: item.sourceUrl,
+      alt: item.altText,
+      title: item.title,
+      width: item.mediaDetails.width,
+      height: item.mediaDetails.height,
+    }));
+  }
+
+  return null;
+}
+
+export async function fetchPhotoIds(
+  folderId: number,
+): Promise<null | number[]> {
+  try {
+    const response = await fetch(
+      `${process.env.WP_FILEBIRD_API_URL}/attachment-id/?folder_id=${folderId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
+        },
+        //next: { revalidate: 300 },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch photo IDs for folder ${folderId}: ${response.status}`,
+      );
+    }
+
+    const json = await response.json();
+
+    if (json.data == null) {
+      return null;
+    }
+
+    const ids = json.data.attachment_ids;
+
+    if (!ids.length) {
+      return null;
+    }
+
+    return ids;
+  } catch (error) {
+    console.error(`Failed to fetch preview for folder ${folderId}`, error);
+    return null;
+  }
 }
