@@ -210,7 +210,7 @@ export async function fetchPhotoIds(
           'Content-Type': 'application/json',
           Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
         },
-        //next: { revalidate: 300 },
+        next: { revalidate: 300 },
       },
     );
 
@@ -235,6 +235,39 @@ export async function fetchPhotoIds(
     return ids;
   } catch (error) {
     console.error(`Failed to fetch preview for folder ${folderId}`, error);
+    return null;
+  }
+}
+
+export async function getFolderTitle(folderId: number): Promise<string | null> {
+  try {
+    const response = await fetch(
+      `${process.env.WP_FILEBIRD_API_URL}/folder/?folder_id=${folderId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
+        },
+        next: { revalidate: 300 },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch folder title for folder ${folderId}: ${response.status}`,
+      );
+    }
+
+    const json = await response.json();
+
+    if (json.data == null) {
+      return null;
+    }
+
+    return json.data.folder.name;
+  } catch (error) {
+    console.error(`Failed to fetch folder title for folder ${folderId}`, error);
     return null;
   }
 }

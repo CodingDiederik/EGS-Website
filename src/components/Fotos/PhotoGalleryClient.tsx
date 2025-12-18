@@ -11,6 +11,7 @@ import {
 import 'react-photo-album/rows.css';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
+import styles from './GallerySelect.module.css';
 
 function renderNextImage(
   { alt = '', title, sizes }: RenderImageProps,
@@ -45,11 +46,13 @@ function renderNextImage(
 type PhotoGalleryClientProps = {
   id: number | null;
   mediaItems: PhotoDetails[] | null;
+  title: string | null;
 };
 
 export default function PhotoGalleryClient({
   id,
   mediaItems,
+  title,
 }: PhotoGalleryClientProps) {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
   const photos = (mediaItems ?? []).map((item) => ({
@@ -80,9 +83,18 @@ export default function PhotoGalleryClient({
           </div>
         ) : hasPhotos ? (
           <>
-            {/* TODO: Add folder title fetching and display here */}
-            <h1>Foto-album</h1>
-            {/* Add button to return to gallery overview */}
+            <div className={styles.heading}>
+              <h1>{title ?? 'Foto-album'}</h1>
+              {/* Button to return to gallery overview */}
+              <button
+                onClick={() => {
+                  window.location.href = '/fotos';
+                }}
+                className={styles['back-to-gallery-button']}
+              >
+                Terug naar foto-overzicht
+              </button>
+            </div>
             <RowsPhotoAlbum
               photos={photos}
               render={{ image: renderNextImage }}

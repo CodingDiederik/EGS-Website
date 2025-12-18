@@ -2,6 +2,7 @@ import {
   fetchPhotoIds,
   fetchPhotos,
   PhotoDetails,
+  getFolderTitle,
 } from '@/lib/wordpress/photos';
 import PhotoGalleryClient from '@/components/Fotos/PhotoGalleryClient';
 import './page.css';
@@ -26,14 +27,15 @@ export default async function PhotoPage({ params }: PhotoPageProps) {
   const id = Number.isFinite(numericId) ? numericId : null;
 
   if (id == null) {
-    return <PhotoGalleryClient id={null} mediaItems={null} />;
+    return <PhotoGalleryClient id={null} mediaItems={null} title={null} />;
   }
 
   const mediaItems = await loadPhotos(id);
+  const title = await getFolderTitle(id);
 
   return (
     <div className="photo-page">
-      <PhotoGalleryClient id={id} mediaItems={mediaItems} />
+      <PhotoGalleryClient id={id} mediaItems={mediaItems} title={title} />
     </div>
   );
 }

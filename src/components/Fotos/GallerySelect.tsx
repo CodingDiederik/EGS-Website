@@ -10,7 +10,7 @@ import styles from './GallerySelect.module.css';
 
 export default async function GallerySelect() {
   const folders = await fetchFolders();
-  const filterdFolders = await removeEmptyFolders(folders);
+  const filterdFolders = removeEmptyFolders(folders);
 
   // Fetch previews for all folders
   const foldersWithPreview = [];
