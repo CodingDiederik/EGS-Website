@@ -36,11 +36,11 @@ pnpm dev
 
 ## Conventions
 
-All code in src, we use three main folders:
+All code is in src; we use three main folders:
 
-- app, here goes all of the pages
-- components, the components used by the pages
-- lib, all logic for pages go here
+- app: all pages go here
+- components: the components used by the pages
+- lib: all logic for pages goes here
 
 Code is formatted and linted by using:
 
@@ -50,7 +50,7 @@ pnpm lint
 ```
 
 All code must first be reviewed by Copilot and SonarQube by using pull requests.
-Commits use the [conventional commit format](https://www.conventionalcommits.org/en/v1.0.0/).
+Commit messages follow the [conventional commit format](https://www.conventionalcommits.org/en/v1.0.0/).
 
 ## High level overview
 
