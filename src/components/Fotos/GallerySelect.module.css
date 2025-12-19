@@ -1,0 +1,132 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 1rem;
+  margin-bottom: 20px;
+}
+
+.folder {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
+  height: 270px;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.heading h1 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.back-to-gallery-button {
+  display: inline-flex;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  text-decoration: none;
+  margin: 0;
+}
+
+.cardLink {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardLink:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.16);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+.cardLink:hover .folder,
+.cardLink:focus-visible .folder {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 36px rgba(2, 6, 23, 0.12);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  position: relative;
+  padding-bottom: 2px;
+  display: inline-block;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 3px;
+  width: 0;
+  border-radius: 2px;
+  transition: width 160ms ease;
+}
+
+.cardLink:hover .title::after,
+.cardLink:focus-visible .title::after {
+  width: 100%;
+}
+
+.preview {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  margin-bottom: 0.9rem;
+}
+
+.previewImage {
+  object-fit: cover;
+}
+
+.previewEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.previewEmptyText {
+  opacity: 0.85;
+}
+
+@media (max-width: 420px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .folder {
+    padding: 0.75rem;
+  }
+  .preview {
+    height: 150px;
+  }
+}

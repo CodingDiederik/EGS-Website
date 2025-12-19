@@ -1,4 +1,4 @@
-import { fetchAPI } from '@/lib/fetch';
+import { fetchAPI } from '@/lib/wordpress/articles';
 import { load } from 'cheerio';
 import sanitizeHtml from 'sanitize-html';
 

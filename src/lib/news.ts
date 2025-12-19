@@ -1,4 +1,4 @@
-import { fetchAPI } from '@/lib/fetch';
+import { fetchAPI } from '@/lib/wordpress/articles';
 import sanitizeHtml from 'sanitize-html';
 import { htmlToText } from 'html-to-text';
 
@@ -30,7 +30,12 @@ export function extractFirstImage(content: string): string | null {
     },
   });
   const match = /<img[^>]+src=['"]([^'"]+)['"]/.exec(cleanContent);
-  return match ? match[1] : null;
+  const matchedImage = match ? match[1] : null;
+  // force https for images from wordpress
+  if (matchedImage?.startsWith('http://')) {
+    return matchedImage.replaceAll('http://', 'https://');
+  }
+  return matchedImage;
 }
 
 export function getFillerImage(id: string): string {

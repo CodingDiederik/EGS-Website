@@ -1,0 +1,23 @@
+.no-pictures {
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.photo-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 80vh;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.photo-album-wrapper {
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+}

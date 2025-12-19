@@ -4,11 +4,7 @@ import path from 'node:path';
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'images.pexels.com' },
-      { protocol: 'https', hostname: 'placehold.co' },
-      { protocol: 'https', hostname: 'jeugd.schaakclubegs.nl' },
-    ],
+    remotePatterns: [{ protocol: 'https', hostname: 'jeugd.schaakclubegs.nl' }],
   },
   reactCompiler: true,
   turbopack: {

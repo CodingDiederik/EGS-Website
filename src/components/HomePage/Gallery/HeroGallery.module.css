@@ -59,8 +59,8 @@
   right: 0;
   /* keep an inner gap from the bottom so images don't get cut off */
   bottom: 72px;
-  filter: blur(2px);
-  opacity: 0.45;
+  filter: blur(3px);
+  opacity: 0.65;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -68,6 +68,7 @@
   transform: translate3d(0, 0, 0);
   mix-blend-mode: normal;
   will-change: transform;
+  border-bottom: #000 3px solid;
 }
 
 .imageTrack {
@@ -118,16 +119,18 @@
   height: 240px;
   margin: 0;
   flex-shrink: 0;
-  background-size: cover;
-  background-position: center;
+  position: relative;
   /* remove rounded corners per request */
   border-radius: 0;
-  box-shadow: 0 8px 20px rgba(8, 30, 60, 0.35);
   transition:
     transform 300ms ease,
     box-shadow 300ms ease;
   transform-origin: center;
   overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
 }
 
 /* Foreground content sits above tracks */
