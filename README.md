@@ -50,6 +50,7 @@ pnpm lint
 ```
 
 All code must first be reviewed by Copilot and SonarQube by using pull requests.
+Commits use the [conventional commit format](https://www.conventionalcommits.org/en/v1.0.0/).
 
 ## High level overview
 
