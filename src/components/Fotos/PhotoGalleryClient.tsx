@@ -92,14 +92,13 @@ export default function PhotoGalleryClient({
         <div className={styles.heading}>
           <h1>{title ?? 'Foto-album'}</h1>
           {/* Button to return to gallery overview */}
-          <button
-            onClick={() => {
-              <Link href="/fotos" />;
-            }}
-            className={styles['back-to-gallery-button']}
-          >
-            Terug naar foto-overzicht
-          </button>
+          <Link href="/fotos">
+            <button
+              className={styles['back-to-gallery-button']}
+            >
+              Terug naar foto-overzicht
+            </button>
+          </Link>
         </div>
         <RowsPhotoAlbum
           photos={photos}
