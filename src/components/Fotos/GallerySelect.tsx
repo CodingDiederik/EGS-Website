@@ -1,5 +1,5 @@
 import {
-  fetchPreviewPhotoId,
+  fetchPhotoIds,
   fetchFolders,
   removeEmptyFolders,
   fetchPhoto,
@@ -15,7 +15,8 @@ export default async function GallerySelect() {
   // Fetch previews for all folders
   const foldersWithPreview = [];
   for (const folder of filterdFolders) {
-    const photoId = await fetchPreviewPhotoId(folder.id);
+    const photoIds = await fetchPhotoIds(folder.id);
+    const photoId = photoIds && photoIds.length > 0 ? photoIds[0] : null;
     const preview = await fetchPhoto(photoId);
     foldersWithPreview.push({ folder, preview });
   }

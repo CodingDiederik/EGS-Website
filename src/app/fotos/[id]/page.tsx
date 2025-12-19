@@ -21,7 +21,7 @@ async function loadPhotos(id: number): Promise<PhotoDetails[] | null> {
   }
 }
 
-export default async function PhotoPage({ params }: PhotoPageProps) {
+export default async function PhotoPage({ params }: Readonly<PhotoPageProps>) {
   const { id: idParam } = await params;
   const numericId = Number(idParam);
   const id = Number.isFinite(numericId) ? numericId : null;

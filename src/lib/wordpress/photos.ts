@@ -82,47 +82,6 @@ export function removeEmptyFolders(
   return newFolders;
 }
 
-export async function fetchPreviewPhotoId(
-  folderId: number,
-): Promise<null | number> {
-  try {
-    const response = await fetch(
-      `${process.env.WP_FILEBIRD_API_URL}/attachment-id/?folder_id=${folderId}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
-        },
-        next: { revalidate: 300 },
-      },
-    );
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch photo IDs for folder ${folderId}: ${response.status}`,
-      );
-    }
-
-    const json = await response.json();
-
-    if (json.data == null) {
-      return null;
-    }
-
-    const ids = json.data.attachment_ids;
-
-    if (!ids.length) {
-      return null;
-    }
-
-    return ids[ids.length % 4];
-  } catch (error) {
-    console.error(`Failed to fetch preview for folder ${folderId}`, error);
-    return null;
-  }
-}
-
 export async function fetchPhoto(photoId: number | null) {
   if (!photoId) {
     return null;
