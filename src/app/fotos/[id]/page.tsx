@@ -30,8 +30,14 @@ export default async function PhotoPage({ params }: Readonly<PhotoPageProps>) {
     return <PhotoGalleryClient id={null} mediaItems={null} title={null} />;
   }
 
-  const mediaItems = await loadPhotos(id);
-  const title = await getFolderTitle(id);
+  let mediaItems: PhotoDetails[] | null = null;
+  let title: string | null = null;
+  try {
+    mediaItems = await loadPhotos(id);
+    title = await getFolderTitle(id);
+  } catch (error) {
+    console.error(`Failed to load data for folder ${id}`, error);
+  }
 
   return (
     <div className="photo-page">

@@ -42,7 +42,13 @@ export type PhotoDetails = {
  * @returns the list of folders
  */
 export async function fetchFolders(): Promise<FileBirdFolder[]> {
-  const baseUrl = process.env.WP_FILEBIRD_API_URL?.replace(/\/$/, '');
+  if (!process.env.WP_FILEBIRD_API_URL || !process.env.WP_FILEBIRD_API_KEY) {
+    throw new Error(
+      'FileBird API URL or API Key is not defined in environment variables.',
+    );
+  }
+
+  const baseUrl = process.env.WP_FILEBIRD_API_URL.replace(/\/$/, '');
   const endpoint = `${baseUrl}/folders`;
 
   const response = await fetch(endpoint, {
@@ -73,8 +79,10 @@ export function removeEmptyFolders(
 ): FileBirdFolder[] {
   const newFolders: FileBirdFolder[] = [];
 
+  const EXCLUDED_FOLDER_IDS = [4, 0]; // Unassigned and only news folder
+
   for (const folder of folders) {
-    if (folder['data-count'] > 0 && folder.id !== 4 && folder.id !== 0) {
+    if (folder['data-count'] > 0 && !EXCLUDED_FOLDER_IDS.includes(folder.id)) {
       newFolders.push(folder);
     }
   }
@@ -89,7 +97,7 @@ export async function fetchPhoto(photoId: number | null) {
 
   const query = `
     query GetPhoto {
-      mediaItem(id: ${photoId}, idType: DATABASE_ID) {
+      mediaItem(id: ${JSON.stringify(photoId)}, idType: DATABASE_ID) {
         id
         sourceUrl
         altText
@@ -105,7 +113,7 @@ export async function fetchPhoto(photoId: number | null) {
   const data = await fetchAPI(query);
   if (data.mediaItem) {
     return {
-      id: data.mediaItem.id,
+      id: Number(data.mediaItem.id),
       src: data.mediaItem.sourceUrl,
       alt: data.mediaItem.altText,
       title: data.mediaItem.title,
@@ -145,7 +153,7 @@ export async function fetchPhotos(
 
   if (data.mediaItems) {
     return data.mediaItems.nodes.map((item: PhotoData) => ({
-      id: item.id,
+      id: Number(item.id),
       src: item.sourceUrl,
       alt: item.altText,
       title: item.title,
@@ -161,6 +169,12 @@ export async function fetchPhotoIds(
   folderId: number,
 ): Promise<null | number[]> {
   try {
+    if (!process.env.WP_FILEBIRD_API_URL || !process.env.WP_FILEBIRD_API_KEY) {
+      throw new Error(
+        'FileBird API URL or API Key is not defined in environment variables.',
+      );
+    }
+
     const response = await fetch(
       `${process.env.WP_FILEBIRD_API_URL}/attachment-id/?folder_id=${folderId}`,
       {
@@ -193,13 +207,19 @@ export async function fetchPhotoIds(
 
     return ids;
   } catch (error) {
-    console.error(`Failed to fetch preview for folder ${folderId}`, error);
+    console.error(`Failed to fetch photo IDs for folder ${folderId}`, error);
     return null;
   }
 }
 
 export async function getFolderTitle(folderId: number): Promise<string | null> {
   try {
+    if (!process.env.WP_FILEBIRD_API_URL || !process.env.WP_FILEBIRD_API_KEY) {
+      throw new Error(
+        'FileBird API URL or API Key is not defined in environment variables.',
+      );
+    }
+
     const response = await fetch(
       `${process.env.WP_FILEBIRD_API_URL}/folder/?folder_id=${folderId}`,
       {

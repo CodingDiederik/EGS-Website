@@ -10,16 +10,17 @@ import styles from './GallerySelect.module.css';
 
 export default async function GallerySelect() {
   const folders = await fetchFolders();
-  const filterdFolders = removeEmptyFolders(folders);
+  const filteredFolders = removeEmptyFolders(folders);
 
   // Fetch previews for all folders
-  const foldersWithPreview = [];
-  for (const folder of filterdFolders) {
-    const photoIds = await fetchPhotoIds(folder.id);
-    const photoId = photoIds && photoIds.length > 0 ? photoIds[0] : null;
-    const preview = await fetchPhoto(photoId);
-    foldersWithPreview.push({ folder, preview });
-  }
+  const foldersWithPreview = await Promise.all(
+    filteredFolders.map(async (folder) => {
+      const photoIds = await fetchPhotoIds(folder.id);
+      const photoId = photoIds && photoIds.length > 0 ? photoIds[0] : null;
+      const preview = await fetchPhoto(photoId);
+      return { folder, preview };
+    }),
+  );
 
   return (
     <div className={styles.wrap}>

@@ -12,6 +12,7 @@ import 'react-photo-album/rows.css';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import styles from './GallerySelect.module.css';
+import Link from 'next/link';
 
 function renderNextImage(
   { alt = '', title, sizes }: RenderImageProps,
@@ -55,12 +56,16 @@ export default function PhotoGalleryClient({
   title,
 }: Readonly<PhotoGalleryClientProps>) {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
-  const photos = (mediaItems ?? []).map((item) => ({
-    src: item.src,
-    width: Math.max(item.width, 250),
-    height: Math.max(item.height, 250),
-    alt: item.alt || 'Photo',
-  }));
+  const photos = useMemo(
+    () =>
+      (mediaItems ?? []).map((item) => ({
+        src: item.src,
+        width: Math.max(item.width, 250),
+        height: Math.max(item.height, 250),
+        alt: item.alt || 'Photo',
+      })),
+    [mediaItems],
+  );
   const slides = useMemo(
     () =>
       photos.map((photo) => ({
@@ -89,7 +94,7 @@ export default function PhotoGalleryClient({
           {/* Button to return to gallery overview */}
           <button
             onClick={() => {
-              window.location.href = '/fotos';
+              <Link href="/fotos" />;
             }}
             className={styles['back-to-gallery-button']}
           >
