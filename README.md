@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 ## Getting Started
 
-First, run the development server:
+This is a [Next.js](https://nextjs.org) project. We outline a few conventions and the setup to start development.
+
+## Setup
+
+First, install [nodejs](https://nodejs.org/en/download) in WSL (or use Linux):
+
+#### Download and install nvm:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+# in lieu of restarting the shell
+\. "$HOME/.nvm/nvm.sh"
+
+# Download and install Node.js:
+nvm install 24
+
+# Verify the Node.js version:
+node -v
+
+# Download and install pnpm:
+corepack enable pnpm
+
+# Verify pnpm version:
+pnpm -v
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Now install the necessary packages and run
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Conventions
 
-## Learn More
+All code is in src; we use three main folders:
 
-To learn more about Next.js, take a look at the following resources:
+- app: all pages go here
+- components: the components used by the pages
+- lib: all logic for pages goes here
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Code is formatted and linted by using:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm format
+pnpm lint
+```
 
-## Deploy on Vercel
+All code must first be reviewed by Copilot and SonarQube by using pull requests.
+Commit messages follow the [conventional commit format](https://www.conventionalcommits.org/en/v1.0.0/).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## High level overview
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js is used as the framework
+- Backend is done by WordPress with a graphQL endpoint
+- Linter is done by ESLint
+- Formatting is done by Prettier
+- Rate limit is done by Upstash
+- Project is deployed on Vercel
+
+Text on webpages is in Dutch. Code and comments are (mostly) in English.
+All of the code should be self-explanatory.
