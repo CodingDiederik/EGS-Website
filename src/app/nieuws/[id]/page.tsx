@@ -5,8 +5,8 @@ type NewsPageProps = {
 };
 
 export default async function NewsPage({ params }: Readonly<NewsPageProps>) {
-  let { id: slug } = await params;
-  
+  const { id: slug } = await params;
+
   return (
     <div>
       <NewsArticle slug={slug} />

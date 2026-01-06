@@ -13,7 +13,6 @@ interface NewsPost {
   } | null;
 }
 
-
 export async function fetchAndSanitizeNews(slug: string): Promise<NewsPost> {
   const query = `
     query GetPostBySlug {

@@ -1,7 +1,7 @@
 import styles from './NewsComponent.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import DOMPurify from "isomorphic-dompurify";
+import DOMPurify from 'isomorphic-dompurify';
 import { fetchAndSanitizeNews } from '@/lib/wordpress/news';
 import NotFound from '@/app/not-found';
 
@@ -23,11 +23,12 @@ const NewsArticle = async ({ slug }: { slug: string }) => {
       <div className={styles.NotFound}>
         <NotFound />
       </div>
-    ); 
+    );
   }
 
   // 1. Extract the first image SRC using Regex
-  const imgRegex = /<figure[^>]*wp-block-image[^>]*>.*?<img[^>]*src="([^"]+)"[^>]*>.*?<\/figure>/;
+  const imgRegex =
+    /<figure[^>]*wp-block-image[^>]*>.*?<img[^>]*src="([^"]+)"[^>]*>.*?<\/figure>/;
   const match = newsArticleData.content.match(imgRegex);
   const heroImageSrc = match ? match[1] : null;
 
@@ -40,21 +41,18 @@ const NewsArticle = async ({ slug }: { slug: string }) => {
   // 3. Sanitize the remaining HTML
   const cleanContent = DOMPurify.sanitize(contentHtml);
 
-
   return (
     <article className={styles.newsArticle}>
       <header className={styles.header}>
         {/* Flex container for Date and Button */}
         <div className={styles.metaContainer}>
-            <time className={styles.date} dateTime={newsArticleData.date}>
-                {formatDate(newsArticleData.date)}
-            </time>
+          <time className={styles.date} dateTime={newsArticleData.date}>
+            {formatDate(newsArticleData.date)}
+          </time>
 
-            <Link href="/nieuws">
-                <button className={styles.backButton}>
-                  Terug naar nieuws
-                </button>
-            </Link>
+          <Link href="/nieuws">
+            <button className={styles.backButton}>Terug naar nieuws</button>
+          </Link>
         </div>
 
         <h1>{newsArticleData.title}</h1>
@@ -63,8 +61,8 @@ const NewsArticle = async ({ slug }: { slug: string }) => {
       {/* Render Next.js Image with natural aspect ratio */}
       {heroImageSrc && (
         <div className={styles.imageContainer}>
-          <Image 
-            src={heroImageSrc} 
+          <Image
+            src={heroImageSrc}
             alt={newsArticleData.title}
             // The following props + CSS make the image responsive without cropping
             width={0}
@@ -77,15 +75,15 @@ const NewsArticle = async ({ slug }: { slug: string }) => {
       )}
 
       <div className={styles.author}>
-        {newsArticleData.author?.node?.firstName 
-          ? `Geschreven door: ${newsArticleData.author.node.firstName.replaceAll('&amp;', '&')}` 
+        {newsArticleData.author?.node?.firstName
+          ? `Geschreven door: ${newsArticleData.author.node.firstName.replaceAll('&amp;', '&')}`
           : 'Geschreven door: EGS-Goirle'}
       </div>
-      
+
       {/* Render the rest of the text */}
-      <div 
+      <div
         className={styles.articleBody}
-        dangerouslySetInnerHTML={{ __html: cleanContent }} 
+        dangerouslySetInnerHTML={{ __html: cleanContent }}
       />
     </article>
   );
