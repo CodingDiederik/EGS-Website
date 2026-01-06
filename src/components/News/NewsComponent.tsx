@@ -29,7 +29,7 @@ const NewsArticle = async ({ slug }: { slug: string }) => {
   // 1. Extract the first image SRC using Regex
   const imgRegex =
     /<figure[^>]*wp-block-image[^>]*>.*?<img[^>]*src="([^"]+)"[^>]*>.*?<\/figure>/;
-  const match = newsArticleData.content.match(imgRegex);
+  const match = imgRegex.exec(newsArticleData.content);
   const heroImageSrc = match ? match[1] : null;
 
   // 2. Remove the extracted image block from the content
