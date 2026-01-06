@@ -85,7 +85,7 @@ export default function NewsList({
                 </span>
                 <p>{excerpt}</p>
                 <Link
-                  href={`/nieuws/${item.id}`}
+                  href={`/nieuws/${item.slug}`}
                   className={styles['read-more']}
                 >
                   Lees verder &rarr;

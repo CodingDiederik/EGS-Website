@@ -7,6 +7,7 @@ export interface NewsItem {
   title: string;
   content: string;
   date: string;
+  slug: string;
   author?: {
     node?: {
       firstName?: string;
@@ -94,6 +95,7 @@ export async function fetchNewsData(
             title
             content
             date
+            slug
             author { node { firstName } }
           }
         }
