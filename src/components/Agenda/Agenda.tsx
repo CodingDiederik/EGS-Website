@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Agenda.module.css';
-import { fetchAgendaTable, getTimeFrame } from '@/lib/agenda';
+import { fetchAgendaTable, getTimeFrame, splitTableDate } from '@/lib/agenda';
 
 const CalendarIcon = () => (
   <svg
@@ -35,34 +35,64 @@ const ClockIcon = () => (
   </svg>
 );
 
-const AgendaComponent: React.FC = async () => {
-  const agendaHTML = await fetchAgendaTable();
+const ArchiveIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M12.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0019 16V8a1 1 0 00-1.6-.8l-5.333 4zM4.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0011 16V8a1 1 0 00-1.6-.8l-5.334 4z"
+    />
+  </svg>
+);
 
-  if (!agendaHTML) {
+const AgendaComponent: React.FC = async () => {
+  const rawAgendaHTML = await fetchAgendaTable();
+  const timeFrame = await getTimeFrame();
+
+  if (!rawAgendaHTML) {
     return (
       <div className="text-center p-4 text-gray-400">Agenda unavailable</div>
     );
   }
 
+  // Split the raw HTML into two parts
+  const agendaData = splitTableDate(rawAgendaHTML);
+
+  if (!agendaData) return null;
+
   return (
-    // 1. Colorful Outer Widget Container
     <div className={styles.widgetContainer}>
-      {/* 2. Header Section with Title & Icons */}
+      {/* --- UPCOMING EVENTS SECTION --- */}
       <div className={styles.header}>
         <CalendarIcon />
-        <h2 className={styles.headerTitle}>Agenda & Activiteiten</h2>
-
-        {/* Optional: A small subtitle or extra icon on the right */}
+        <h2 className={styles.headerTitle}>Agenda</h2>
         <div className={styles.headerSubtitle}>
           <ClockIcon />
-          <span>{await getTimeFrame()}</span>
+          <span>{timeFrame}</span>
         </div>
       </div>
 
-      {/* 3. White Table Container */}
       <div className={styles.tableWrapper}>
-        <div dangerouslySetInnerHTML={{ __html: agendaHTML }} />
+        <div dangerouslySetInnerHTML={{ __html: agendaData.upcomingHtml }} />
       </div>
+
+      {/* --- PAST EVENTS (ARCHIVE) SECTION --- */}
+      <details className={styles.archiveDetails}>
+        <summary className={styles.archiveSummary}>
+          <ArchiveIcon />
+          <span>Toon eerdere activiteiten</span>
+        </summary>
+        <div className={`${styles.tableWrapper} ${styles.archiveTable}`}>
+          <div dangerouslySetInnerHTML={{ __html: agendaData.pastHtml }} />
+        </div>
+      </details>
     </div>
   );
 };
