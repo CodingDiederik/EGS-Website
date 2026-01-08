@@ -6,17 +6,15 @@
   max-width: 1024px;
   margin: 3rem auto;
   border-radius: 16px;
-  /* A modern, professional gradient (Blue to Indigo) */
   background: linear-gradient(135deg, #3b82f6 0%, #4f46e5 100%);
   box-shadow:
     0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  overflow: hidden; /* Ensures child elements don't poke out of the rounded corners */
-
+  overflow: hidden;
   margin-top: 40px;
 }
 
-/* 2. The Header Section (Icons + Title) */
+/* 2. The Header Section */
 .header {
   display: flex;
   align-items: center;
@@ -41,26 +39,22 @@
 .headerSubtitle {
   font-size: 0.875rem;
   opacity: 0.8;
-  margin-left: auto; /* Pushes subtitle to the right */
+  margin-left: auto;
   font-weight: 500;
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-/* 3. The White Table Container */
+/* 3. The Table Wrappers */
 .tableWrapper {
   background: #ffffff;
   width: 100%;
-  overflow-x: auto; /* Handles mobile scrolling */
-
-  /* We don't need border-radius here because the parent clips it, 
-     but we might want a little spacing if you prefer a 'floating' look.
-     For a clean look, we just let it fill the bottom. */
+  overflow-x: auto;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* --- Table Styles (Mostly same as before) --- */
+/* Ensure figure margins from WP content don't break layout */
 .tableWrapper figure {
   margin: 0;
   width: 100%;
@@ -100,74 +94,87 @@
   vertical-align: top;
 }
 
-/* Hover effect */
 .tableWrapper table tr:not(:first-child):hover {
-  background-color: #f0f9ff; /* Very light blue on hover */
+  background-color: #f0f9ff;
 }
 
-/* Date Column */
 .tableWrapper table tr:not(:first-child) td:first-child {
   font-weight: 600;
   color: #0f172a;
   white-space: nowrap;
 }
 
-/* Comments Column */
 .tableWrapper table tr:not(:first-child) td:last-child {
   color: #64748b;
   font-style: italic;
   font-size: 0.9rem;
 }
 
-/* --- Responsive: Small Devices --- */
+/* --- Archive / Past Events Styling --- */
+.archiveDetails {
+  background-color: #f1f5f9; /* Light gray background */
+  border-top: 1px solid #e2e8f0;
+}
+
+.archiveSummary {
+  list-style: none;
+  padding: 16px 32px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+}
+
+/* Hide default detail marker */
+.archiveSummary::-webkit-details-marker {
+  display: none;
+}
+
+.archiveSummary:hover {
+  color: #3b82f6;
+  background-color: #e2e8f0;
+}
+
+/* When expanded, show the archive table clearly */
+.archiveTable {
+  border-top: 1px solid #cbd5e1;
+}
+
+/* Differentiate past events visually */
+.archiveTable table tr:not(:first-child) {
+  opacity: 0.7; /* Fade them out slightly */
+}
+.archiveTable table tr:not(:first-child):hover {
+  opacity: 1;
+  background-color: #fff;
+}
+
+/* --- Responsive --- */
 @media (max-width: 600px) {
   .widgetContainer {
     margin: 1rem;
     max-width: calc(100% - 2rem);
     border-radius: 12px;
-    margin-top: 16px;
   }
-
   .header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
-    padding: 12px 16px;
+    padding: 16px;
   }
-
-  .headerIcon {
-    width: 28px;
-    height: 28px;
-  }
-
-  .headerTitle {
-    font-size: 1.125rem;
-    font-weight: 700;
-  }
-
   .headerSubtitle {
     margin-left: 0;
-    align-self: stretch;
+    width: 100%;
     justify-content: space-between;
-    font-size: 0.8rem;
   }
-
-  .tableWrapper {
-    border-top: none;
+  .archiveSummary {
+    padding: 14px 16px;
   }
-
   .tableWrapper td {
     padding: 12px 14px;
-  }
-
-  .tableWrapper table tr:first-child td {
-    padding: 10px 14px;
-  }
-
-  .tableWrapper table {
-    /* keep horizontal scroll but allow table to shrink visually */
-    display: block;
-    overflow-x: auto;
-    width: 100%;
   }
 }
