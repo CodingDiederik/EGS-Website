@@ -70,6 +70,9 @@ const NewsArticle = async ({ slug }: { slug: string }) => {
             sizes="100vw"
             className={styles.heroImage}
             priority
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
           />
         </div>
       )}

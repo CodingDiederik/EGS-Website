@@ -74,7 +74,7 @@ export default function NewsList({
   );
 }
 
-function NewsCard({ item }: { item: NewsItem }) {
+function NewsCard({ item }: { item: Readonly<NewsItem> }) {
   const extractedUrl = extractFirstImage(item.content || '');
   const displayImage = extractedUrl || getFillerImage(item.id || 'default');
   const excerpt = createExcerpt(item.content || '');
