@@ -63,16 +63,20 @@ export default function NewsList({
             item.author?.node?.firstName || 'Jeugdsecretaris',
           );
 
+          const [imgSrc, setImgSrc] = useState(displayImage);
+
           return (
             <article key={item.id} className={styles['news-card']}>
               <div className={styles['card-image-wrapper']}>
                 <Image
-                  src={displayImage}
+                  src={imgSrc}
                   alt={item.title || 'Nieuwsafbeelding'}
                   fill
                   className={styles['card-image']}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  unoptimized
+                  onError={() => {
+                    setImgSrc(getFillerImage(item.id || 'default'));
+                  }}
                 />
                 <span className={styles['news-date']}>
                   {formatDate(item.date || new Date().toISOString())}
