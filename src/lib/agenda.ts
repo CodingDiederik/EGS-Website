@@ -34,14 +34,14 @@ export function splitTableDate(
   const dateRegex = /(\d{2})-(\d{2})-(\d{4})/;
 
   dataRows.forEach((row) => {
-    const match = row.match(dateRegex);
+    const match = dateRegex.exec(row);
     if (match) {
       // match[0] = full date, match[1]=DD, match[2]=MM, match[3]=YYYY
       // Create date object (Month is 0-indexed in JS)
       const rowDate = new Date(
-        parseInt(match[3]),
-        parseInt(match[2]) - 1,
-        parseInt(match[1]),
+        Number.parseInt(match[3]),
+        Number.parseInt(match[2]) - 1,
+        Number.parseInt(match[1]),
       );
 
       // Compare dates
