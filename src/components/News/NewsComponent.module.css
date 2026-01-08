@@ -2,6 +2,13 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
+  background-color: var(--background-main);
+}
+
+.newsArticle * {
+  max-width: 100%;
+  box-sizing: border-box;
+  word-break: break-word;
 }
 
 /* NotFound styling for NewsComponent */
@@ -35,7 +42,6 @@
 
 .imageContainer {
   width: 100%;
-  /* Removed fixed height (400px) so it adapts to the image size */
   height: auto;
   margin-bottom: 1.5rem;
   border-radius: 8px;
@@ -43,7 +49,6 @@
 }
 
 .heroImage {
-  /* These are required when using width={0} height={0} on Next/Image */
   width: 100%;
   height: auto;
   display: block;
@@ -56,7 +61,6 @@
   font-style: italic;
 }
 
-/* Styling for the HTML content */
 .articleBody p {
   line-height: 1.6;
   margin-bottom: 1rem;

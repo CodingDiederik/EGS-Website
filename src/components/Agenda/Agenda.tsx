@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './Agenda.module.css';
 import { fetchAgendaTable, getTimeFrame } from '@/lib/agenda';
 
-// --- Helper Components for Icons ---
 const CalendarIcon = () => (
   <svg
     className={styles.headerIcon}

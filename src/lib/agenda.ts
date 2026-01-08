@@ -1,15 +1,14 @@
 import { fetchAPI } from '@/lib/wordpress/articles';
 import { load } from 'cheerio';
-import sanitizeHtml from 'sanitize-html';
+import DOMPurify from 'isomorphic-dompurify';
 
 export async function getTimeFrame(): Promise<string> {
   const now = new Date();
 
-  if (now.getMonth() >= 6) {
-    return `${now.getFullYear()} - ${now.getFullYear() + 1}`;
-  }
-  return `${now.getFullYear() - 1} - ${now.getFullYear()}`;
+  return `${now.getFullYear()} - ${now.getFullYear() + 1}`;
 }
+
+export function tableToCome() {}
 
 export async function fetchAgendaTable(): Promise<string | null> {
   try {
@@ -37,8 +36,8 @@ export async function fetchAgendaTable(): Promise<string | null> {
 
     const tableHTML = tableElement.prop('outerHTML') || '';
 
-    return sanitizeHtml(tableHTML, {
-      allowedTags: [
+    return DOMPurify.sanitize(tableHTML, {
+      ALLOWED_TAGS: [
         'figure',
         'table',
         'tbody',
@@ -50,11 +49,6 @@ export async function fetchAgendaTable(): Promise<string | null> {
         'b',
         'span',
       ],
-      allowedAttributes: {
-        '*': ['class'],
-        td: ['colspan', 'rowspan'],
-        th: ['colspan', 'rowspan'],
-      },
     });
   } catch (error) {
     console.error('Agenda Fetch Error:', error);

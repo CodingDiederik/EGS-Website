@@ -1,6 +1,6 @@
 import { fetchAPI } from '@/lib/wordpress/articles';
-import sanitizeHtml from 'sanitize-html';
 import { htmlToText } from 'html-to-text';
+import DOMPurify from 'isomorphic-dompurify';
 
 export interface NewsItem {
   id: string;
@@ -24,11 +24,8 @@ export interface NewsResponse {
 }
 
 export function extractFirstImage(content: string): string | null {
-  const cleanContent = sanitizeHtml(content, {
-    allowedTags: ['img'],
-    allowedAttributes: {
-      img: ['src'],
-    },
+  const cleanContent = DOMPurify.sanitize(content, {
+    ALLOWED_TAGS: ['img'],
   });
   const match = /<img[^>]+src=['"]([^'"]+)['"]/.exec(cleanContent);
   const matchedImage = match ? match[1] : null;
