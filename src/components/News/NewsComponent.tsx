@@ -1,5 +1,5 @@
 import styles from './NewsComponent.module.css';
-import Image from 'next/image';
+import SafeImage from '@/components/common/SafeImage';
 import Link from 'next/link';
 import DOMPurify from 'isomorphic-dompurify';
 import { fetchAndSanitizeNews } from '@/lib/wordpress/news';
@@ -30,7 +30,12 @@ const NewsArticle = async ({ slug }: { slug: string }) => {
   const imgRegex =
     /<figure[^>]*wp-block-image[^>]*>.*?<img[^>]*src="([^"]+)"[^>]*>.*?<\/figure>/;
   const match = imgRegex.exec(newsArticleData.content);
-  const heroImageSrc = match ? match[1] : null;
+  // Ensure we use https to avoid mixed-content blocking
+  const heroImageSrc = match
+    ? match[1].startsWith('http://')
+      ? match[1].replace('http://', 'https://')
+      : match[1]
+    : null;
 
   // 2. Remove the extracted image block from the content
   let contentHtml = newsArticleData.content;
@@ -61,18 +66,15 @@ const NewsArticle = async ({ slug }: { slug: string }) => {
       {/* Render Next.js Image with natural aspect ratio */}
       {heroImageSrc && (
         <div className={styles.imageContainer}>
-          <Image
+          <SafeImage
             src={heroImageSrc}
             alt={newsArticleData.title}
-            // The following props + CSS make the image responsive without cropping
             width={0}
             height={0}
             sizes="100vw"
             className={styles.heroImage}
             priority
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = 'none';
-            }}
+            hideOnError
           />
         </div>
       )}
