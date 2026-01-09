@@ -13,14 +13,19 @@ interface NewsPost {
   } | null;
 }
 
-function sanitizeSlug(slug: string): string {
-  return slug.replaceAll(/[^a-zA-Z0-9-_]/g, '');
+function sanitizeSlug(slug: string | null | undefined): string {
+  if (!slug) return '';
+  return slug.toString().replaceAll(/[^a-zA-Z0-9-_]/g, '');
 }
 
 export async function fetchAndSanitizeNews(
-  slug: string,
+  slug: string | null | undefined,
 ): Promise<NewsPost | null> {
   const sanitizedSlug = sanitizeSlug(slug);
+
+  if (!sanitizedSlug) {
+    return null;
+  }
 
   const query = `
     query GetPostBySlug {

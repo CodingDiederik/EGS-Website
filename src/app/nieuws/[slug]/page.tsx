@@ -1,11 +1,11 @@
 import NewsArticle from '@/components/News/NewsComponent';
 
 type NewsPageProps = {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export default async function NewsPage({ params }: Readonly<NewsPageProps>) {
-  const { id: slug } = await params;
+  const { slug } = await params;
 
   return (
     <div>
