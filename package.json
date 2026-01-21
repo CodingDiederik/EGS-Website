@@ -14,7 +14,7 @@
     "sonar:scan": "dotenv sonar-scanner -Dsonar.projectKey=egs-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=local-org"
   },
   "dependencies": {
-    "@upstash/ratelimit": "^2.0.7",
+    "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.36.1",
     "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.3.1",
