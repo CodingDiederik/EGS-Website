@@ -4,8 +4,8 @@ updates:
   - package-ecosystem: "npm" # Type of dependencies (npm, pip, bundler, etc.)
     directory: "/"           # Directory where the dependencies file is located
     schedule:
-      interval: "daily"       # Frequency of checking updates (daily, weekly, monthly)
+      interval: "weekly"       # Frequency of checking updates (daily, weekly, monthly)
     ignore:
       - dependency-name: "jsdom"  # Ignore specific dependencies (optional)
-        versions: ["22.1.0"]
+        versions: [">= 22.1.0, < 22.1.1"]
 
