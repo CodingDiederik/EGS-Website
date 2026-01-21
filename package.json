@@ -34,7 +34,7 @@
     "@sonar/scan": "^4.3.4",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/html-to-text": "^9.0.4",
-    "@types/node": "^20.19.27",
+    "@types/node": "^25.0.9",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "babel-plugin-react-compiler": "1.0.0",
