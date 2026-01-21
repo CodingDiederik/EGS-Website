@@ -1,7 +1,7 @@
 
 version: 2
 updates:
-  - package-ecosystem: "pnpm" # Type of dependencies (npm, pip, bundler, etc.)
+  - package-ecosystem: "npm" # Type of dependencies (npm, pip, bundler, etc.)
     directory: "/"           # Directory where the dependencies file is located
     schedule:
       interval: "daily"       # Frequency of checking updates (daily, weekly, monthly)
