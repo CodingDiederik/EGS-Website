@@ -6,6 +6,5 @@ updates:
     schedule:
       interval: "weekly"       # Frequency of checking updates (daily, weekly, monthly)
     ignore:
-      - dependency-name: "jsdom"  # Ignore specific dependencies (optional)
-        versions: [">= 22.1.0, < 22.1.1"]
+      - dependency-name: "jsdom"  # Ignore specific dependencies
 
