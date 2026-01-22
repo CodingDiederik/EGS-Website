@@ -1,5 +1,4 @@
 .footer {
-  /* Gebruik de lichte achtergrondkleur voor de footer */
   background-color: var(--background-secondary);
   font-family: var(--font-secondary);
   color: var(--text-dark);
@@ -11,23 +10,21 @@
 
 .footerContainer {
   display: flex;
-  flex-wrap: wrap; /* Zorgt dat de kolommen onder elkaar vallen op mobiel */
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--spacing-large);
   max-width: 1200px;
-  margin: 0 auto; /* Centreert de content */
+  margin: 0 auto;
 }
 
-/* Algemene stijlen voor de secties */
 .linkSection,
 .socialSection,
 .contactSection {
-  flex: 1; /* Zorgt dat ze de ruimte verdelen */
-  min-width: 250px; /* Voorkomt dat ze te smal worden */
+  flex: 1;
+  min-width: 250px;
 }
 
 .footerHeading {
-  /* Gebruik de serif (Merriweather) voor koppen, zoals gedefinieerd */
   font-family: var(--font-primary);
   font-weight: 700;
   color: var(--text-primary);
@@ -36,7 +33,6 @@
   padding-bottom: var(--spacing-small);
 }
 
-/* Navigatie links */
 .linkList {
   list-style: none;
   padding: 0;
@@ -58,7 +54,6 @@
   text-decoration: underline;
 }
 
-/* Contact sectie */
 .address {
   font-style: normal;
   line-height: 1.6;
@@ -69,7 +64,6 @@
   margin: 0 0 var(--spacing-small) 0;
 }
 
-/* Social media sectie */
 .socialList {
   list-style: none;
   padding: 0;
@@ -88,7 +82,6 @@
   vertical-align: middle;
 }
 
-/* Copyright balk */
 .copyrightBar {
   width: 100vw;
   position: relative;
