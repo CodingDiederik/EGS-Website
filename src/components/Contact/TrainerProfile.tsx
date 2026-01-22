@@ -12,15 +12,13 @@ export default function TrainerProfile({
   imageSrc,
   bio,
 }: Readonly<TrainerProfileProps>) {
-  if (!imageSrc) {
-    imageSrc = '/trainer/person.jpg';
-  }
+  const effectiveImageSrc = imageSrc ?? '/trainer/person.jpg';
 
   return (
     <div className={styles.trainerProfile}>
       <div className={styles.trainerImage}>
         <Image
-          src={imageSrc}
+          src={effectiveImageSrc}
           alt={`Foto van trainer ${name}`}
           width={200}
           height={200}

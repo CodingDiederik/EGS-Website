@@ -66,7 +66,7 @@ export default function Over() {
               De lessen van de jeugd vinden plaats op vrijdagavond van 18.45 uur
               tot 20.15 uur bij Wijkcentrum &apos;De Wildacker&apos;, van
               Hogendorpplein 73, 5051 ST Goirle. Voor de actuele data en{' '}
-              <Link href="/agenda">agenda</Link> kunt hier kijken. U kunt
+              <Link href="/agenda">agenda</Link> kunt u hier kijken. U kunt
               natuurlijk ook <Link href="/contact">contact</Link> met ons
               opnemen. Hier vindt u meer informatie over onze contactgegevens en
               -mogelijkheden.

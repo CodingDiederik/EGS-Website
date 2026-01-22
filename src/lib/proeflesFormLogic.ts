@@ -37,11 +37,9 @@ export function validateProeflesForm(data: ProeflesFormData): FieldErrors {
     errors['student-name'] = 'Naam kind is verplicht.';
   }
 
-  if (isNaN(data.age) || data.age <= 0) {
+  if (isNaN(data.age) || data.age < 1) {
     errors['student-age'] = 'Voer een geldige leeftijd in.';
-  }
-
-  if (data.age > 20) {
+  } else if (data.age > 20) {
     errors['student-age'] =
       'De proeflessen zijn bedoeld voor kinderen tot en met 20 jaar.';
   }
