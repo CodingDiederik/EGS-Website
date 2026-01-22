@@ -51,7 +51,7 @@ function convertToAgendaItem(row: string): AgendaItem | null {
   while ((m = tdRegex.exec(row)) !== null) {
     let cell = m[1] || '';
     // remove inner HTML tags
-    cell = cell.replace(/<[^>]+>/g, '');
+    cell = cell.replaceAll(/<[^>]+>/g, '');
     // decode common HTML entities minimally
     cell = cell
       .replace(/&nbsp;/g, ' ')

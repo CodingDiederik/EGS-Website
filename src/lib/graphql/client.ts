@@ -44,7 +44,9 @@ export async function fetchGraphQL<TResult, TVariables = unknown>(
   const json = await response.json();
 
   if (json.errors) {
-    const errorMessage = json.errors.map((e: any) => e.message).join('\n');
+    const errorMessage = json.errors
+      .map((e: { message: string }) => e.message)
+      .join('\n');
     throw new Error(`GraphQL Error: ${errorMessage}`);
   }
 
