@@ -3,10 +3,8 @@
   max-width: 1024px;
   margin: 3rem auto;
   border-radius: 16px;
-  background: linear-gradient(135deg, #3b82f6 0%, #4f46e5 100%);
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background: var(--background-accent-secondary);
+  box-shadow: var(--shadow-intense);
   overflow: hidden;
   margin-top: 40px;
 }
@@ -72,7 +70,7 @@
   border-bottom: 2px solid #e2e8f0;
   background-color: #f9fafb;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 .tableWrapper td {
@@ -84,7 +82,7 @@
 }
 
 .tableWrapper table tr:hover {
-  background-color: #f0f9ff;
+  background-color: #eeeeee;
 }
 
 .archiveDetails {
@@ -111,7 +109,7 @@
 }
 
 .archiveSummary:hover {
-  color: #3b82f6;
+  color: var(--background-hover);
   background-color: #e2e8f0;
 }
 

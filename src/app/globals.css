@@ -2,8 +2,9 @@
   --background-primary: #dce0e3;
   --background-secondary: #d0d0d0;
   --background-accent: #000000;
+  --background-accent-secondary: #222222;
   --background-main: #ffffff;
-
+  --background-hover: #0a1526;
   --background-transparent: rgba(5, 5, 5, 0.65);
 
   --text-primary: #000000;
@@ -11,6 +12,7 @@
   --text-tertiary: #fffbf4;
   --text-accent: #424242;
   --text-dark: #333333;
+
 
   --accent-primary: #4e4b3d;
   --accent-secondary: #edd363;
