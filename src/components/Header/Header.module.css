@@ -36,14 +36,14 @@
 }
 
 .hamburger {
-  display: none; /* Hidden by default on desktop */
+  display: none;
   cursor: pointer;
   background: none;
   border: none;
   flex-direction: column;
   gap: 5px;
   padding: 5px;
-  z-index: 101; /* Above the menu overlay */
+  z-index: 101;
 }
 
 .hamburgerLine {
@@ -126,7 +126,7 @@
     margin-left: auto;
   }
   .hamburger {
-    display: flex; /* Show hamburger on mobile */
+    display: flex;
   }
 
   .navList {
@@ -146,7 +146,6 @@
     z-index: 100;
   }
 
-  /* add space above the first nav item so it isn't flush with the top */
   .navList li:first-child {
     margin-top: 10px;
   }
