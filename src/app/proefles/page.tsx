@@ -38,11 +38,11 @@ export default function Proefles() {
             <br />
             <p>
               Om een proefles aan te vragen, kunt hieronder het contactformulier
-              invullen. U kunt ook altijd een e-mail sturen naar
-              <a href="mailto:egsjeugd@gmail.com"> egsjeugd@gmail.com</a>. Heeft
+              invullen. U kunt ook altijd een e-mail sturen naar{' '}
+              <a href="mailto:egsjeugd@gmail.com">egsjeugd@gmail.com</a>. Heeft
               u liever telefonisch contact? Dat kan. Dan vragen wij u een e-mail
-              met belverzoek te sturen naar
-              <a href="mailto:egsjeugd@gmail.com"> egsjeugd@gmail.com</a> en dan
+              met belverzoek te sturen naar{' '}
+              <a href="mailto:egsjeugd@gmail.com">egsjeugd@gmail.com</a> en dan
               maakt onze jeugdsecretaris met u een afspraak.
             </p>
             <br />
