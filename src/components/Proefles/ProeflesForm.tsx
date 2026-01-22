@@ -46,7 +46,7 @@ const ProeflesForm = () => {
       setFormData({
         name: '',
         studentName: '',
-        age: 0,
+        age: -1,
         level: '',
         email: '',
         message: '',
@@ -149,17 +149,23 @@ const ProeflesForm = () => {
             Leeftijd kind:
           </label>
           <input
-            type="text"
+            type="number"
             id="student-age"
             name="student-age"
             className={`${styles.input} ${
               fieldErrors['student-age'] ? styles.inputError : ''
             }`}
             disabled={status === 'loading'}
+            min={1}
+            max={120}
             value={formData.age === -1 ? '' : formData.age}
-            onChange={(e) =>
-              setFormData({ ...formData, age: Number(e.target.value) })
-            }
+            onChange={(e) => {
+              const value = e.target.value;
+              setFormData({
+                ...formData,
+                age: value === '' ? -1 : Number(value),
+              });
+            }}
           />
           {fieldErrors['student-age'] && (
             <span className={styles.errorText}>
@@ -176,7 +182,9 @@ const ProeflesForm = () => {
           <select
             id="student-level"
             name="student-level"
-            className={styles.select}
+            className={`${styles.select} ${
+              fieldErrors['student-level'] ? styles.inputError : ''
+            }`}
             disabled={status === 'loading'}
             value={formData.level}
             onChange={(e) =>
@@ -200,6 +208,11 @@ const ProeflesForm = () => {
               Anders (specificeer in bericht)
             </option>
           </select>
+          {fieldErrors['student-level'] && (
+            <span className={styles.errorText}>
+              {fieldErrors['student-level']}
+            </span>
+          )}
         </div>
 
         {/* MESSAGE */}
