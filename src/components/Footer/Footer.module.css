@@ -79,9 +79,8 @@
 }
 
 .imageInstagram {
-  margin-right: calc(var(--spacing-small) + 2px);
   vertical-align: middle;
-  margin-left: 2px;
+  margin-right: var(--spacing-small);
 }
 
 .imageFacebook {
