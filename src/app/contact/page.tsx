@@ -13,15 +13,20 @@ export default function Contact() {
         text={
           <>
             <p>
-              Neem contact op met EGS Goirle voor al uw vragen, opmerkingen of
-              verzoeken. Wij staan klaar om u te helpen en te voorzien van de
-              informatie die u nodig heeft.
+              Hebt u nog vragen of wilt u graag meer weten? Neem dan gerust
+              contact op met onze vereniging. Wij staan klaar voor al uw vragen,
+              opmerkingen en verzoeken, of u nu meer wilt weten over onze
+              lesprogramma&apos;s, speciale evenementen of lidmaatschapsopties,
+              ons team is beschikbaar om uw vragen te beantwoorden.
             </p>
+            <br />
             <p>
-              Of u nu meer wilt weten over onze lesprogramma&apos;s, speciale
-              evenementen of lidmaatschapsopties, ons team is beschikbaar om uw
-              vragen te beantwoorden. U kunt ons bereiken via telefoon, e-mail
-              of door het contactformulier op deze pagina in te vullen.
+              U kunt ons bereiken via het contactformulier hieronder, of via de
+              e-mail <a href="mailto:egsjeugd@gmail.com">egsjeugd@gmail.com</a>.
+              Heeft u liever telefonisch contact? Dat kan. Dan vragen wij u een
+              e-mail met belverzoek te sturen naar{' '}
+              <a href="mailto:egsjeugd@gmail.com">egsjeugd@gmail.com</a> en dan
+              maakt onze jeugdsecretaris met u een afspraak.
             </p>
           </>
         }

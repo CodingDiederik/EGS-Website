@@ -1,10 +1,20 @@
 export type ProeflesFormData = {
   name: string;
+  studentName: string;
+  age: number;
+  level: StudentLevels;
   email: string;
-  optionalMessage: string;
+  message: string;
 };
 
 export type FieldErrors = { [key: string]: string };
+
+export type StudentLevels =
+  | 'Beginner (geen ervaring)'
+  | 'Basiskennis (loop stukken)'
+  | 'Ervaren (speelt partijen)'
+  | 'Anders (specificeer in bericht)'
+  | '';
 
 /**
  * Validates the proefles form data.
@@ -16,11 +26,28 @@ export function validateProeflesForm(data: ProeflesFormData): FieldErrors {
   const emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   if (!data.name.trim() || data.name.trim().length < 2) {
-    errors['person-name'] = 'Naam is verplicht.';
+    errors['person-name'] = 'Naam ouder/verzorger is verplicht.';
   }
+
   if (!data.email.trim() || !emailRegex.test(data.email)) {
     errors['email'] = 'Voer een geldig emailadres in.';
   }
+
+  if (!data.studentName.trim() || data.studentName.trim().length < 2) {
+    errors['student-name'] = 'Naam kind is verplicht.';
+  }
+
+  if (Number.isNaN(data.age) || data.age < 1) {
+    errors['student-age'] = 'Voer een geldige leeftijd in.';
+  } else if (data.age > 20) {
+    errors['student-age'] =
+      'De proeflessen zijn bedoeld voor kinderen tot en met 20 jaar.';
+  }
+
+  if (!data.level) {
+    errors['student-level'] = 'Selecteer alstublieft het niveau van uw kind.';
+  }
+
   return errors;
 }
 

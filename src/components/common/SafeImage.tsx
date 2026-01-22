@@ -17,7 +17,6 @@ export default function SafeImage({
   src,
   fallbackSrc,
   hideOnError = true,
-  priority: _priority, // ignored for native img
   ...rest
 }: Readonly<SafeImageProps>) {
   const [currentSrc, setCurrentSrc] = useState(src);
@@ -26,9 +25,11 @@ export default function SafeImage({
   if (hideOnError && hidden) return null;
 
   return (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       {...rest}
       src={currentSrc}
+      alt="Nieuws foto"
       onError={() => {
         if (fallbackSrc && currentSrc !== fallbackSrc) {
           setCurrentSrc(fallbackSrc);

@@ -5,7 +5,7 @@ const IntroductionImage: React.FC<{ text: string }> = ({ text }) => {
   return (
     <div className={styles.imagecard}>
       <Image
-        src="/common/1920x500.jpg"
+        src="/common/schaken.jpg"
         alt={`${text} bij EGS Goirle`}
         fill
         style={{ objectFit: 'cover', objectPosition: 'center' }}
