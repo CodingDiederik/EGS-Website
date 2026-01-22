@@ -1,10 +1,16 @@
 import AgendaComponent from '@/components/Agenda/Agenda';
-import './page.css';
+import {
+  getAgendaItems,
+  getCurrentSchoolyear,
+} from '@/lib/graphql/services/agenda';
 
-export default function Agenda() {
-  return (
-    <div className="image-text">
-      <AgendaComponent />
-    </div>
-  );
+export default async function Agenda() {
+  const agendaData = await getAgendaItems();
+  const timeframe = getCurrentSchoolyear();
+
+  if (!agendaData) {
+    return <div>Geen agenda items beschikbaar.</div>;
+  }
+
+  return <AgendaComponent timeFrame={timeframe} agendaItems={agendaData} />;
 }
