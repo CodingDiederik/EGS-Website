@@ -3,7 +3,7 @@
   text-align: center;
   color: white;
   height: 400px;
-  max-width: 1200px;
+  max-width: 1000px;
   width: 100%;
   left: 50%;
   transform: translateX(-50%);
@@ -13,16 +13,13 @@
 .imagecard h1 {
   position: absolute;
   top: 50%;
-  left: 30%;
-  transform: translate(-50%, -50%);
+  left: var(--spacing-large);
+  margin: 0;
+  transform: translateY(-50%);
+  text-align: left;
   font-size: 5rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 1rem 2rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 0.5rem 1rem;
   border-radius: var(--border-radius);
-}
-
-.imagecard img {
-  height: 400px;
-  width: 1200px;
-  border-radius: var(--border-radius);
+  color: var(--text-tertiary);
 }

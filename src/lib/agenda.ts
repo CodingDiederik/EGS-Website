@@ -5,6 +5,10 @@ import DOMPurify from 'isomorphic-dompurify';
 export async function getTimeFrame(): Promise<string> {
   const now = new Date();
 
+  if (now.getMonth() < 6) {
+    return `${now.getFullYear() - 1} - ${now.getFullYear()}`;
+  }
+
   return `${now.getFullYear()} - ${now.getFullYear() + 1}`;
 }
 

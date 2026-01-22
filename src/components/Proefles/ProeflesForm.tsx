@@ -6,13 +6,17 @@ import {
   submitProeflesForm,
   ProeflesFormData,
   FieldErrors,
+  StudentLevels,
 } from '@/lib/proeflesFormLogic';
 
 const ProeflesForm = () => {
   const [formData, setFormData] = useState<ProeflesFormData>({
     name: '',
+    studentName: '',
+    age: -1,
+    level: '',
     email: '',
-    optionalMessage: '',
+    message: '',
   });
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
@@ -39,7 +43,14 @@ const ProeflesForm = () => {
     if (result.success) {
       setStatus('success');
       setStatusMessage(result.message);
-      setFormData({ name: '', email: '', optionalMessage: '' });
+      setFormData({
+        name: '',
+        studentName: '',
+        age: 0,
+        level: '',
+        email: '',
+        message: '',
+      });
     } else {
       setStatus('error');
       setStatusMessage(result.message);
@@ -56,10 +67,10 @@ const ProeflesForm = () => {
         onSubmit={handleSubmit}
         noValidate
       >
-        {/* NAME */}
+        {/* NAME parent */}
         <div className={styles.fieldGroup}>
           <label htmlFor="person-name" className={styles.label}>
-            Naam:
+            Naam ouder/verzorger:
           </label>
           <input
             type="text"
@@ -107,20 +118,104 @@ const ProeflesForm = () => {
           )}
         </div>
 
+        {/* NAME student */}
+        <div className={styles.fieldGroup}>
+          <label htmlFor="student-name" className={styles.label}>
+            Naam kind:
+          </label>
+          <input
+            type="text"
+            id="student-name"
+            name="student-name"
+            className={`${styles.input} ${
+              fieldErrors['student-name'] ? styles.inputError : ''
+            }`}
+            disabled={status === 'loading'}
+            value={formData.studentName}
+            onChange={(e) =>
+              setFormData({ ...formData, studentName: e.target.value })
+            }
+          />
+          {fieldErrors['student-name'] && (
+            <span className={styles.errorText}>
+              {fieldErrors['student-name']}
+            </span>
+          )}
+        </div>
+
+        {/* AGE student */}
+        <div className={styles.fieldGroup}>
+          <label htmlFor="student-age" className={styles.label}>
+            Leeftijd kind:
+          </label>
+          <input
+            type="text"
+            id="student-age"
+            name="student-age"
+            className={`${styles.input} ${
+              fieldErrors['student-age'] ? styles.inputError : ''
+            }`}
+            disabled={status === 'loading'}
+            value={formData.age === -1 ? '' : formData.age}
+            onChange={(e) =>
+              setFormData({ ...formData, age: Number(e.target.value) })
+            }
+          />
+          {fieldErrors['student-age'] && (
+            <span className={styles.errorText}>
+              {fieldErrors['student-age']}
+            </span>
+          )}
+        </div>
+
+        {/* LEVEL student */}
+        <div className={styles.fieldGroup}>
+          <label htmlFor="student-level" className={styles.label}>
+            Speelniveau kind:
+          </label>
+          <select
+            id="student-level"
+            name="student-level"
+            className={styles.select}
+            disabled={status === 'loading'}
+            value={formData.level}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                level: e.target.value as StudentLevels,
+              })
+            }
+          >
+            <option value="">-- Selecteer niveau --</option>
+            <option value="Beginner (geen ervaring)">
+              Beginner (geen ervaring)
+            </option>
+            <option value="Basiskennis (loop stukken)">
+              Basiskennis (loop stukken)
+            </option>
+            <option value="Ervaren (speelt partijen)">
+              Ervaren (speelt partijen)
+            </option>
+            <option value="Anders (specificeer in bericht)">
+              Anders (specificeer in bericht)
+            </option>
+          </select>
+        </div>
+
         {/* MESSAGE */}
         <div className={styles.fieldGroup}>
-          <label htmlFor="optional-message" className={styles.label}>
-            Bericht (optioneel):
+          <label htmlFor="message" className={styles.label}>
+            Bericht:
           </label>
           <textarea
-            id="optional-message"
-            name="optional-message"
+            id="message"
+            name="message"
             rows={4}
             className={styles.textarea}
             disabled={status === 'loading'}
-            value={formData.optionalMessage}
+            value={formData.message}
             onChange={(e) =>
-              setFormData({ ...formData, optionalMessage: e.target.value })
+              setFormData({ ...formData, message: e.target.value })
             }
           ></textarea>
         </div>

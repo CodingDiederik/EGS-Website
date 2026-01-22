@@ -7,7 +7,7 @@ export default function Fotos() {
   return (
     <div className="image-text">
       {/* Default introduction component*/}
-      <Introduction text="Fotos" />
+      <Introduction text="Foto's" />
 
       {/* Explanation about proeflessen */}
       <TextSection
@@ -15,16 +15,17 @@ export default function Fotos() {
           <>
             <p>
               Hier vindt u een verzameling van foto&apos;s die de sfeer en
-              activiteiten bij EGS Goirle vastleggen. Blader door onze galerij
-              om een indruk te krijgen van wat wij te bieden hebben en om de
-              herinneringen aan onze evenementen en lessen te herbeleven.
+              activiteiten bij Schaakclub EGS vastleggen. Blader door onze
+              galerij om een indruk te krijgen van wat wij te bieden hebben en
+              om de herinneringen aan onze evenementen en lessen te beleven.
             </p>
+            <br />
             <p>
-              Onze fotogalerij wordt regelmatig bijgewerkt met nieuwe beelden,
-              dus kom gerust terug om de nieuwste toevoegingen te bekijken. Of u
-              nu op zoek bent naar inspiratie of gewoon wilt zien wat er bij EGS
-              Goirle gebeurt, onze foto&apos;s geven u een kijkje in onze
-              levendige gemeenschap.
+              Onze fotogalerij wordt regelmatig bijgewerkt met nieuwe kiekjes,
+              dus kom gerust later terug om de nieuwste toevoegingen te
+              bekijken. Of u nu op zoek bent naar inspiratie of gewoon wilt zien
+              wat er bij Schaakclub EGS gebeurt, onze foto&apos;s geven u een
+              kijkje in onze levendige en gezellige vereniging.
             </p>
           </>
         }

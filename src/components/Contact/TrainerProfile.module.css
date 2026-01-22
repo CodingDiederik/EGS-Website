@@ -1,0 +1,59 @@
+.trainerProfile {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'image name'
+    'image bio';
+  align-items: flex-start;
+  column-gap: 1.5rem;
+  row-gap: 0.25rem;
+  padding: 2rem;
+  background-color: var(--background-secondary);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: var(--spacing-large);
+}
+
+.trainerImage {
+  grid-area: image;
+}
+
+.image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.trainerName {
+  grid-area: name;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  text-align: left;
+}
+
+.trainerBio {
+  grid-area: bio;
+  font-size: 1rem;
+  text-align: left;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .trainerProfile {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'image'
+      'name'
+      'bio';
+    text-align: center;
+    row-gap: 0.5rem;
+  }
+
+  .trainerName,
+  .trainerBio {
+    text-align: center;
+  }
+}
