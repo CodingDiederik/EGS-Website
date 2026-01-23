@@ -1,0 +1,114 @@
+.formContainer {
+  max-width: 600px;
+  margin: 0px auto 60px auto;
+  padding: var(--spacing-medium);
+  background-color: var(--background-secondary);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.heading {
+  margin-bottom: var(--spacing-medium);
+  text-align: center;
+  font-family: var(--font-secondary);
+  color: var(--font-primary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+}
+
+.label {
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.input,
+.textarea {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.select {
+  width: 100%;
+  padding: 0.75rem 2.75rem 0.75rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  background-color: #fff;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #333 50%),
+    linear-gradient(135deg, #333 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 22px) 50%,
+    calc(100% - 16px) 50%,
+    calc(100% - 2.5rem) 50%;
+  background-size:
+    6px 6px,
+    6px 6px,
+    1px 1.5rem;
+  background-repeat: no-repeat;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background-color 0.2s;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent-secondary);
+  box-shadow: 0 0 0 3px rgba(237, 211, 99, 0.1);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--accent-secondary);
+  box-shadow: 0 0 0 3px rgba(237, 211, 99, 0.1);
+}
+
+.select:hover {
+  border-color: var(--accent-secondary);
+}
+
+.select:disabled {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+}
+
+.statusMessage {
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.error {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}

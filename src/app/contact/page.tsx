@@ -1,14 +1,21 @@
 import Introduction from '@/components/common/IntroductionImage/IntroductionImage';
 import TextSection from '@/components/common/TextSection/TextSection';
+import Form, { FormValues } from '@/components/common/Form/Form';
 import './page.css';
+import { CONTACT_FORM_FIELDS } from './constants';
 
 export default function Contact() {
+  async function handleContactFormSubmit(data: FormValues) {
+    'use server';
+    // Handle form submission logic here, e.g., send data to an API or email service
+    console.log('Contact form submitted:', data);
+  }
+
   return (
     <div className="image-text">
       {/* Default introduction component*/}
       <Introduction text="Contact" />
 
-      {/* Explanation about proeflessen */}
       <TextSection
         text={
           <>
@@ -30,6 +37,12 @@ export default function Contact() {
             </p>
           </>
         }
+      />
+
+      <Form
+        formFields={CONTACT_FORM_FIELDS}
+        header="Contactformulier"
+        onSubmit={handleContactFormSubmit}
       />
     </div>
   );
