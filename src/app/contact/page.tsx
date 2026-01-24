@@ -1,16 +1,10 @@
 import Introduction from '@/components/common/IntroductionImage/IntroductionImage';
 import TextSection from '@/components/common/TextSection/TextSection';
-import Form, { FormValues } from '@/components/common/Form/Form';
+import Form from '@/components/common/Form/Form';
 import './page.css';
-import { CONTACT_FORM_FIELDS } from './constants';
+import { CONTACT_FORM_FIELDS, CONTACT_FORM_NAME } from './constants';
 
 export default function Contact() {
-  async function handleContactFormSubmit(data: FormValues) {
-    'use server';
-    // Handle form submission logic here, e.g., send data to an API or email service
-    console.log('Contact form submitted:', data);
-  }
-
   return (
     <div className="image-text">
       {/* Default introduction component*/}
@@ -42,7 +36,7 @@ export default function Contact() {
       <Form
         formFields={CONTACT_FORM_FIELDS}
         header="Contactformulier"
-        onSubmit={handleContactFormSubmit}
+        formName={CONTACT_FORM_NAME}
       />
     </div>
   );

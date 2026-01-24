@@ -9,7 +9,6 @@
 }
 
 .heading {
-  margin-bottom: var(--spacing-medium);
   text-align: center;
   font-family: var(--font-secondary);
   color: var(--font-primary);

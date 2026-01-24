@@ -29,7 +29,9 @@
     "react-dom": "19.2.3",
     "react-icons": "^5.5.0",
     "react-photo-album": "^3.4.0",
-    "yet-another-react-lightbox": "^3.28.0"
+    "resend": "^6.8.0",
+    "yet-another-react-lightbox": "^3.28.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@sonar/scan": "^4.3.4",
