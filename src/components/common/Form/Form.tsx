@@ -1,16 +1,7 @@
 'use client';
-import { FormField } from '@/lib/common/form';
+import { FormField, FormState } from './types';
 import styles from './Form.module.css';
-import { useActionState, useState, useRef } from 'react';
-import { submitFormData } from '@/lib/common/form';
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export type FormValues = Record<string, any>;
-
-export type FormState = {
-  status: 'idle' | 'success' | 'error';
-  message: string;
-};
+import { useActionState, useState, useRef, startTransition } from 'react';
 
 const initialState: FormState = {
   status: 'idle',
@@ -23,7 +14,22 @@ async function action(
   formName: string,
 ): Promise<FormState> {
   try {
-    await submitFormData(formData, formName);
+    formData.set('formName', formName);
+    const response = await fetch('/api/submitform', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return {
+        status: 'error',
+        message:
+          errorData.message ||
+          'Er is een fout opgetreden bij het verzenden van het formulier.',
+      };
+    }
+
     return {
       status: 'success',
       message: 'Formulier succesvol verzonden!',
@@ -80,7 +86,9 @@ const Form = ({
     }
 
     setValidationError('');
-    formAction(formData);
+    startTransition(() => {
+      formAction(formData);
+    });
   };
 
   return (

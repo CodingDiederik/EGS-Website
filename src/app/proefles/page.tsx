@@ -1,7 +1,8 @@
 import Introduction from '@/components/common/IntroductionImage/IntroductionImage';
 import TextSection from '@/components/common/TextSection/TextSection';
 import './page.css';
-import ProeflesForm from '@/components/Proefles/ProeflesForm';
+import Form from '@/components/common/Form/Form';
+import { PROEFLES_FORM_FIELDS, PROEFLES_FORM_NAME } from './constants';
 
 export default function Proefles() {
   return (
@@ -53,7 +54,11 @@ export default function Proefles() {
           </>
         }
       />
-      <ProeflesForm />
+      <Form
+        formFields={PROEFLES_FORM_FIELDS}
+        header="Aanvraag proeflessen"
+        formName={PROEFLES_FORM_NAME}
+      />
     </div>
   );
 }

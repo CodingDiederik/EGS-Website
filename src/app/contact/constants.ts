@@ -1,4 +1,4 @@
-import { FormField } from '@/lib/common/form';
+import { FormField } from '@/components/common/Form/types';
 import { z } from 'zod';
 
 export const CONTACT_FORM_FIELDS: FormField[] = [

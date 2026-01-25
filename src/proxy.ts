@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ratelimit } from '@/lib/ratelimit';
+import { Ratelimit } from '@upstash/ratelimit';
+import { Redis } from '@upstash/redis';
 
 export const config = {
-  // Only run the middleware on API routes
   matcher: '/api/:path*',
 };
+
+export const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(2, '30 s'),
+  analytics: true,
+  prefix: '@upstash/ratelimit',
+});
 
 export default async function proxy(request: NextRequest) {
   // Get the User's IP to use as the unique identifier
@@ -13,7 +20,6 @@ export default async function proxy(request: NextRequest) {
   const realIp = request.headers.get('x-real-ip');
 
   if (forwardedFor) {
-    // The first one is the client.
     ip = forwardedFor.split(',')[0].trim();
   } else if (realIp) {
     ip = realIp.trim();
