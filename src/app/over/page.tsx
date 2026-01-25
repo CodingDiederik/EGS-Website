@@ -10,7 +10,6 @@ export default function Over() {
       {/* Default introduction component*/}
       <Introduction text="Over" />
 
-      {/* Explanation about proeflessen */}
       <TextSection
         text={
           <>

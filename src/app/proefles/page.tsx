@@ -10,7 +10,6 @@ export default function Proefles() {
       {/* Default introduction component*/}
       <Introduction text="Proeflessen" />
 
-      {/* Explanation about proeflessen */}
       <TextSection
         text={
           <>
