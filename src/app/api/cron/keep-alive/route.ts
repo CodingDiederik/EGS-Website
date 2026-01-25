@@ -15,12 +15,15 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Write a timestamp to a key. 
+    // Write a timestamp to a key.
     const timestamp = new Date().toISOString();
     await redis.set('system:keep-alive', timestamp);
-    
+
     return NextResponse.json({ success: true, timestamp });
-  } catch (error) {
-    return NextResponse.json({ success: false, error: 'Redis connection failed' }, { status: 500 });
+  } catch {
+    return NextResponse.json(
+      { success: false, error: 'Redis connection failed' },
+      { status: 500 },
+    );
   }
 }
