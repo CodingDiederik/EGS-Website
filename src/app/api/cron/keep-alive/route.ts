@@ -7,8 +7,6 @@ const redis = new Redis({
 });
 
 export async function GET(request: Request) {
-  // Security: Only allow Vercel Cron to trigger this
-  // Vercel automatically sends this header when running a cron job
   const authHeader = request.headers.get('authorization');
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new NextResponse('Unauthorized', { status: 401 });

@@ -34,12 +34,18 @@ export default async function NewsPage({ params }: Readonly<NewsPageProps>) {
   const imgRegex =
     /<figure[^>]*wp-block-image[^>]*>.*?<img[^>]*src="([^"]+)"[^>]*>.*?<\/figure>/;
   const match = imgRegex.exec(newsArticleData.content);
+
   // Ensure we use https to avoid mixed-content blocking
-  const heroImageSrc = match
-    ? match[1].startsWith('http://')
-      ? match[1].replace('http://', 'https://')
-      : match[1]
-    : null;
+  let heroImageSrc;
+  if (match) {
+    if (match[1].startsWith('http://')) {
+      heroImageSrc = match[1].replace('http://', 'https://');
+    } else {
+      heroImageSrc = match[1];
+    }
+  } else {
+    heroImageSrc = null;
+  }
 
   // Remove the extracted image block from the content
   let contentHtml = newsArticleData.content;

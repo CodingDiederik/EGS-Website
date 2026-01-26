@@ -54,11 +54,11 @@ function convertToAgendaItem(row: string): AgendaItem | null {
     cell = cell.replaceAll(/<[^>]+>/g, '');
     // decode common HTML entities minimally
     cell = cell
-      .replace(/&nbsp;/g, ' ')
-      .replace(/&amp;/g, '&')
+      .replaceAll(/&nbsp;/g, ' ')
+      .replaceAll(/&amp;/g, '&')
       .trim();
     // normalize multiple spaces
-    cell = cell.replace(/\s+/g, ' ').trim();
+    cell = cell.replaceAll(/\s+/g, ' ').trim();
     cells.push(cell);
   }
 
@@ -74,11 +74,12 @@ function convertToAgendaItem(row: string): AgendaItem | null {
 
   // parse date in format DD-MM-YYYY (fall back to invalid -> upcoming=false)
   let upcoming = false;
-  const dateMatch = datumRaw.match(/(\d{1,2})-(\d{1,2})-(\d{4})/);
+  const dateRegex = /(\d{1,2})-(\d{1,2})-(\d{4})/;
+  const dateMatch = dateRegex.exec(datumRaw);
   if (dateMatch) {
-    const day = parseInt(dateMatch[1], 10);
-    const month = parseInt(dateMatch[2], 10) - 1;
-    const year = parseInt(dateMatch[3], 10);
+    const day = Number.parseInt(dateMatch[1], 10);
+    const month = Number.parseInt(dateMatch[2], 10) - 1;
+    const year = Number.parseInt(dateMatch[3], 10);
     const eventDate = new Date(year, month, day);
     const today = new Date();
     today.setHours(0, 0, 0, 0);

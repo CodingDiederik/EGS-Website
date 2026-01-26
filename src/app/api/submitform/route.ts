@@ -45,9 +45,13 @@ export async function POST(req: Request) {
 
     formData.delete('website');
 
+    if (!process.env.RECEIVER_EMAIL_ADDRESS) {
+      throw new Error('Receiver email address is not configured.');
+    }
+
     resend.emails.send({
       from: 'egsjeugd@resend.dev',
-      to: 'djjmwebster@gmail.com',
+      to: process.env.RECEIVER_EMAIL_ADDRESS!,
       subject: `Nieuw bericht via het ${formName}`,
       text:
         `Er is een nieuw bericht verzonden voor het ${formName}:\n\n` +
