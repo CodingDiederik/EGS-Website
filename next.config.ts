@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
+      { protocol: 'https', hostname: 'wsrv.nl' },
       { protocol: 'https', hostname: 'jeugd.schaakclubegs.nl' },
-      { protocol: 'https', hostname: 'egs.diederikwebster.nl' },
     ],
   },
   reactCompiler: true,

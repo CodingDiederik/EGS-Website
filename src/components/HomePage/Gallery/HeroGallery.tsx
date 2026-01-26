@@ -1,11 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
 import styles from './HeroGallery.module.css';
-import { getPhotosHomepage } from '@/lib/homepage';
+import { getPhotosHomepage } from '@/lib/services/homepage';
 
 const { track1Images, track2Images, track3Images } = getPhotosHomepage();
 
-// Duplicate images for seamless looping
 const allTrack1Images = [...track1Images, ...track1Images];
 const allTrack2Images = [...track2Images, ...track2Images];
 const allTrack3Images = [...track3Images, ...track3Images];
@@ -13,7 +12,6 @@ const allTrack3Images = [...track3Images, ...track3Images];
 const HeroGallery: React.FC = () => {
   return (
     <section className={styles.heroGallery}>
-      {/* Background container with blur */}
       <div className={styles.backgroundContainer}>
         {/* Track 1: Scrolls Right-to-Left (Fast) */}
         <div
@@ -31,7 +29,7 @@ const HeroGallery: React.FC = () => {
                 fill
                 className={styles.image}
                 sizes="(max-width: 480px) 260px, 380px"
-                priority={index < 3}
+                loading="lazy"
               />
             </div>
           ))}
@@ -53,7 +51,7 @@ const HeroGallery: React.FC = () => {
                 fill
                 className={styles.image}
                 sizes="(max-width: 480px) 260px, 380px"
-                priority={index < 3}
+                loading="lazy"
               />
             </div>
           ))}
@@ -75,7 +73,7 @@ const HeroGallery: React.FC = () => {
                 fill
                 className={styles.image}
                 sizes="(max-width: 480px) 260px, 380px"
-                priority={index < 3}
+                loading="lazy"
               />
             </div>
           ))}

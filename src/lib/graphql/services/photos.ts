@@ -24,8 +24,8 @@ export async function fetchPhoto(photoId: number | null) {
   }
 
   const query = `
-    query GetPhoto {
-      mediaItem(id: ${JSON.stringify(photoId)}, idType: DATABASE_ID) {
+    query GetPhoto($id: ID!) {
+      mediaItem(id: $id, idType: DATABASE_ID) {
         id
         sourceUrl
         altText
@@ -38,7 +38,11 @@ export async function fetchPhoto(photoId: number | null) {
     }
   `;
 
-  const data: { mediaItem: PhotoData | null } = await fetchGraphQL(query);
+  const data: { mediaItem: PhotoData | null } = await fetchGraphQL(
+    query,
+    { next: { revalidate: 3600, tags: ['photo'] } },
+    { id: photoId },
+  );
   if (data.mediaItem) {
     return {
       id: Number(data.mediaItem.id),
@@ -61,8 +65,8 @@ export async function fetchPhotos(
   }
 
   const query = `
-    query GetPhotos {
-      mediaItems(where: { in: ${JSON.stringify(photoIds)} }) {
+    query GetPhotos($ids: [ID!]!) {
+      mediaItems(where: { in: $ids }) {
         nodes {
           id
           sourceUrl
@@ -77,7 +81,11 @@ export async function fetchPhotos(
     }
   `;
 
-  const data: PhotosData = await fetchGraphQL(query);
+  const data: PhotosData = await fetchGraphQL(
+    query,
+    { next: { revalidate: 3600, tags: ['photos'] } },
+    { ids: photoIds },
+  );
 
   if (data.mediaItems) {
     return data.mediaItems.nodes.map((item: PhotoData) => ({

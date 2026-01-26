@@ -1,6 +1,6 @@
 'use server';
 
-import { fetchNewsData } from '@/lib/news';
+import { fetchNewsData } from '@/lib/graphql/services/news';
 
 function isValidCursor(cursor: string): boolean {
   // Accepts base64, UUID, or similar safe tokens

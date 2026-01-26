@@ -1,14 +1,26 @@
+function checkEnvironmentVariables(): string | null {
+  if (!process.env.WP_USERNAME || !process.env.WP_PASSWORD) {
+    return 'Missing WordPress credentials: WP_USERNAME and WP_PASSWORD must be set';
+  }
+
+  if (!process.env.BACKEND_URL) {
+    return 'Missing BACKEND_URL environment variable';
+  }
+
+  return null;
+}
+
 /**
  * Function to fetch data from the backend GraphQL endpoint. (Wordpress)
  * @param query GraphQL query string
  * @param variables Optional variables for the GraphQL query
- * @param options Optional fetch options
+ * @param options Fetch options
  * @returns
  */
 export async function fetchGraphQL<TResult, TVariables = unknown>(
   query: string,
+  options: RequestInit & { next?: NextFetchRequestConfig },
   variables?: TVariables,
-  options?: RequestInit & { next?: NextFetchRequestConfig },
 ): Promise<TResult> {
   // Check environment variables
   const envError = checkEnvironmentVariables();
@@ -55,16 +67,4 @@ export async function fetchGraphQL<TResult, TVariables = unknown>(
   }
 
   return json.data;
-}
-
-function checkEnvironmentVariables(): string | null {
-  if (!process.env.WP_USERNAME || !process.env.WP_PASSWORD) {
-    return 'Missing WordPress credentials: WP_USERNAME and WP_PASSWORD must be set';
-  }
-
-  if (!process.env.BACKEND_URL) {
-    return 'Missing BACKEND_URL environment variable';
-  }
-
-  return null;
 }

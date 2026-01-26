@@ -1,17 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import NewsCard from '../NewsCard/NewsCard';
 import { loadMoreNews } from '@/app/actions';
-import {
-  NewsItem,
-  extractFirstImage,
-  getFillerImage,
-  createExcerpt,
-  formatDate,
-} from '@/lib/news';
-import styles from './NewsSection.module.css';
+import { NewsItem } from '@/lib/services/newsSection';
+import styles from './NewsList.module.css';
 
 interface NewsListProps {
   initialPosts: NewsItem[];
@@ -71,46 +64,5 @@ export default function NewsList({
         </div>
       )}
     </>
-  );
-}
-
-function NewsCard({ item }: { item: Readonly<NewsItem> }) {
-  const extractedUrl = extractFirstImage(item.content || '');
-  const displayImage = extractedUrl || getFillerImage(item.id || 'default');
-  const excerpt = createExcerpt(item.content || '');
-  const authorName = createExcerpt(
-    item.author?.node?.firstName || 'Jeugdsecretaris',
-  );
-  const [imgSrc, setImgSrc] = useState(displayImage);
-
-  return (
-    <article className={styles['news-card']}>
-      <div className={styles['card-image-wrapper']}>
-        <Image
-          src={imgSrc}
-          alt={item.title || 'Nieuwsafbeelding'}
-          fill
-          className={styles['card-image']}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          onError={() => {
-            setImgSrc(getFillerImage(item.id || 'default'));
-          }}
-        />
-        <span className={styles['news-date']}>
-          {formatDate(item.date || new Date().toISOString())}
-        </span>
-      </div>
-
-      <div className={styles['card-content']}>
-        <h3>{item.title}</h3>
-        <span className={styles['news-meta']}>
-          <span className={styles['news-author']}>{authorName}</span>
-        </span>
-        <p>{excerpt}</p>
-        <Link href={`/nieuws/${item.slug}`} className={styles['read-more']}>
-          Lees verder &rarr;
-        </Link>
-      </div>
-    </article>
   );
 }
