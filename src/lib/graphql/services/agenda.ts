@@ -125,7 +125,7 @@ export async function getAgendaItems(): Promise<AgendaItem[] | null> {
   let agendaData;
   try {
     agendaData = await fetchGraphQL<GetAgendaResponse>(GET_AGENDA_QUERY, {
-      next: { revalidate: 3600, tags: ['agenda'] },
+      next: { revalidate: 600, tags: ['agenda'] },
     });
   } catch (error) {
     console.error('Agenda Fetch Error:', error);

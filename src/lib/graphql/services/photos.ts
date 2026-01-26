@@ -40,7 +40,7 @@ export async function fetchPhoto(photoId: number | null) {
 
   const data: { mediaItem: PhotoData | null } = await fetchGraphQL(
     query,
-    { next: { revalidate: 3600, tags: ['photo'] } },
+    { next: { revalidate: 600, tags: ['photo'] } },
     { id: photoId },
   );
   if (data.mediaItem) {
@@ -83,7 +83,7 @@ export async function fetchPhotos(
 
   const data: PhotosData = await fetchGraphQL(
     query,
-    { next: { revalidate: 3600, tags: ['photos'] } },
+    { next: { revalidate: 600, tags: ['photos'] } },
     { ids: photoIds },
   );
 

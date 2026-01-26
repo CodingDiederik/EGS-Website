@@ -2,7 +2,10 @@ import styles from './NewsPage.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import DOMPurify from 'isomorphic-dompurify';
-import { fetchNewsArticle } from '@/lib/graphql/services/news';
+import {
+  fetchNewsArticle,
+  fetchNewsArticleSlugs,
+} from '@/lib/graphql/services/news';
 import { notFound } from 'next/navigation';
 
 type NewsPageProps = {
@@ -90,3 +93,14 @@ export default async function NewsPage({ params }: Readonly<NewsPageProps>) {
     </article>
   );
 }
+
+export async function generateStaticParams() {
+  const posts = await fetchNewsArticleSlugs();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+export const dynamicParams = true;
+
+export const revalidate = 600;

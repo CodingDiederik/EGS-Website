@@ -65,7 +65,7 @@ export async function fetchNewsData(
 
     const result: { posts: NewsResponse } = await fetchGraphQL(
       query,
-      { next: { revalidate: 3600, tags: ['news'] } },
+      { next: { revalidate: 600, tags: ['news'] } },
       variables,
     );
     return result.posts;
@@ -104,12 +104,35 @@ export async function fetchNewsArticle(
   try {
     const data: { post: NewsPost } = await fetchGraphQL(
       query,
-      { next: { revalidate: 3600, tags: ['newspost'] } },
+      { next: { revalidate: 600, tags: ['newspost'] } },
       { slug: sanitizedSlug },
     );
     return data.post as NewsPost;
   } catch (error) {
     console.error('Error fetching news article:', error);
     return null;
+  }
+}
+
+export async function fetchNewsArticleSlugs(): Promise<{ slug: string }[]> {
+  const query = `
+    query GetAllPostSlugs {
+      posts(first: 100, where: {categoryNotIn: "9"}) {
+        nodes {
+          slug
+        }
+      }
+    }
+  `;
+
+  try {
+    const data: { posts: { nodes: { slug: string }[] } } = await fetchGraphQL(
+      query,
+      { next: { revalidate: 600, tags: ['newspost-slugs'] } },
+    );
+    return data.posts.nodes;
+  } catch (error) {
+    console.error('Error fetching news article slugs:', error);
+    return [];
   }
 }
