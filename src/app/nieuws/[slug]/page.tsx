@@ -1,5 +1,5 @@
 import styles from './NewsPage.module.css';
-import SafeImage from '@/components/common/SafeImage';
+import Image from 'next/image';
 import Link from 'next/link';
 import DOMPurify from 'isomorphic-dompurify';
 import { fetchNewsArticle } from '@/lib/graphql/services/news';
@@ -65,7 +65,7 @@ export default async function NewsPage({ params }: Readonly<NewsPageProps>) {
 
       {heroImageSrc && (
         <div className={styles.imageContainer}>
-          <SafeImage
+          <Image
             src={heroImageSrc}
             alt={newsArticleData.title}
             width={0}
@@ -73,7 +73,6 @@ export default async function NewsPage({ params }: Readonly<NewsPageProps>) {
             sizes="100vw"
             className={styles.heroImage}
             priority
-            hideOnError
           />
         </div>
       )}
