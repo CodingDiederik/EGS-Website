@@ -1,6 +1,6 @@
 'use client';
 
-import { PhotoDetails } from '@/lib/wordpress/photos';
+import { PhotoDetails } from '@/lib/filebird/photos';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import {
@@ -11,8 +11,9 @@ import {
 import 'react-photo-album/rows.css';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
-import styles from './GallerySelect.module.css';
+import styles from './PhotoGallery.module.css';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 function renderNextImage(
   { alt = '', title, sizes }: RenderImageProps,
@@ -44,18 +45,19 @@ function renderNextImage(
   );
 }
 
-type PhotoGalleryClientProps = {
+type PhotoGalleryProps = {
   id: number | null;
   mediaItems: PhotoDetails[] | null;
   title: string | null;
 };
 
-export default function PhotoGalleryClient({
+export default function PhotoGallery({
   id,
   mediaItems,
   title,
-}: Readonly<PhotoGalleryClientProps>) {
+}: Readonly<PhotoGalleryProps>) {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
+
   const photos = useMemo(
     () =>
       (mediaItems ?? []).map((item) => ({
@@ -66,6 +68,7 @@ export default function PhotoGalleryClient({
       })),
     [mediaItems],
   );
+
   const slides = useMemo(
     () =>
       photos.map((photo) => ({
@@ -76,16 +79,12 @@ export default function PhotoGalleryClient({
       })),
     [photos],
   );
+
   const hasPhotos = photos.length > 0;
 
   let galleryContent;
   if (id == null) {
-    galleryContent = (
-      <div className="no-pictures">
-        <h1>Ongeldig foto-album</h1>
-        <p>Deze pagina kon geen geldige map-ID vinden.</p>
-      </div>
-    );
+    return notFound();
   } else if (hasPhotos) {
     galleryContent = (
       <>
@@ -98,6 +97,7 @@ export default function PhotoGalleryClient({
             </button>
           </Link>
         </div>
+
         <RowsPhotoAlbum
           photos={photos}
           render={{ image: renderNextImage }}

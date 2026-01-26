@@ -1,5 +1,3 @@
-import { fetchAPI } from './articles';
-
 export type FileBirdFolder = {
   id: number;
   title: string;
@@ -15,17 +13,6 @@ export type Photo = {
     width: number;
   };
   altText: string;
-};
-
-type PhotoData = {
-  id: string;
-  sourceUrl: string;
-  altText: string;
-  title: string;
-  mediaDetails: {
-    width: number;
-    height: number;
-  };
 };
 
 export type PhotoDetails = {
@@ -57,7 +44,7 @@ export async function fetchFolders(): Promise<FileBirdFolder[]> {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
     },
-    next: { revalidate: 60 },
+    next: { revalidate: 3000 },
   });
 
   if (!response.ok) {
@@ -67,102 +54,6 @@ export async function fetchFolders(): Promise<FileBirdFolder[]> {
   const json = await response.json();
 
   return json.data.folders;
-}
-
-/**
- * Function to remove empty folders. Does not do this for children.
- * @param folders the list of folders to clean.
- * @returns the cleaned list of folders.
- */
-export function removeEmptyFolders(
-  folders: FileBirdFolder[],
-): FileBirdFolder[] {
-  const newFolders: FileBirdFolder[] = [];
-
-  const EXCLUDED_FOLDER_IDS = [4, 0]; // Unassigned and only news folder
-
-  for (const folder of folders) {
-    if (folder['data-count'] > 0 && !EXCLUDED_FOLDER_IDS.includes(folder.id)) {
-      newFolders.push(folder);
-    }
-  }
-
-  return newFolders;
-}
-
-export async function fetchPhoto(photoId: number | null) {
-  if (!photoId) {
-    return null;
-  }
-
-  const query = `
-    query GetPhoto {
-      mediaItem(id: ${JSON.stringify(photoId)}, idType: DATABASE_ID) {
-        id
-        sourceUrl
-        altText
-        title
-        mediaDetails {
-          width
-          height
-        }
-      }
-    }
-  `;
-
-  const data = await fetchAPI(query);
-  if (data.mediaItem) {
-    return {
-      id: Number(data.mediaItem.id),
-      src: data.mediaItem.sourceUrl,
-      alt: data.mediaItem.altText,
-      title: data.mediaItem.title,
-      width: data.mediaItem.mediaDetails.width,
-      height: data.mediaItem.mediaDetails.height,
-    };
-  }
-
-  return null;
-}
-
-export async function fetchPhotos(
-  photoIds: number[] | null,
-): Promise<null | PhotoDetails[]> {
-  if (!photoIds || photoIds.length === 0) {
-    return null;
-  }
-
-  const query = `
-    query GetPhotos {
-      mediaItems(where: { in: ${JSON.stringify(photoIds)} }) {
-        nodes {
-          id
-          sourceUrl
-          altText
-          title
-          mediaDetails {
-            width
-            height
-          }
-        }
-      }
-    }
-  `;
-
-  const data = await fetchAPI(query);
-
-  if (data.mediaItems) {
-    return data.mediaItems.nodes.map((item: PhotoData) => ({
-      id: Number(item.id),
-      src: item.sourceUrl,
-      alt: item.altText,
-      title: item.title,
-      width: item.mediaDetails.width,
-      height: item.mediaDetails.height,
-    }));
-  }
-
-  return null;
 }
 
 export async function fetchPhotoIds(
@@ -183,7 +74,7 @@ export async function fetchPhotoIds(
           'Content-Type': 'application/json',
           Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
         },
-        next: { revalidate: 300 },
+        next: { revalidate: 3000 },
       },
     );
 
@@ -228,7 +119,7 @@ export async function getFolderTitle(folderId: number): Promise<string | null> {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
         },
-        next: { revalidate: 300 },
+        next: { revalidate: 3000 },
       },
     );
 

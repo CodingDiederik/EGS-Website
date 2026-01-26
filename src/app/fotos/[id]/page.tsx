@@ -1,11 +1,12 @@
 import {
   fetchPhotoIds,
-  fetchPhotos,
   PhotoDetails,
   getFolderTitle,
-} from '@/lib/wordpress/photos';
-import PhotoGalleryClient from '@/components/Fotos/PhotoGalleryClient';
+} from '@/lib/filebird/photos';
+import PhotoGalleryClient from '@/components/Fotos/PhotoGallery/PhotoGallery';
 import './page.css';
+import { fetchPhotos } from '@/lib/graphql/services/photos';
+import { notFound } from 'next/navigation';
 
 type PhotoPageProps = {
   params: Promise<{ id: string }>;
@@ -27,7 +28,7 @@ export default async function PhotoPage({ params }: Readonly<PhotoPageProps>) {
   const id = Number.isFinite(numericId) ? numericId : null;
 
   if (id == null) {
-    return <PhotoGalleryClient id={null} mediaItems={null} title={null} />;
+    notFound();
   }
 
   let mediaItems: PhotoDetails[] | null = null;

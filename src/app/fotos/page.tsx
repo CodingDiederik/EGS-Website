@@ -1,7 +1,7 @@
 import Introduction from '@/components/common/IntroductionImage/IntroductionImage';
 import TextSection from '@/components/common/TextSection/TextSection';
 import './page.css';
-import GallerySelect from '@/components/Fotos/GallerySelect';
+import FolderSelect from '@/components/Fotos/FolderSelect/FolderSelect';
 
 export default function Fotos() {
   return (
@@ -9,7 +9,6 @@ export default function Fotos() {
       {/* Default introduction component*/}
       <Introduction text="Foto's" />
 
-      {/* Explanation about proeflessen */}
       <TextSection
         text={
           <>
@@ -30,7 +29,8 @@ export default function Fotos() {
           </>
         }
       />
-      <GallerySelect />
+
+      <FolderSelect />
     </div>
   );
 }
