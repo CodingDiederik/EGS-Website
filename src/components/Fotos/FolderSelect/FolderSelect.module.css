@@ -39,14 +39,6 @@
   font-weight: 600;
 }
 
-.back-to-gallery-button {
-  display: inline-flex;
-  gap: 0.5rem;
-  font-size: 0.95rem;
-  text-decoration: none;
-  margin: 0;
-}
-
 .cardLink {
   display: block;
   color: inherit;
