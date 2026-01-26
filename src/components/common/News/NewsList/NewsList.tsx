@@ -1,9 +1,9 @@
 'use client';
 
+import { NewsItem } from '@/lib/graphql/services/news';
 import { useState } from 'react';
 import NewsCard from '../NewsCard/NewsCard';
 import { loadMoreNews } from '@/app/actions';
-import { NewsItem } from '@/lib/services/newsSection';
 import styles from './NewsList.module.css';
 
 interface NewsListProps {
