@@ -3,11 +3,11 @@
 import { fetchNewsData } from '@/lib/graphql/services/news';
 
 function isValidCursor(cursor: string): boolean {
-  // Accepts base64, UUID, or similar safe tokens
   return (
     typeof cursor === 'string' && /^[A-Za-z0-9\-_+=/]{1,256}$/.test(cursor)
   );
 }
+
 export async function loadMoreNews(cursor: string) {
   // Validate cursor before using
   const safeCursor = isValidCursor(cursor) ? cursor : undefined;
