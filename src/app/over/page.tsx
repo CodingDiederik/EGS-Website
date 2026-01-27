@@ -3,6 +3,7 @@ import TextSection from '@/components/common/TextSection/TextSection';
 import Link from 'next/link';
 import './page.css';
 import TrainerProfile from '@/components/Contact/TrainerProfile';
+import Image from 'next/image';
 
 export default function Over() {
   return (
@@ -76,24 +77,49 @@ export default function Over() {
             <br />
             <h2>Onze trainers</h2>
             <TrainerProfile
+              name="Jasper"
+              imageSrc="/trainer/Jasper.jpeg"
+              objectPosition="170% -10px"
+              scale={1.6}
+              bio="Jasper is een ervaren schaaktrainer die al vele jaren lesgeeft aan jeugdspelers van alle niveaus. Met zijn geduldige en enthousiaste aanpak weet hij elke leerling te motiveren en te inspireren om het beste uit zichzelf te halen."
+            />
+            <TrainerProfile
               name="Ciske"
+              imageSrc="/trainer/Ciske.jpeg"
+              objectPosition="100% -10px"
               bio="Ciske is een ervaren schaaktrainer die al vele jaren lesgeeft aan jeugdspelers van alle niveaus. Met zijn geduldige en enthousiaste aanpak weet hij elke leerling te motiveren en te inspireren om het beste uit zichzelf te halen."
             />
             <TrainerProfile
               name="Sil"
+              imageSrc="/trainer/Sil.jpeg"
+              scale={1.1}
+              objectPosition="5px -20px"
               bio="Sil is een ervaren schaaktrainer die al vele jaren lesgeeft aan jeugdspelers van alle niveaus. Met zijn geduldige en enthousiaste aanpak weet hij elke leerling te motiveren en te inspireren om het beste uit zichzelf te halen."
             />
             <TrainerProfile
+              name="Thijs"
+              imageSrc="/trainer/Thijs.jpeg"
+              objectPosition="5px 0px"
+              bio="Thijs is een ervaren schaaktrainer die al vele jaren lesgeeft aan jeugdspelers van alle niveaus. Met zijn geduldige en enthousiaste aanpak weet hij elke leerling te motiveren en te inspireren om het beste uit zichzelf te halen."
+            />
+            <TrainerProfile
               name="Niels"
+              imageSrc="/trainer/Niels.jpeg"
+              objectPosition="10px 0px"
+              scale={1.1}
               bio="Niels is een ervaren schaaktrainer die al vele jaren lesgeeft aan jeugdspelers van alle niveaus. Met zijn geduldige en enthousiaste aanpak weet hij elke leerling te motiveren en te inspireren om het beste uit zichzelf te halen."
             />
             <TrainerProfile
-              name="Jasper"
-              bio="Jasper is een ervaren schaaktrainer die al vele jaren lesgeeft aan jeugdspelers van alle niveaus. Met zijn geduldige en enthousiaste aanpak weet hij elke leerling te motiveren en te inspireren om het beste uit zichzelf te halen."
-            />
-            <TrainerProfile
               name="Sjaak"
+              imageSrc="/trainer/Sjaak.jpeg"
               bio="Sjaak is een ervaren schaaktrainer die al vele jaren lesgeeft aan jeugdspelers van alle niveaus. Met zijn geduldige en enthousiaste aanpak weet hij elke leerling te motiveren en te inspireren om het beste uit zichzelf te halen."
+            />
+            <Image
+              src="/trainer/Group.jpeg"
+              alt="Onze trainers"
+              width={800}
+              height={600}
+              className="trainer-group-image"
             />
           </>
         }
