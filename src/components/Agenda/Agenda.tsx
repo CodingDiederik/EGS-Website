@@ -2,12 +2,12 @@ import styles from './Agenda.module.css';
 import { AgendaItem } from '@/lib/graphql/services/agenda';
 import { FaClock, FaCalendar, FaArchive } from 'react-icons/fa';
 
-export default function AgendaComponent({
+export default function Agenda({
   timeFrame,
   agendaItems,
 }: {
-  timeFrame: string;
-  agendaItems: AgendaItem[];
+  timeFrame: Readonly<string>;
+  agendaItems: ReadonlyArray<AgendaItem>;
 }) {
   return (
     <div className={styles.widgetContainer}>
@@ -34,8 +34,8 @@ export default function AgendaComponent({
           <tbody>
             {agendaItems
               .filter((item) => item.upcoming)
-              .map((item, index) => (
-                <tr key={index}>
+              .map((item) => (
+                <tr key={item.Datum + item.Activiteit}>
                   <td>{item.Datum}</td>
                   <td>
                     {item.Activiteit}
@@ -66,8 +66,8 @@ export default function AgendaComponent({
             <tbody>
               {agendaItems
                 .filter((item) => !item.upcoming)
-                .map((item, index) => (
-                  <tr key={index}>
+                .map((item) => (
+                  <tr key={item.Datum + item.Activiteit}>
                     <td>{item.Datum}</td>
                     <td>
                       {item.Activiteit}

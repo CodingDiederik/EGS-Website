@@ -101,8 +101,8 @@ const Form = ({
         onSubmit={handleSubmit}
       >
         <h2 className={styles.heading}>{header}</h2>
-        {formFields.map((field, index) => (
-          <div key={index}>
+        {formFields.map((field) => (
+          <div key={field.label}>
             <label className={styles.label}>
               {field.label + ':'}
               {field.type === 'textarea' ? (

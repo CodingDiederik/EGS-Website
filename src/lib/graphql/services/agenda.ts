@@ -53,10 +53,7 @@ function convertToAgendaItem(row: string): AgendaItem | null {
     // remove inner HTML tags
     cell = cell.replaceAll(/<[^>]+>/g, '');
     // decode common HTML entities minimally
-    cell = cell
-      .replaceAll(/&nbsp;/g, ' ')
-      .replaceAll(/&amp;/g, '&')
-      .trim();
+    cell = cell.replaceAll('&nbsp;', ' ').replaceAll('&amp;', '&').trim();
     // normalize multiple spaces
     cell = cell.replaceAll(/\s+/g, ' ').trim();
     cells.push(cell);

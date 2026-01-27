@@ -1,10 +1,10 @@
-import AgendaComponent from '@/components/Agenda/Agenda';
+import Agenda from '@/components/Agenda/Agenda';
 import {
   getAgendaItems,
   getCurrentSchoolyear,
 } from '@/lib/graphql/services/agenda';
 
-export default async function Agenda() {
+export default async function AgendaPage() {
   const agendaData = await getAgendaItems();
   const timeframe = getCurrentSchoolyear();
 
@@ -12,5 +12,5 @@ export default async function Agenda() {
     return <div>Geen agenda items beschikbaar.</div>;
   }
 
-  return <AgendaComponent timeFrame={timeframe} agendaItems={agendaData} />;
+  return <Agenda timeFrame={timeframe} agendaItems={agendaData} />;
 }
