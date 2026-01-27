@@ -38,7 +38,10 @@ export async function POST(req: Request) {
         throw new Error(JSON.stringify(validatedData.error));
       }
     } else {
-      throw new Error('Onbekend formulier.');
+      return NextResponse.json(
+        { message: 'Ongeldig formuliernaam' },
+        { status: 400 },
+      );
     }
 
     formData.delete('website');
