@@ -1,11 +1,17 @@
 import {
   fetchPhotoIds,
-  fetchPhotos,
   PhotoDetails,
   getFolderTitle,
-} from '@/lib/wordpress/photos';
-import PhotoGalleryClient from '@/components/Fotos/PhotoGalleryClient';
+  fetchFolders,
+} from '@/lib/filebird/photos';
+import PhotoGalleryClient from '@/components/Fotos/PhotoGallery/PhotoGallery';
 import './page.css';
+import { fetchPhotos } from '@/lib/graphql/services/photos';
+import { notFound } from 'next/navigation';
+import {
+  removeEmptyFolders,
+  EXCLUDED_FOLDER_IDS,
+} from '@/lib/services/gallerySelect';
 
 type PhotoPageProps = {
   params: Promise<{ id: string }>;
@@ -26,8 +32,8 @@ export default async function PhotoPage({ params }: Readonly<PhotoPageProps>) {
   const numericId = Number(idParam);
   const id = Number.isFinite(numericId) ? numericId : null;
 
-  if (id == null) {
-    return <PhotoGalleryClient id={null} mediaItems={null} title={null} />;
+  if (id == null || EXCLUDED_FOLDER_IDS.includes(id)) {
+    notFound();
   }
 
   let mediaItems: PhotoDetails[] | null = null;
@@ -45,3 +51,14 @@ export default async function PhotoPage({ params }: Readonly<PhotoPageProps>) {
     </div>
   );
 }
+
+export async function generateStaticParams() {
+  const folderIds = await fetchFolders();
+  const folderIdsFiltered = removeEmptyFolders(folderIds);
+  const ids = folderIdsFiltered.map((folder) => ({ id: folder.id.toString() }));
+  return ids;
+}
+
+export const dynamicParams = true;
+
+export const revalidate = 600;

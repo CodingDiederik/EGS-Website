@@ -1,14 +1,11 @@
-import {
-  fetchPhotoIds,
-  fetchFolders,
-  removeEmptyFolders,
-  fetchPhoto,
-} from '@/lib/wordpress/photos';
+import { fetchPhotoIds, fetchFolders } from '@/lib/filebird/photos';
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from './GallerySelect.module.css';
+import { fetchPhoto } from '@/lib/graphql/services/photos';
+import { removeEmptyFolders } from '@/lib/services/gallerySelect';
+import styles from './FolderSelect.module.css';
 
-export default async function GallerySelect() {
+export default async function FolderSelect() {
   const folders = await fetchFolders();
   const filteredFolders = removeEmptyFolders(folders);
 

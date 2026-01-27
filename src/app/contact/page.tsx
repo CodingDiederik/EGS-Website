@@ -1,6 +1,8 @@
 import Introduction from '@/components/common/IntroductionImage/IntroductionImage';
 import TextSection from '@/components/common/TextSection/TextSection';
+import Form from '@/components/common/Form/Form';
 import './page.css';
+import { CONTACT_FORM_FIELDS, CONTACT_FORM_NAME } from './constants';
 
 export default function Contact() {
   return (
@@ -8,7 +10,6 @@ export default function Contact() {
       {/* Default introduction component*/}
       <Introduction text="Contact" />
 
-      {/* Explanation about proeflessen */}
       <TextSection
         text={
           <>
@@ -30,6 +31,12 @@ export default function Contact() {
             </p>
           </>
         }
+      />
+
+      <Form
+        formFields={CONTACT_FORM_FIELDS}
+        header="Contactformulier"
+        formName={CONTACT_FORM_NAME}
       />
     </div>
   );

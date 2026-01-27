@@ -1,6 +1,6 @@
 import styles from './NewsSection.module.css';
-import { fetchNewsData } from '@/lib/news';
-import NewsList from './NewsList';
+import { fetchNewsData } from '@/lib/graphql/services/news';
+import NewsList from '../NewsList/NewsList';
 
 interface NewsSectionProps {
   count?: number;
@@ -11,7 +11,6 @@ export default async function NewsSection({
   count,
   displayLoadMore,
 }: Readonly<NewsSectionProps>) {
-  // Fetch initial data on the server (SEO friendly)
   const data = await fetchNewsData(count);
 
   return (

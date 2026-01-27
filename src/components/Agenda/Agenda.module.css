@@ -1,20 +1,14 @@
-/* Agenda.module.css */
-
-/* 1. The Colorful Outer Widget */
 .widgetContainer {
   width: 100%;
   max-width: 1024px;
   margin: 3rem auto;
   border-radius: 16px;
-  background: linear-gradient(135deg, #3b82f6 0%, #4f46e5 100%);
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background: var(--background-accent-secondary);
+  box-shadow: var(--shadow-intense);
   overflow: hidden;
   margin-top: 40px;
 }
 
-/* 2. The Header Section */
 .header {
   display: flex;
   align-items: center;
@@ -46,7 +40,6 @@
   gap: 6px;
 }
 
-/* 3. The Table Wrappers */
 .tableWrapper {
   background: #ffffff;
   width: 100%;
@@ -54,7 +47,6 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Ensure figure margins from WP content don't break layout */
 .tableWrapper figure {
   margin: 0;
   width: 100%;
@@ -72,47 +64,29 @@
   min-width: 600px;
 }
 
-/* Header Row */
-.tableWrapper table tr:first-child {
-  background-color: #f8fafc;
-  border-bottom: 2px solid #e2e8f0;
-}
-
-.tableWrapper table tr:first-child td {
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  color: #64748b;
+.tableWrapper th {
+  text-align: left;
   padding: 16px 24px;
+  border-bottom: 2px solid #e2e8f0;
+  background-color: #f9fafb;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
-/* Body Rows */
 .tableWrapper td {
   padding: 16px 24px;
   border-bottom: 1px solid #f1f5f9;
   vertical-align: top;
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
-.tableWrapper table tr:not(:first-child):hover {
-  background-color: #f0f9ff;
+.tableWrapper table tr:hover {
+  background-color: #eeeeee;
 }
 
-.tableWrapper table tr:not(:first-child) td:first-child {
-  font-weight: 600;
-  color: #0f172a;
-  white-space: nowrap;
-}
-
-.tableWrapper table tr:not(:first-child) td:last-child {
-  color: #64748b;
-  font-style: italic;
-  font-size: 0.9rem;
-}
-
-/* --- Archive / Past Events Styling --- */
 .archiveDetails {
-  background-color: #f1f5f9; /* Light gray background */
+  background-color: #f1f5f9;
   border-top: 1px solid #e2e8f0;
 }
 
@@ -121,7 +95,7 @@
   padding: 16px 32px;
   cursor: pointer;
   font-weight: 600;
-  color: #64748b;
+  color: #000000;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -130,31 +104,19 @@
     background-color 0.2s;
 }
 
-/* Hide default detail marker */
 .archiveSummary::-webkit-details-marker {
   display: none;
 }
 
 .archiveSummary:hover {
-  color: #3b82f6;
+  color: var(--background-hover);
   background-color: #e2e8f0;
 }
 
-/* When expanded, show the archive table clearly */
 .archiveTable {
   border-top: 1px solid #cbd5e1;
 }
 
-/* Differentiate past events visually */
-.archiveTable table tr:not(:first-child) {
-  opacity: 0.7; /* Fade them out slightly */
-}
-.archiveTable table tr:not(:first-child):hover {
-  opacity: 1;
-  background-color: #fff;
-}
-
-/* --- Responsive --- */
 @media (max-width: 600px) {
   .widgetContainer {
     margin: 1rem;

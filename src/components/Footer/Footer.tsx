@@ -1,9 +1,7 @@
-// src/components/Footer/Footer.tsx
 import Link from 'next/link';
 import styles from './Footer.module.css';
-import Image from 'next/image';
+import { FaInstagram, FaFacebook } from 'react-icons/fa';
 
-// Definitie van de links voor eenvoudige aanpassing
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/agenda', label: 'Agenda' },
@@ -20,7 +18,7 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContainer}>
-        {/* Sectie 1: Navigatie Links */}
+        {/* Quick Links */}
         <div className={styles.linkSection}>
           <h3 className={styles.footerHeading}>Snel naar</h3>
           <ul className={styles.linkList}>
@@ -34,7 +32,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Sectie 2: Contactgegevens */}
+        {/* Contact */}
         <div className={styles.contactSection}>
           <h3 className={styles.footerHeading}>Contact</h3>
           <address className={styles.address}>
@@ -47,7 +45,7 @@ const Footer = () => {
           </address>
         </div>
 
-        {/* Sectie 3: Social Media Links */}
+        {/* Social Media */}
         <div className={styles.socialSection}>
           <h3 className={styles.footerHeading}>Volg ons op</h3>
           <ul className={styles.linkList}>
@@ -58,13 +56,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className={styles.link}
               >
-                <Image
-                  src="/common/facebook.png"
-                  alt="Facebook Logo"
-                  width={32}
-                  height={32}
-                  className={styles.imageFacebook}
-                />
+                <FaFacebook className={styles.imageFacebook} size={28} />
                 Facebook
               </a>
             </li>
@@ -75,13 +67,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className={styles.link}
               >
-                <Image
-                  src="/common/instagram.png"
-                  alt="Instagram Logo"
-                  width={28}
-                  height={28}
-                  className={styles.imageInstagram}
-                />
+                <FaInstagram className={styles.imageInstagram} size={28} />
                 Instagram
               </a>
             </li>
@@ -89,7 +75,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/*Copyright */}
+      {/* Copyright */}
       <div className={styles.copyrightBar}>
         <small>
           Copyright &copy; {currentYear} Eerste Goirlese Schaakclub. Alle

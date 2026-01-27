@@ -1,46 +1,77 @@
 import { NextResponse } from 'next/server';
-import { checkOkayResponse } from '@/lib/proeflesFormLogic';
+import { Resend } from 'resend';
+import { CONTACT_FORM_NAME, ContactFormSchema } from '@/app/contact/constants';
+import {
+  ProeflesFormSchema,
+  PROEFLES_FORM_NAME,
+} from '@/app/proefles/constants';
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-
-    // 1. Map your custom field names to Google's "entry.xxxx" IDs
-    const googleFormData = new URLSearchParams();
-    googleFormData.append('entry.2005620554', body.name);
-    googleFormData.append('entry.1045781291', body.email);
-    googleFormData.append('entry.839337160', body.optionalMessage || '');
-
-    // 2. The Form Action URL
-    if (!process.env.GOOGLE_FORMS_URL) {
-      throw new Error(
-        'GOOGLE_FORMS_URL is not defined in environment variables',
+    const contentType = req.headers.get('content-type') || '';
+    if (!contentType.startsWith('multipart/form-data')) {
+      return NextResponse.json(
+        { message: 'Ongeldig content-type' },
+        { status: 400 },
       );
     }
-    const GOOGLE_FORM_URL = process.env.GOOGLE_FORMS_URL as string;
 
-    // 3. Send the data to Google
-    const response = await fetch(GOOGLE_FORM_URL, {
-      method: 'POST',
-      body: googleFormData,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+    const formData = await req.formData();
+    const formName = formData.get('formName')?.toString() || '';
+
+    if (formData.get('website')) {
+      return NextResponse.json({ message: 'OK' }, { status: 200 }); // Honeypot field filled
+    }
+
+    if (formName === CONTACT_FORM_NAME) {
+      const validatedData = ContactFormSchema.safeParse(
+        Object.fromEntries(formData.entries()),
+      );
+      if (!validatedData.success) {
+        throw new Error(JSON.stringify(validatedData.error));
+      }
+    } else if (formName === PROEFLES_FORM_NAME) {
+      const validatedData = ProeflesFormSchema.safeParse(
+        Object.fromEntries(formData.entries()),
+      );
+      if (!validatedData.success) {
+        throw new Error(JSON.stringify(validatedData.error));
+      }
+    } else {
+      throw new Error('Onbekend formulier.');
+    }
+
+    formData.delete('website');
+
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('Resend API key is not configured.');
+    }
+
+    if (!process.env.RECEIVER_EMAIL_ADDRESS) {
+      throw new Error('Receiver email address is not configured.');
+    }
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    const { error } = await resend.emails.send({
+      from: 'egsjeugd@resend.dev',
+      to: process.env.RECEIVER_EMAIL_ADDRESS,
+      subject: `Nieuw bericht via het ${formName}`,
+      text:
+        `Er is een nieuw bericht verzonden voor het ${formName}:\n\n` +
+        Array.from(formData.entries())
+          .map(([key, value]) => `${key}: ${value}`)
+          .join('\n'),
     });
 
-    if (response.ok && checkOkayResponse(await response.text())) {
-      return NextResponse.json({
-        message: 'Je proefles aanvraag is succesvol verzonden!',
-      });
-    } else {
-      return NextResponse.json(
-        {
-          message:
-            'Er is een fout opgetreden bij het verzenden van je aanvraag. Controleer je gegevens en probeer het later opnieuw.',
-        },
-        { status: 500 },
-      );
+    if (error) {
+      throw new Error(`Failed to send email: ${error.message}`);
     }
+
+    return NextResponse.json(
+      { message: 'Formulier succesvol verzonden!' },
+      { status: 200 },
+    );
   } catch (error) {
     console.error('Error submitting form:', error);
     return NextResponse.json(

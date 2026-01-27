@@ -1,6 +1,6 @@
 import Introduction from '@/components/common/IntroductionImage/IntroductionImage';
 import './page.css';
-import NewsSection from '@/components/common/News/NewsSection';
+import NewsSection from '@/components/common/News/NewsSection/NewsSection';
 
 export default function Nieuws() {
   return (

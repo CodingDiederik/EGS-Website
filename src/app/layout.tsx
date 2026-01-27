@@ -20,7 +20,8 @@ const merriweatherSans = Merriweather_Sans({
 
 export const metadata: Metadata = {
   title: 'EGS website',
-  description: 'Copyright EGS 2025',
+  description:
+    'Copyright Eerste Goirlese Schaakclub ' + new Date().getFullYear(),
 };
 
 export default function RootLayout({
