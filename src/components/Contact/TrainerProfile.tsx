@@ -20,7 +20,7 @@ export default function TrainerProfile({
 
   return (
     <div className={styles.trainerProfile}>
-      <div className={styles.trainerImage} style={{ width: 150, height: 150 }}>
+      <div className={styles.trainerImage}>
         <Image
           src={effectiveImageSrc}
           alt={`Foto van trainer ${name}`}

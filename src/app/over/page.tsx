@@ -119,7 +119,6 @@ export default function Over() {
               alt="Onze trainers"
               width={800}
               height={600}
-              className="trainer-group-image"
             />
           </>
         }
