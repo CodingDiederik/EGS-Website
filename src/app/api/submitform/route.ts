@@ -6,8 +6,6 @@ import {
   PROEFLES_FORM_NAME,
 } from '@/app/proefles/constants';
 
-const resend = new Resend(process.env.RESEND_API_KEY!);
-
 export async function POST(req: Request) {
   try {
     const contentType = req.headers.get('content-type') || '';
@@ -22,7 +20,7 @@ export async function POST(req: Request) {
     const formName = formData.get('formName')?.toString() || '';
 
     if (formData.get('website')) {
-      return; // Honeypot field filled
+      return NextResponse.json({ message: 'OK' }, { status: 200 }); // Honeypot field filled
     }
 
     if (formName === CONTACT_FORM_NAME) {
@@ -45,13 +43,19 @@ export async function POST(req: Request) {
 
     formData.delete('website');
 
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('Resend API key is not configured.');
+    }
+
     if (!process.env.RECEIVER_EMAIL_ADDRESS) {
       throw new Error('Receiver email address is not configured.');
     }
 
-    resend.emails.send({
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    const { error } = await resend.emails.send({
       from: 'egsjeugd@resend.dev',
-      to: process.env.RECEIVER_EMAIL_ADDRESS!,
+      to: process.env.RECEIVER_EMAIL_ADDRESS,
       subject: `Nieuw bericht via het ${formName}`,
       text:
         `Er is een nieuw bericht verzonden voor het ${formName}:\n\n` +
@@ -59,6 +63,10 @@ export async function POST(req: Request) {
           .map(([key, value]) => `${key}: ${value}`)
           .join('\n'),
     });
+
+    if (error) {
+      throw new Error(`Failed to send email: ${error.message}`);
+    }
 
     return NextResponse.json(
       { message: 'Formulier succesvol verzonden!' },

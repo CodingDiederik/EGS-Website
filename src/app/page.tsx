@@ -6,9 +6,7 @@ import MainContentWrapper from '@/components/HomePage/MainContentWrapper';
 export default function Home() {
   return (
     <div className={styles['home-container']}>
-      <div className={styles['photo-overview']}>
-        <HeroGallery />
-      </div>
+      <HeroGallery />
 
       <MainContentWrapper>
         <main className={styles['main-content']}>
