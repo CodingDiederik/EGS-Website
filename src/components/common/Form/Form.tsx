@@ -118,7 +118,11 @@ const Form = ({
                   required={field.required}
                   className={styles.select}
                   disabled={isPending}
+                  defaultValue=""
                 >
+                  <option value="" disabled>
+                    Selecteer een optie...
+                  </option>
                   {field.options?.map((option, idx) => (
                     <option
                       key={idx}

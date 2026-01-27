@@ -32,16 +32,18 @@ export default function AgendaComponent({
             </tr>
           </thead>
           <tbody>
-            {agendaItems.map((item, index) => (
-              <tr key={index} className={item.upcoming ? styles.upcoming : ''}>
-                <td>{item.Datum}</td>
-                <td>
-                  {item.Activiteit}
-                  {item.Tweedeactiviteit ? ` / ${item.Tweedeactiviteit}` : ''}
-                </td>
-                <td>{item.Opmerkingen || '-'}</td>
-              </tr>
-            ))}
+            {agendaItems
+              .filter((item) => item.upcoming)
+              .map((item, index) => (
+                <tr key={index}>
+                  <td>{item.Datum}</td>
+                  <td>
+                    {item.Activiteit}
+                    {item.Tweedeactiviteit ? ` / ${item.Tweedeactiviteit}` : ''}
+                  </td>
+                  <td>{item.Opmerkingen || '-'}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
