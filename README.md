@@ -38,7 +38,7 @@ pnpm dev
 
 All code is in src; we use three main folders:
 
-- app: all pages go here
+- app: all pages and routing goes here
 - components: the components used by the pages
 - lib: all logic for pages goes here
 
@@ -51,6 +51,7 @@ pnpm lint
 
 All code must first be reviewed by Copilot and SonarQube by using pull requests.
 Commit messages follow the [conventional commit format](https://www.conventionalcommits.org/en/v1.0.0/).
+Pages should be tested by using Playwright; tests are in the tests folder.
 
 ## High level overview
 

@@ -11,7 +11,9 @@
     "format": "prettier --write \"**/*.{js,ts,tsx,json,css,md}\"",
     "format:check": "prettier --check \"**/*.{js,ts,tsx,json,css,md}\"",
     "copy:env": "cp .env.example .env",
-    "test": "pnpm exec playwright test",
+    "test": "pnpm exec playwright test --project=chromium",
+    "test:all": "pnpm exec playwright test",
+    "test:report": "pnpm exec playwright show-report",
     "test:generate": "pnpm exec playwright codegen",
     "test:ui": "pnpm exec playwright test --ui"
   },
