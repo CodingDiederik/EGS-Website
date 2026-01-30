@@ -11,7 +11,9 @@
     "format": "prettier --write \"**/*.{js,ts,tsx,json,css,md}\"",
     "format:check": "prettier --check \"**/*.{js,ts,tsx,json,css,md}\"",
     "copy:env": "cp .env.example .env",
-    "sonar:scan": "dotenv sonar-scanner -Dsonar.projectKey=egs-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=local-org"
+    "test": "pnpm exec playwright test",
+    "test:generate": "pnpm exec playwright codegen",
+    "test:ui": "pnpm exec playwright test --ui"
   },
   "dependencies": {
     "@upstash/ratelimit": "^2.0.8",
@@ -34,7 +36,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@sonar/scan": "^4.3.4",
+    "@playwright/test": "^1.58.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/html-to-text": "^9.0.4",
     "@types/node": "^25.2.0",
