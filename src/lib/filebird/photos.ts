@@ -38,22 +38,32 @@ export async function fetchFolders(): Promise<FileBirdFolder[]> {
   const baseUrl = process.env.WP_FILEBIRD_API_URL.replace(/\/$/, '');
   const endpoint = `${baseUrl}/folders`;
 
-  const response = await fetch(endpoint, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
-    },
-    next: { revalidate: 3000 },
-  });
+  try {
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
+      },
+      next: { revalidate: 3000 },
+    });
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch folders: ${response.status}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch folders: ${response.status}`);
+    }
+
+    const json = await response.json();
+
+    if (!json.data || !json.data.folders) {
+      console.error('Invalid folder data structure:', json);
+      return [];
+    }
+
+    return json.data.folders;
+  } catch (error) {
+    console.error('Error fetching folders:', error);
+    return [];
   }
-
-  const json = await response.json();
-
-  return json.data.folders;
 }
 
 export async function fetchPhotoIds(
@@ -92,7 +102,7 @@ export async function fetchPhotoIds(
 
     const ids = json.data.attachment_ids;
 
-    if (!ids.length) {
+    if (!ids || !ids.length) {
       return null;
     }
 
