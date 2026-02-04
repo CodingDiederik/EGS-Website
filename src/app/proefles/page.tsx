@@ -47,7 +47,7 @@ export default function Proefles() {
             </p>
             <br />
             <p>
-              We kijken ernaar uit je te verwelkomen bij EGS Goirle en je te
+              We kijken ernaar uit je te verwelkomen bij Schaakclub EGS en je te
               laten zien wat we te bieden hebben!
             </p>
           </>
