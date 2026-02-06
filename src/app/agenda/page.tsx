@@ -3,13 +3,16 @@ import {
   getAgendaItems,
   getCurrentSchoolyear,
 } from '@/lib/graphql/services/agenda';
+import ErrorAgenda from './error';
 
 export default async function AgendaPage() {
-  const agendaData = await getAgendaItems();
+  let agendaData = await getAgendaItems();
   const timeframe = getCurrentSchoolyear();
 
+  agendaData = null;
+
   if (!agendaData) {
-    return <div>Geen agenda items beschikbaar.</div>;
+    return <ErrorAgenda />;
   }
 
   return <Agenda timeFrame={timeframe} agendaItems={agendaData} />;

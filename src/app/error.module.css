@@ -1,0 +1,32 @@
+.not-found {
+  text-align: center;
+  margin-top: min(20vh, 100px);
+  margin-bottom: min(20vh, 100px);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.not-found h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.not-found p {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.not-found a {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  margin-left: 10px;
+  margin-right: 10px;
+}
