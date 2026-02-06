@@ -120,20 +120,25 @@ function extractTable(sanitizedContent: string): AgendaItem[] | null {
 }
 
 export async function getAgendaItems(): Promise<AgendaItem[] | null> {
-  const agendaData = await fetchGraphQL<GetAgendaResponse>(GET_AGENDA_QUERY, {
-    next: { revalidate: 600, tags: ['agenda'] },
-  });
+  try {
+    const agendaData = await fetchGraphQL<GetAgendaResponse>(GET_AGENDA_QUERY, {
+      next: { revalidate: 600, tags: ['agenda'] },
+    });
 
-  if (!agendaData) return null;
+    if (!agendaData) return null;
 
-  const rawHTMLContent = agendaData.posts?.edges?.[0]?.node?.content;
-  if (!rawHTMLContent) return null;
+    const rawHTMLContent = agendaData.posts?.edges?.[0]?.node?.content;
+    if (!rawHTMLContent) return null;
 
-  const sanitizedContent = sanitizeAgendaContent(rawHTMLContent);
-  if (!sanitizedContent) return null;
+    const sanitizedContent = sanitizeAgendaContent(rawHTMLContent);
+    if (!sanitizedContent) return null;
 
-  const extractedTable = extractTable(sanitizedContent);
-  return extractedTable;
+    const extractedTable = extractTable(sanitizedContent);
+    return extractedTable;
+  } catch (error) {
+    console.error('Error fetching agenda items:', error);
+    return null;
+  }
 }
 
 export function getCurrentSchoolyear(): string {

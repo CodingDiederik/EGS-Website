@@ -1,9 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import styles from './error.module.css';
+import styles from './error-content.module.css';
 
-export default function ErrorPage() {
+export default function ErrorPage({
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
   return (
     <div className={styles['wrapper']}>
       <div className={styles['not-found']}>
@@ -13,6 +18,9 @@ export default function ErrorPage() {
           Probeer het later opnieuw of neem contact op met de websitebeheerder
           als het probleem aanhoudt.
         </p>
+        <button onClick={reset} className={styles['retry-button']}>
+          Probeer opnieuw
+        </button>
         <Link href="/">Klik hier om terug naar de homepagina te gaan</Link>
       </div>
     </div>

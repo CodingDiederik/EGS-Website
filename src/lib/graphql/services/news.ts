@@ -101,13 +101,18 @@ export async function fetchNewsArticle(
       }
   }`;
 
-  const data: { post: NewsPost } = await fetchGraphQL(
-    query,
-    { next: { revalidate: 600, tags: ['newspost'] } },
-    { slug: sanitizedSlug },
-  );
+  try {
+    const data: { post: NewsPost } = await fetchGraphQL(
+      query,
+      { next: { revalidate: 600, tags: ['newspost'] } },
+      { slug: sanitizedSlug },
+    );
 
-  return data.post as NewsPost;
+    return data.post as NewsPost;
+  } catch (error) {
+    console.error('Error fetching news article:', error);
+    return null;
+  }
 }
 
 export async function fetchNewsArticleSlugs(): Promise<{ slug: string }[]> {
