@@ -2,7 +2,7 @@
   margin-top: -1.5rem;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 800px) {
   .content-section h2 {
     font-size: 1.75rem;
   }

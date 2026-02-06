@@ -118,7 +118,7 @@
   text-decoration: none;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 800px) {
   .hamburgerWrapper {
     display: flex;
     align-items: center;
@@ -160,7 +160,6 @@
 
   .backToMainSite {
     margin-left: 0;
-    margin-top: auto;
     text-align: center;
   }
 }
