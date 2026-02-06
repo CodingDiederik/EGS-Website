@@ -6,10 +6,8 @@ import {
 import ErrorAgenda from './error';
 
 export default async function AgendaPage() {
-  let agendaData = await getAgendaItems();
+  const agendaData = await getAgendaItems();
   const timeframe = getCurrentSchoolyear();
-
-  agendaData = null;
 
   if (!agendaData) {
     return <ErrorAgenda />;

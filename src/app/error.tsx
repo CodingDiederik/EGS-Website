@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import styles from './error.module.css';
 
-export default function Error() {
+export default function ErrorPage() {
   return (
     <div className={styles['wrapper']}>
       <div className={styles['not-found']}>
