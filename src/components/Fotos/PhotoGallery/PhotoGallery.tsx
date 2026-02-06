@@ -92,9 +92,7 @@ export default function PhotoGallery({
           <h1>{title ?? 'Foto-album'}</h1>
           {/* Button to return to gallery overview */}
           <Link href="/fotos">
-            <button className={styles['back-to-gallery-button']}>
-              Terug naar foto-overzicht
-            </button>
+            <button className={styles['back-to-gallery-button']}>Terug</button>
           </Link>
         </div>
 

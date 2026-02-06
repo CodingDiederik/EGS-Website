@@ -31,3 +31,10 @@
   margin-bottom: var(--spacing-medium);
   color: var(--text-primary);
 }
+
+@media (max-width: 1200px) {
+  .content-section {
+    width: 90%;
+    padding: var(--spacing-medium);
+  }
+}
