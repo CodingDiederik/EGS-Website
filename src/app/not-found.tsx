@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from './error.module.css';
+import styles from './error-content.module.css';
 
 export default function NotFound() {
   return (
