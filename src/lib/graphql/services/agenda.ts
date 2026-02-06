@@ -121,14 +121,10 @@ function extractTable(sanitizedContent: string): AgendaItem[] | null {
 
 export async function getAgendaItems(): Promise<AgendaItem[] | null> {
   let agendaData;
-  try {
-    agendaData = await fetchGraphQL<GetAgendaResponse>(GET_AGENDA_QUERY, {
-      next: { revalidate: 600, tags: ['agenda'] },
-    });
-  } catch (error) {
-    console.error('Agenda Fetch Error:', error);
-    return null;
-  }
+
+  agendaData = await fetchGraphQL<GetAgendaResponse>(GET_AGENDA_QUERY, {
+    next: { revalidate: 600, tags: ['agenda'] },
+  });
 
   if (!agendaData) return null;
 
