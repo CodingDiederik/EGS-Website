@@ -19,7 +19,7 @@ const createInfiniteTrack = (images: string[]) => {
 
   const halfTrack: string[] = Array.from(
     { length: halfTrackLength },
-    (_, index) => images[index % images.length]
+    (_, index) => images[index % images.length],
   );
 
   // Duplicate the half track to create a seamless infinite scroll track.
