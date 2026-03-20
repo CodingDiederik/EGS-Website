@@ -5,9 +5,30 @@ import { getPhotosHomepage } from '@/lib/services/homepage';
 
 const { track1Images, track2Images, track3Images } = getPhotosHomepage();
 
-const allTrack1Images = [...track1Images, ...track1Images];
-const allTrack2Images = [...track2Images, ...track2Images];
-const allTrack3Images = [...track3Images, ...track3Images];
+// Minimum number of images to render in each half of an infinite track.
+const MIN_IMAGES_PER_HALF_TRACK = 12;
+
+// HELPER: Ensures the track is long enough to span a 4K monitor seamlessly.
+const createInfiniteTrack = (images: string[]) => {
+  if (!images || images.length === 0) return [];
+
+  // Determine how many times we need to repeat the base images
+  // to reach at least the minimum half-track length.
+  const repeats = Math.ceil(MIN_IMAGES_PER_HALF_TRACK / images.length);
+  const halfTrackLength = repeats * images.length;
+
+  const halfTrack: string[] = Array.from(
+    { length: halfTrackLength },
+    (_, index) => images[index % images.length],
+  );
+
+  // Duplicate the half track to create a seamless infinite scroll track.
+  return [...halfTrack, ...halfTrack];
+};
+
+const allTrack1Images = createInfiniteTrack(track1Images);
+const allTrack2Images = createInfiniteTrack(track2Images);
+const allTrack3Images = createInfiniteTrack(track3Images);
 
 const HeroGallery: React.FC = () => {
   return (

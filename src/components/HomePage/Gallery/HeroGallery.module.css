@@ -21,7 +21,7 @@
 .heroGallery {
   position: relative;
   height: 85vh;
-  width: 100%;
+  max-height: 900px;
   overflow: hidden;
   padding-bottom: 72px;
   background: var(--background-primary);
@@ -31,6 +31,9 @@
   justify-content: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 
 .heroGallery::after {
@@ -57,26 +60,26 @@
   opacity: 0.65;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 24px;
   z-index: 0;
   transform: translate3d(0, 0, 0);
   mix-blend-mode: normal;
   will-change: transform;
-  border-bottom: #000 3px solid;
 }
 
 .imageTrack {
   display: flex;
   flex-shrink: 0;
-  width: min-content;
+  width: max-content; /* Critical: change this from min-content */
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-duration: 160s;
+  animation-duration: 320s;
   gap: 12px;
   position: relative;
   background: var(--background-primary);
   padding: 10px 12px;
-  border-radius: 6px;
+  border-radius: 0;
 }
 
 .imageTrack::before,
@@ -106,6 +109,18 @@
 
 .scrollRightToLeft {
   animation-name: scrollRtl;
+}
+
+.track2 {
+  animation-duration: 450s;
+}
+
+.track3 {
+  animation-duration: 350s;
+}
+
+.track1 {
+  animation-duration: 200s;
 }
 
 .imageWrapper {
