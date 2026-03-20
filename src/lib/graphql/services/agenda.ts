@@ -124,8 +124,6 @@ export async function getAgendaItems(): Promise<AgendaItem[] | null> {
     next: { revalidate: 600, tags: ['agenda'] },
   });
 
-  if (!agendaData) return null;
-
   const rawHTMLContent = agendaData.posts?.edges?.[0]?.node?.content;
   if (!rawHTMLContent) return null;
 
