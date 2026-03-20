@@ -35,10 +35,10 @@ export default function RootLayout({
         className={`${merriweather.variable} ${merriweatherSans.variable} antialiased`}
       >
         <Header />
-        {children}
+        <main>{children}</main>
+        <Footer />
         <Analytics />
         <SpeedInsights />
-        <Footer />
       </body>
     </html>
   );

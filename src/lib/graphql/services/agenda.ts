@@ -120,17 +120,9 @@ function extractTable(sanitizedContent: string): AgendaItem[] | null {
 }
 
 export async function getAgendaItems(): Promise<AgendaItem[] | null> {
-  let agendaData;
-  try {
-    agendaData = await fetchGraphQL<GetAgendaResponse>(GET_AGENDA_QUERY, {
-      next: { revalidate: 600, tags: ['agenda'] },
-    });
-  } catch (error) {
-    console.error('Agenda Fetch Error:', error);
-    return null;
-  }
-
-  if (!agendaData) return null;
+  const agendaData = await fetchGraphQL<GetAgendaResponse>(GET_AGENDA_QUERY, {
+    next: { revalidate: 600, tags: ['agenda'] },
+  });
 
   const rawHTMLContent = agendaData.posts?.edges?.[0]?.node?.content;
   if (!rawHTMLContent) return null;
