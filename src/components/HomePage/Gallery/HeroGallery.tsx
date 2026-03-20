@@ -5,9 +5,20 @@ import { getPhotosHomepage } from '@/lib/services/homepage';
 
 const { track1Images, track2Images, track3Images } = getPhotosHomepage();
 
-const allTrack1Images = [...track1Images, ...track1Images];
-const allTrack2Images = [...track2Images, ...track2Images];
-const allTrack3Images = [...track3Images, ...track3Images];
+// HELPER: Ensures the track is long enough to span a 4K monitor seamlessly.
+const createInfiniteTrack = (images: string[]) => {
+  if (!images || images.length === 0) return [];
+
+  let halfTrack = [...images];
+  while (halfTrack.length < 12) {
+    halfTrack = [...halfTrack, ...images];
+  }
+  return [...halfTrack, ...halfTrack];
+};
+
+const allTrack1Images = createInfiniteTrack(track1Images);
+const allTrack2Images = createInfiniteTrack(track2Images);
+const allTrack3Images = createInfiniteTrack(track3Images);
 
 const HeroGallery: React.FC = () => {
   return (

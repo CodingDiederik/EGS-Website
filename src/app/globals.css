@@ -50,7 +50,8 @@ body {
 }
 
 main {
-  flex-grow: 1;
+  max-width: 2400px;
+  margin: 0 auto;
 }
 
 button {
