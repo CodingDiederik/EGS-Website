@@ -74,7 +74,7 @@
   width: max-content; /* Critical: change this from min-content */
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-duration: 160s;
+  animation-duration: 320s;
   gap: 12px;
   position: relative;
   background: var(--background-primary);
@@ -109,6 +109,18 @@
 
 .scrollRightToLeft {
   animation-name: scrollRtl;
+}
+
+.track2 {
+  animation-duration: 450s; 
+}
+
+.track3 {
+  animation-duration: 350s;
+}
+
+.track1 {
+  animation-duration: 200s;
 }
 
 .imageWrapper {
