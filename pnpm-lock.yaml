@@ -30,8 +30,8 @@ importers:
         specifier: ^9.0.5
         version: 9.0.5
       isomorphic-dompurify:
-        specifier: ^3.5.1
-        version: 3.5.1
+        specifier: ^3.7.1
+        version: 3.7.1
       jsdom:
         specifier: 22.1.0
         version: 22.1.0
@@ -1718,8 +1718,8 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
-  isomorphic-dompurify@3.5.1:
-    resolution: {integrity: sha512-LlUCZikq/W6CmSq1UWcFLgS4nhkNBwimmVyNQtdByDffT0yVjKYef9lincZ7/ohBlknPkX1C97BBmjeNuFFR4Q==}
+  isomorphic-dompurify@3.7.1:
+    resolution: {integrity: sha512-ChhzwwCm7k8h8ANiq1Vc7geCWeHGaAPusgXU5N4mu7Y2wChgn2JHvbUe6aH/XQOUG3+KV+GmqSq95MntW/V1ng==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
 
   iterator.prototype@1.1.5:
@@ -4248,7 +4248,7 @@ snapshots:
 
   isexe@2.0.0: {}
 
-  isomorphic-dompurify@3.5.1:
+  isomorphic-dompurify@3.7.1:
     dependencies:
       dompurify: 3.3.3
       jsdom: 22.1.0
