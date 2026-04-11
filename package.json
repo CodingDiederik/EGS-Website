@@ -14,17 +14,14 @@
     "sonar:scan": "dotenv sonar-scanner -Dsonar.projectKey=egs-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=local-org"
   },
   "dependencies": {
-    "@tootallnate/once": "^3.0.1",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.37.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
-    "axios": "^1.15.0",
     "html-to-text": "^9.0.5",
     "isomorphic-dompurify": "^3.8.0",
     "jsdom": "22.1.0",
     "next": "^16.2.3",
-    "node-forge": "^1.4.0",
     "postcss": "^8.5.9",
     "prettier": "^3.8.2",
     "react": "19.2.4",
@@ -38,24 +35,24 @@
   "devDependencies": {
     "@sonar/scan": "^4.3.5",
     "@tailwindcss/postcss": "^4.2.2",
-    "@tootallnate/once": ">=3.0.1",
     "@types/html-to-text": "^9.0.4",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "axios": ">=1.15.0",
     "babel-plugin-react-compiler": "1.0.0",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.2",
-    "node-forge": ">=1.4.0",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2"
   },
   "packageManager": "pnpm@10.28.2+sha512.41872f037ad22f7348e3b1debbaf7e867cfd448f2726d9cf74c08f19507c31d2c8e7a11525b983febc2df640b5438dee6023ebb1f84ed43cc2d654d2bc326264",
   "pnpm": {
     "overrides": {
-      "jsdom": "22.1.0"
+      "@tootallnate/once": "^3.0.1",
+      "axios": "^1.15.0",
+      "jsdom": "22.1.0",
+      "node-forge": "^1.4.0"
     }
   }
 }
