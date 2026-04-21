@@ -28,7 +28,7 @@
     "react-dom": "19.2.4",
     "react-icons": "^5.6.0",
     "react-photo-album": "^3.5.1",
-    "resend": "^6.10.0",
+    "resend": "^6.12.2",
     "yet-another-react-lightbox": "^3.31.0",
     "zod": "^4.3.6"
   },
