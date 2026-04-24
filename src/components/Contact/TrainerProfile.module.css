@@ -19,6 +19,8 @@
   grid-area: image;
   overflow: hidden;
   border-radius: 20%;
+  margin-top: auto;
+  margin-bottom: auto;
   width: 150px;
   height: 150px;
 }
