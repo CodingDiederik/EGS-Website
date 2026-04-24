@@ -19,7 +19,7 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "html-to-text": "^9.0.5",
-    "isomorphic-dompurify": "^3.8.0",
+    "isomorphic-dompurify": "^3.9.0",
     "jsdom": "22.1.0",
     "next": "^16.2.3",
     "postcss": "^8.5.9",
