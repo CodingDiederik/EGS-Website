@@ -31,6 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nl">
+      <head>
+        <meta name="google-site-verification" content="DV05pC3PPYEZlCWyMAFsLEukuhVLg216Ag27O0mR4OE" />
+      </head>
       <body
         className={`${merriweather.variable} ${merriweatherSans.variable} antialiased`}
       >
