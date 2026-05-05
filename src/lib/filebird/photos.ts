@@ -67,7 +67,7 @@ export async function fetchPhotoIds(
     }
 
     const response = await fetch(
-      `${process.env.WP_FILEBIRD_API_URL}/attachment-id/?folder_id=${folderId}`,
+      `${process.env.WP_FILEBIRD_API_URL}/attachment-id/&folder_id=${folderId}`,
       {
         method: 'GET',
         headers: {
