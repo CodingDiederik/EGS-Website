@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
 import styles from './Footer.module.css';
 import { FaInstagram, FaFacebook } from 'react-icons/fa';
 
@@ -13,6 +16,7 @@ const navLinks = [
 ];
 
 const Footer = () => {
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   const currentYear = new Date().getFullYear();
 
   return (
@@ -71,6 +75,17 @@ const Footer = () => {
                 Instagram
               </a>
             </li>
+            <br />
+            <li>
+              <h3 className={styles.footerHeading}>Privacy statement</h3>
+              <p className={styles.privacystatementtext}>
+                {' '}
+                EGS heeft een privacy statement:{' '}
+              </p>
+              <button onClick={() => setShowPrivacyPolicy(true)}>
+                Bekijk hier
+              </button>
+            </li>
           </ul>
         </div>
       </div>
@@ -82,6 +97,35 @@ const Footer = () => {
           rechten voorbehouden. Website gemaakt door Diederik Webster.
         </small>
       </div>
+
+      {/* Privacy Policy Modal */}
+      {showPrivacyPolicy && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setShowPrivacyPolicy(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.modalHeader}>
+              <h2>Privacy statement</h2>
+              <button
+                className={styles.closeButton}
+                onClick={() => setShowPrivacyPolicy(false)}
+                aria-label="Close modal"
+              >
+                ✕
+              </button>
+            </div>
+            <iframe
+              src="https://schaakclubegs.nl/wp-content/themes/egsthema//2018-04-Privacy-Statement-EGS.pdf"
+              className={styles.pdfViewer}
+              title="Privacy Statement PDF"
+            />
+          </div>
+        </div>
+      )}
     </footer>
   );
 };
