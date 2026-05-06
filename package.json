@@ -30,7 +30,7 @@
     "react-photo-album": "^3.6.0",
     "resend": "^6.12.2",
     "yet-another-react-lightbox": "^3.31.0",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@sonar/scan": "^4.3.6",
