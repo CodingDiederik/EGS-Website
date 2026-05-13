@@ -41,7 +41,7 @@ export async function fetchNewsData(
   try {
     const query = `
       query GetNewsItems($first: Int!, $after: String) {
-        posts(first: $first, after: $after, where: {categoryNotIn: "9"}) {
+        posts(first: $first, after: $after, where: {categoryNotIn: "2"}) {
           pageInfo {
             endCursor
             hasNextPage
