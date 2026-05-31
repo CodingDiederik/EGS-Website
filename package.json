@@ -27,9 +27,8 @@
     "@upstash/redis": "^1.38.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
+    "cheerio": "^1.2.0",
     "html-to-text": "^9.0.5",
-    "isomorphic-dompurify": "^3.15.0",
-    "jsdom": "22.1.0",
     "next": "^16.2.6",
     "postcss": "^8.5.15",
     "prettier": "^3.8.3",
@@ -59,12 +58,7 @@
   "packageManager": "pnpm@11.1.1+sha512.d1fdf5f73c617b64fa1a56a81c3c8dfe0e966e33a6010aa256b517ae77be21d93e05affc0de1a83b0e4f29d569f68b446ae8f068cd7247c0bb3df0fb4d7bdf9a",
   "pnpm": {
     "overrides": {
-      "@tootallnate/once": "3.0.1",
       "axios": "1.15.0",
-      "jsdom": "22.1.0",
-      "node-forge": "1.4.0",
-      "http-proxy-agent": "^7.0.2",
-      "https-proxy-agent": "^7.0.2",
       "postcss@<8.5.10": ">=8.5.10",
       "axios@>=1.0.0 <1.15.1": ">=1.15.1",
       "axios@>=1.0.0 <1.15.2": ">=1.15.2"

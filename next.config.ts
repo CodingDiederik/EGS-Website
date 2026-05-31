@@ -11,7 +11,6 @@ const nextConfig: NextConfig = {
     root: path.join(__dirname, '..'),
   },
   output: 'standalone',
-  serverExternalPackages: ['jsdom'],
 };
 
 export default nextConfig;
