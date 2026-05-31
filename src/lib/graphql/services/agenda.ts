@@ -1,5 +1,5 @@
 import { fetchGraphQL } from '../client';
-import DOMPurify from 'isomorphic-dompurify';
+import * as cheerio from 'cheerio';
 
 export interface AgendaItem {
   upcoming: boolean;
@@ -26,39 +26,7 @@ const GET_AGENDA_QUERY = `
   }
 `;
 
-function sanitizeAgendaContent(rawContent: string): string | null {
-  return DOMPurify.sanitize(rawContent, {
-    ALLOWED_TAGS: [
-      'figure',
-      'table',
-      'tbody',
-      'thead',
-      'tr',
-      'td',
-      'th',
-      'strong',
-      'b',
-      'span',
-    ],
-  });
-}
-
-function convertToAgendaItem(row: string): AgendaItem | null {
-  // extract all <td>...</td> contents
-  const tdRegex = /<td[^>]*>([\s\S]*?)<\/td>/gi;
-  const cells: string[] = [];
-  let m;
-  while ((m = tdRegex.exec(row)) !== null) {
-    let cell = m[1] || '';
-    // remove inner HTML tags
-    cell = cell.replaceAll(/<[^>]+>/g, '');
-    // decode common HTML entities minimally
-    cell = cell.replaceAll('&nbsp;', ' ').replaceAll('&amp;', '&').trim();
-    // normalize multiple spaces
-    cell = cell.replaceAll(/\s+/g, ' ').trim();
-    cells.push(cell);
-  }
-
+function convertToAgendaItem(cells: string[]): AgendaItem | null {
   if (cells.length === 0) return null;
 
   // detect header row (contains "Datum" or "Activiteit" etc.)
@@ -93,24 +61,27 @@ function convertToAgendaItem(row: string): AgendaItem | null {
   };
 }
 
-function extractTable(sanitizedContent: string): AgendaItem[] | null {
-  const tableRegex = /<figure class="wp-block-table">[\s\S]*?<\/figure>/gi;
-  const matches = Array.from(sanitizedContent.matchAll(tableRegex));
-  if (matches.length === 0) return null;
+function extractTable(rawContent: string): AgendaItem[] | null {
+  const $ = cheerio.load(rawContent, null, false);
 
-  const tableHtml = matches[0][0];
+  const table = $('figure.wp-block-table').first();
+  if (table.length === 0) return null;
 
-  // Parse the tableHtml into AgendaItem objects
-  const rowRegex = /<tr[\s\S]*?<\/tr>/gi;
-  const rows = tableHtml.match(rowRegex);
-  if (!rows || rows.length === 0) return null;
+  const rows = table.find('tr').toArray();
+  if (rows.length === 0) return null;
 
   const agendaItems: AgendaItem[] = [];
 
-  // Convert rows to AgendaItem, skipping header row
-  for (let i = 1; i < rows.length; i++) {
-    const row = rows[i];
-    const agendaItem = convertToAgendaItem(row);
+  // Convert rows to AgendaItem, skipping the header row
+  for (const row of rows.slice(1)) {
+    // extract the text content of each cell (cheerio strips inner tags and
+    // decodes HTML entities for us)
+    const cells = $(row)
+      .find('td')
+      .toArray()
+      .map((td) => $(td).text().replaceAll(/\s+/g, ' ').trim());
+
+    const agendaItem = convertToAgendaItem(cells);
     if (agendaItem) {
       agendaItems.push(agendaItem);
     }
@@ -127,11 +98,7 @@ export async function getAgendaItems(): Promise<AgendaItem[] | null> {
   const rawHTMLContent = agendaData.posts?.edges?.[0]?.node?.content;
   if (!rawHTMLContent) return null;
 
-  const sanitizedContent = sanitizeAgendaContent(rawHTMLContent);
-  if (!sanitizedContent) return null;
-
-  const extractedTable = extractTable(sanitizedContent);
-  return extractedTable;
+  return extractTable(rawHTMLContent);
 }
 
 export function getCurrentSchoolyear(): string {

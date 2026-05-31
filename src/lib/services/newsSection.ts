@@ -1,15 +1,14 @@
 import { htmlToText } from 'html-to-text';
-import DOMPurify from 'isomorphic-dompurify';
+import * as cheerio from 'cheerio';
 
 export function extractFirstImage(content: string): string | null {
-  const cleanContent = DOMPurify.sanitize(content, {
-    ALLOWED_TAGS: ['img'],
-  });
-  const match = /<img[^>]+src=['"]([^'"]+)['"]/.exec(cleanContent);
-  const matchedImage = match ? match[1] : null;
+  if (!content) return null;
 
-  if (!matchedImage) return null;
-  return matchedImage.replaceAll('http://', 'https://');
+  const $ = cheerio.load(content, null, false);
+  const src = $('img').first().attr('src');
+
+  if (!src) return null;
+  return src.replaceAll('http://', 'https://');
 }
 
 export function getFillerImage(id: string): string {

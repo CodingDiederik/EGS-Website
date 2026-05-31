@@ -1,7 +1,7 @@
 import styles from './NewsPage.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import DOMPurify from 'isomorphic-dompurify';
+import { sanitizeHtml } from '@/lib/sanitize';
 import {
   fetchNewsArticle,
   fetchNewsArticleSlugs,
@@ -54,7 +54,7 @@ export default async function NewsPage({ params }: Readonly<NewsPageProps>) {
   }
 
   // Sanitize the remaining HTML
-  const cleanContent = DOMPurify.sanitize(contentHtml);
+  const cleanContent = sanitizeHtml(contentHtml);
 
   return (
     <article className={styles.newsArticle}>
