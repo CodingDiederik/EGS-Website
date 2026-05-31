@@ -112,7 +112,7 @@ export async function getFolderTitle(folderId: number): Promise<string | null> {
     }
 
     const response = await fetch(
-      `${process.env.WP_FILEBIRD_API_URL}/folder/?folder_id=${folderId}`,
+      `${process.env.WP_FILEBIRD_API_URL}/folder/&folder_id=${folderId}`,
       {
         method: 'GET',
         headers: {
