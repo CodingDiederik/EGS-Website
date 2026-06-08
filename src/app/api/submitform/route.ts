@@ -60,12 +60,13 @@ export async function POST(req: Request) {
     }
 
     const resend = new Resend(process.env.RESEND_API_KEY);
+    const receiverEmails = process.env.RECEIVER_EMAIL_ADDRESSES.split(',').map(
+      (email) => email.trim(),
+    );
 
     const { error } = await resend.emails.send({
       from: process.env.SENDER_EMAIL_ADDRESS,
-      to: process.env.RECEIVER_EMAIL_ADDRESSES.split(',').map((email) =>
-        email.trim(),
-      ),
+      to: receiverEmails,
       subject: `Nieuw bericht via het ${formName}`,
       text:
         `Er is een nieuw bericht verzonden voor het ${formName}:\n\n` +
