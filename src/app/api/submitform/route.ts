@@ -50,15 +50,23 @@ export async function POST(req: Request) {
       throw new Error('Resend API key is not configured.');
     }
 
-    if (!process.env.RECEIVER_EMAIL_ADDRESS) {
-      throw new Error('Receiver email address is not configured.');
+    if (
+      !process.env.RECEIVER_EMAIL_ADDRESSES ||
+      !process.env.SENDER_EMAIL_ADDRESS
+    ) {
+      throw new Error(
+        'Receiver email addresses or sender email address is not configured.',
+      );
     }
 
     const resend = new Resend(process.env.RESEND_API_KEY);
+    const receiverEmails = process.env.RECEIVER_EMAIL_ADDRESSES.split(',').map(
+      (email) => email.trim(),
+    );
 
     const { error } = await resend.emails.send({
-      from: 'egsjeugd@resend.dev',
-      to: process.env.RECEIVER_EMAIL_ADDRESS,
+      from: process.env.SENDER_EMAIL_ADDRESS,
+      to: receiverEmails,
       subject: `Nieuw bericht via het ${formName}`,
       text:
         `Er is een nieuw bericht verzonden voor het ${formName}:\n\n` +
