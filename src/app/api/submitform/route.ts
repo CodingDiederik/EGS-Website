@@ -82,7 +82,7 @@ export async function POST(req: Request) {
     const { error: confirmationError } = await resend.emails.send({
       // Allow soft failures for confirmation email
       from: process.env.SENDER_EMAIL_ADDRESS,
-      to: formData.get('email')?.toString() || '',
+      to: formData.get('Email')?.toString() || '',
       subject: `Bevestiging van je bericht via het ${formName}`,
       text:
         `Beste ${formData.get('name')?.toString() || 'gebruiker'},\n\n` +
