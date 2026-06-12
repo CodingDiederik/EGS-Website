@@ -79,6 +79,24 @@ export async function POST(req: Request) {
       throw new Error(`Failed to send email: ${error.message}`);
     }
 
+    const { error: confirmationError } = await resend.emails.send({
+      // Allow soft failures for confirmation email
+      from: process.env.SENDER_EMAIL_ADDRESS,
+      to: formData.get('email')?.toString() || '',
+      subject: `Bevestiging van je bericht via het ${formName}`,
+      text:
+        `Beste ${formData.get('name')?.toString() || 'gebruiker'},\n\n` +
+        `Bedankt voor je bericht via het ${formName}. We hebben je bericht ontvangen en nemen zo snel mogelijk contact met je op.\n\n` +
+        `Met vriendelijke groet,\n` +
+        `EGS Jeugd`,
+    });
+
+    if (confirmationError) {
+      console.warn(
+        `Failed to send confirmation email: ${confirmationError.message}`,
+      );
+    }
+
     return NextResponse.json(
       { message: 'Formulier succesvol verzonden!' },
       { status: 200 },
