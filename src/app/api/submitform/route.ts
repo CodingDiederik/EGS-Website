@@ -86,7 +86,7 @@ export async function POST(req: Request) {
       subject: `Bevestiging van je bericht via het ${formName}`,
       text:
         `Beste ${formData.get('name')?.toString() || 'gebruiker'},\n\n` +
-        `Bedankt voor je bericht via het ${formName}. We hebben je bericht ontvangen en nemen zo snel mogelijk contact met je op.\n\n` +
+        `Bedankt voor je bericht. We hebben je bericht ontvangen en nemen zo snel mogelijk contact met je op.\n\n` +
         `Met vriendelijke groet,\n` +
         `EGS Jeugd`,
     });
