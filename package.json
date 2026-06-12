@@ -28,7 +28,7 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "cheerio": "^1.2.0",
-    "html-to-text": "^9.0.5",
+    "html-to-text": "^10.0.0",
     "next": "^16.2.9",
     "postcss": "^8.5.15",
     "prettier": "^3.8.4",
