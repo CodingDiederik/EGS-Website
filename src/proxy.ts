@@ -6,12 +6,24 @@ export const config = {
   matcher: '/api/:path*',
 };
 
-export const ratelimit = new Ratelimit({
-  redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(2, '30 s'),
-  analytics: true,
-  prefix: '@upstash/ratelimit',
-});
+// Construct the limiter defensively: Redis.fromEnv() throws when the Upstash
+// env vars are missing, and we don't want that to crash every /api/* request at
+// module load. If it can't be built we fall back to null and fail open below.
+function createRatelimit(): Ratelimit | null {
+  try {
+    return new Ratelimit({
+      redis: Redis.fromEnv(),
+      limiter: Ratelimit.slidingWindow(2, '30 s'),
+      analytics: true,
+      prefix: '@upstash/ratelimit',
+    });
+  } catch (error) {
+    console.error('Failed to initialise rate limiter, disabling it:', error);
+    return null;
+  }
+}
+
+export const ratelimit = createRatelimit();
 
 export default async function proxy(request: NextRequest) {
   // Get the User's IP to use as the unique identifier
@@ -25,8 +37,24 @@ export default async function proxy(request: NextRequest) {
     ip = realIp.trim();
   }
 
-  // Rate Limit check
-  const { success, limit, reset, remaining } = await ratelimit.limit(ip);
+  // Rate Limit check. Fail open: if the limiter couldn't be initialised, or the
+  // call itself errors (e.g. Upstash is unreachable), we allow the request
+  // through so a limiter outage can't take down the contact and proefles forms.
+  if (!ratelimit) {
+    return NextResponse.next();
+  }
+
+  let success: boolean;
+  let limit: number;
+  let reset: number;
+  let remaining: number;
+
+  try {
+    ({ success, limit, reset, remaining } = await ratelimit.limit(ip));
+  } catch (error) {
+    console.error('Rate limiter unavailable, allowing request:', error);
+    return NextResponse.next();
+  }
 
   const res = success
     ? NextResponse.next()

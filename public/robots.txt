@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://jeugd.schaakclubegs.nl/sitemap.xml

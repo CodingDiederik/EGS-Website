@@ -5,6 +5,13 @@ import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_TITLE,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+} from '@/lib/siteConfig';
 
 const merriweather = Merriweather({
   variable: '--font-merriweather',
@@ -19,9 +26,31 @@ const merriweatherSans = Merriweather_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'EGS website',
-  description:
-    'Copyright Eerste Goirlese Schaakclub ' + new Date().getFullYear(),
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: DEFAULT_TITLE,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  openGraph: {
+    type: 'website',
+    locale: 'nl_NL',
+    siteName: SITE_NAME,
+    title: DEFAULT_TITLE,
+    description: SITE_DESCRIPTION,
+    url: '/',
+    images: [DEFAULT_OG_IMAGE],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: DEFAULT_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE.url],
+  },
+  verification: {
+    google: 'DV05pC3PPYEZlCWyMAFsLEukuhVLg216Ag27O0mR4OE',
+  },
 };
 
 export default function RootLayout({
@@ -31,12 +60,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nl">
-      <head>
-        <meta
-          name="google-site-verification"
-          content="DV05pC3PPYEZlCWyMAFsLEukuhVLg216Ag27O0mR4OE"
-        />
-      </head>
       <body
         className={`${merriweather.variable} ${merriweatherSans.variable} antialiased`}
       >

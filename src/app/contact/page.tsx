@@ -3,6 +3,15 @@ import TextSection from '@/components/common/TextSection/TextSection';
 import Form from '@/components/common/Form/Form';
 import './page.css';
 import { CONTACT_FORM_FIELDS, CONTACT_FORM_NAME } from './constants';
+import { buildMetadata } from '@/lib/siteConfig';
+
+export const metadata = buildMetadata({
+  title: 'Contact',
+  description:
+    'Neem contact op met de jeugdafdeling van Schaakclub EGS Goirle. ' +
+    'Stel je vraag via het contactformulier of per e-mail.',
+  path: '/contact',
+});
 
 export default function Contact() {
   return (

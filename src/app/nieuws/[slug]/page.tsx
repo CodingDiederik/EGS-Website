@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+import * as cheerio from 'cheerio';
 import styles from './NewsPage.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,10 +9,56 @@ import {
   fetchNewsArticleSlugs,
 } from '@/lib/graphql/services/news';
 import { notFound } from 'next/navigation';
+import { buildMetadata } from '@/lib/siteConfig';
 
 type NewsPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+// Decode HTML entities and strip markup from a WordPress string (titles often
+// contain entities like &amp;).
+const toPlainText = (html: string): string =>
+  cheerio.load(html, null, false).root().text();
+
+const buildExcerpt = (html: string, maxLength = 160): string => {
+  const text = toPlainText(html).replace(/\s+/g, ' ').trim();
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength - 1).trimEnd() + '…';
+};
+
+const extractFirstImage = (html: string): string | null => {
+  const src = cheerio.load(html, null, false)('img').first().attr('src');
+  if (!src) return null;
+  // Force https to avoid mixed-content blocking on social crawlers.
+  return src.startsWith('http://') ? src.replace('http://', 'https://') : src;
+};
+
+export async function generateMetadata({
+  params,
+}: Readonly<NewsPageProps>): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await fetchNewsArticle(slug);
+
+  if (!article) {
+    return {
+      title: 'Artikel niet gevonden',
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const title = toPlainText(article.title);
+  const description = buildExcerpt(article.content);
+  const image = extractFirstImage(article.content);
+
+  return buildMetadata({
+    title,
+    description: description || undefined,
+    path: `/nieuws/${slug}`,
+    type: 'article',
+    publishedTime: article.date,
+    images: image ? [{ url: image, alt: title }] : undefined,
+  });
+}
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('nl-NL', {
