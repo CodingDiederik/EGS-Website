@@ -3,6 +3,15 @@ import TextSection from '@/components/common/TextSection/TextSection';
 import './page.css';
 import Form from '@/components/common/Form/Form';
 import { PROEFLES_FORM_FIELDS, PROEFLES_FORM_NAME } from './constants';
+import { buildMetadata } from '@/lib/siteConfig';
+
+export const metadata = buildMetadata({
+  title: 'Proeflessen',
+  description:
+    'Maak gratis kennis met schaken bij Schaakclub EGS Goirle. Vraag drie ' +
+    'gratis proeflessen aan voordat je besluit lid te worden.',
+  path: '/proefles',
+});
 
 export default function Proefles() {
   return (

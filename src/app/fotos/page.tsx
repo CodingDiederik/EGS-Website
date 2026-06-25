@@ -2,6 +2,15 @@ import Introduction from '@/components/common/IntroductionImage/IntroductionImag
 import TextSection from '@/components/common/TextSection/TextSection';
 import './page.css';
 import FolderSelect from '@/components/Fotos/FolderSelect/FolderSelect';
+import { buildMetadata } from '@/lib/siteConfig';
+
+export const metadata = buildMetadata({
+  title: "Foto's",
+  description:
+    "Bekijk foto's van de lessen, toernooien en activiteiten van de " +
+    'jeugdafdeling van Schaakclub EGS Goirle.',
+  path: '/fotos',
+});
 
 export default function Fotos() {
   return (

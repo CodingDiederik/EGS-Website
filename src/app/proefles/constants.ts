@@ -42,9 +42,15 @@ export const PROEFLES_FORM_FIELDS: FormField[] = [
 ];
 
 export const ProeflesFormSchema = z.object({
-  'Naam ouder/verzorger': z.string().min(1, 'Naam is verplicht'),
-  Email: z.email('Ongeldig e-mailadres'),
-  'Naam kind': z.string().min(1, 'Naam van het kind is verplicht'),
+  'Naam ouder/verzorger': z
+    .string()
+    .min(1, 'Naam is verplicht')
+    .max(100, 'Naam is te lang'),
+  Email: z.email('Ongeldig e-mailadres').max(254, 'E-mailadres is te lang'),
+  'Naam kind': z
+    .string()
+    .min(1, 'Naam van het kind is verplicht')
+    .max(100, 'Naam is te lang'),
   Leeftijd: z.enum(
     ['6-10 jaar', '11-14 jaar', '15+ jaar'],
     'Leeftijd is verplicht',
@@ -58,8 +64,13 @@ export const ProeflesFormSchema = z.object({
     ],
     'Niveau is verplicht',
   ),
-  Bericht: z.string().min(1, 'Bericht is verplicht'),
+  Bericht: z
+    .string()
+    .min(1, 'Bericht is verplicht')
+    .max(2000, 'Bericht is te lang'),
   website: z.string().optional(), // honeypot field
 });
+
+export type ProeflesFormData = z.infer<typeof ProeflesFormSchema>;
 
 export const PROEFLES_FORM_NAME = 'Proeflesformulier';

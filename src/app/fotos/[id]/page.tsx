@@ -12,10 +12,34 @@ import {
   removeEmptyFolders,
   EXCLUDED_FOLDER_IDS,
 } from '@/lib/services/gallerySelect';
+import type { Metadata } from 'next';
+import { buildMetadata } from '@/lib/siteConfig';
 
 type PhotoPageProps = {
   params: Promise<{ id: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: Readonly<PhotoPageProps>): Promise<Metadata> {
+  const { id: idParam } = await params;
+  const numericId = Number(idParam);
+
+  if (!Number.isFinite(numericId) || EXCLUDED_FOLDER_IDS.includes(numericId)) {
+    return {
+      title: "Foto's niet gevonden",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const title = (await getFolderTitle(numericId)) ?? "Foto's";
+
+  return buildMetadata({
+    title,
+    description: `Bekijk foto's van ${title} bij de jeugdafdeling van Schaakclub EGS Goirle.`,
+    path: `/fotos/${idParam}`,
+  });
+}
 
 async function loadPhotos(id: number): Promise<PhotoDetails[] | null> {
   try {

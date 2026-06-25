@@ -4,6 +4,15 @@ import Link from 'next/link';
 import './page.css';
 import TrainerProfile from '@/components/Contact/TrainerProfile';
 import Image from 'next/image';
+import { buildMetadata } from '@/lib/siteConfig';
+
+export const metadata = buildMetadata({
+  title: 'Over ons',
+  description:
+    'Maak kennis met de Eerste Goirlese Schaakclub (EGS), opgericht in 1935, ' +
+    'en haar jeugdafdeling: lesopzet, trainers en praktische informatie.',
+  path: '/over',
+});
 
 export default function Over() {
   return (

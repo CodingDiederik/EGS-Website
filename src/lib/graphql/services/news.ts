@@ -1,5 +1,12 @@
 import { fetchGraphQL } from '../client';
 
+/**
+ * WordPress category IDs that must never surface as news articles. The news
+ * list and the statically generated article pages exclude the exact same set,
+ * so the listed posts and the pre-rendered/sitemapped posts stay in sync.
+ */
+export const EXCLUDED_NEWS_CATEGORY_IDS = ['2', '9'];
+
 export interface NewsItem {
   id: string;
   title: string;
@@ -40,8 +47,8 @@ export async function fetchNewsData(
 ): Promise<NewsResponse> {
   try {
     const query = `
-      query GetNewsItems($first: Int!, $after: String) {
-        posts(first: $first, after: $after, where: {categoryNotIn: "2"}) {
+      query GetNewsItems($first: Int!, $after: String, $exclude: [ID]) {
+        posts(first: $first, after: $after, where: {categoryNotIn: $exclude}) {
           pageInfo {
             endCursor
             hasNextPage
@@ -61,6 +68,7 @@ export async function fetchNewsData(
     const variables = {
       first: nrItems,
       after: afterCursor || null,
+      exclude: EXCLUDED_NEWS_CATEGORY_IDS,
     };
 
     const result: { posts: NewsResponse } = await fetchGraphQL(
@@ -112,8 +120,8 @@ export async function fetchNewsArticle(
 
 export async function fetchNewsArticleSlugs(): Promise<{ slug: string }[]> {
   const query = `
-    query GetAllPostSlugs {
-      posts(first: 100, where: {categoryNotIn: "9"}) {
+    query GetAllPostSlugs($exclude: [ID]) {
+      posts(first: 100, where: {categoryNotIn: $exclude}) {
         nodes {
           slug
         }
@@ -125,6 +133,7 @@ export async function fetchNewsArticleSlugs(): Promise<{ slug: string }[]> {
     const data: { posts: { nodes: { slug: string }[] } } = await fetchGraphQL(
       query,
       { next: { revalidate: 600, tags: ['newspost-slugs'] } },
+      { exclude: EXCLUDED_NEWS_CATEGORY_IDS },
     );
     return data.posts.nodes;
   } catch (error) {
