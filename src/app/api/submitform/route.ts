@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { CONTACT_FORM_NAME, ContactFormSchema } from '@/app/contact/constants';
+import {
+  CONTACT_FORM_NAME,
+  ContactFormSchema,
+  type ContactFormData,
+} from '@/app/contact/constants';
 import {
   ProeflesFormSchema,
   PROEFLES_FORM_NAME,
+  type ProeflesFormData,
 } from '@/app/proefles/constants';
 
 export async function POST(req: Request) {
@@ -23,20 +28,28 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'OK' }, { status: 200 }); // Honeypot field filled
     }
 
+    const rawData = Object.fromEntries(formData.entries());
+
+    // Validate against the per-form schema and keep the parsed result: emails
+    // are built from validatedData (not the raw formData) so injected/unknown
+    // fields never reach the inbox and length limits are enforced.
+    let validatedData: ContactFormData | ProeflesFormData;
+    let recipientName: string;
+
     if (formName === CONTACT_FORM_NAME) {
-      const validatedData = ContactFormSchema.safeParse(
-        Object.fromEntries(formData.entries()),
-      );
-      if (!validatedData.success) {
-        throw new Error(JSON.stringify(validatedData.error));
+      const result = ContactFormSchema.safeParse(rawData);
+      if (!result.success) {
+        throw new Error(JSON.stringify(result.error));
       }
+      validatedData = result.data;
+      recipientName = result.data.Naam;
     } else if (formName === PROEFLES_FORM_NAME) {
-      const validatedData = ProeflesFormSchema.safeParse(
-        Object.fromEntries(formData.entries()),
-      );
-      if (!validatedData.success) {
-        throw new Error(JSON.stringify(validatedData.error));
+      const result = ProeflesFormSchema.safeParse(rawData);
+      if (!result.success) {
+        throw new Error(JSON.stringify(result.error));
       }
+      validatedData = result.data;
+      recipientName = result.data['Naam ouder/verzorger'];
     } else {
       return NextResponse.json(
         { message: 'Ongeldig formuliernaam' },
@@ -44,7 +57,11 @@ export async function POST(req: Request) {
       );
     }
 
-    formData.delete('website');
+    // Build the email body from the validated fields, dropping the honeypot.
+    const submissionDetails = Object.entries(validatedData)
+      .filter(([key]) => key !== 'website')
+      .map(([key, value]) => `${key}: ${value}`)
+      .join('\n');
 
     if (!process.env.RESEND_API_KEY) {
       throw new Error('Resend API key is not configured.');
@@ -70,9 +87,7 @@ export async function POST(req: Request) {
       subject: `Nieuw bericht via het ${formName}`,
       text:
         `Er is een nieuw bericht verzonden voor het ${formName}:\n\n` +
-        Array.from(formData.entries())
-          .map(([key, value]) => `${key}: ${value}`)
-          .join('\n'),
+        submissionDetails,
     });
 
     if (error) {
@@ -82,10 +97,10 @@ export async function POST(req: Request) {
     const { error: confirmationError } = await resend.emails.send({
       // Allow soft failures for confirmation email
       from: process.env.SENDER_EMAIL_ADDRESS,
-      to: formData.get('Email')?.toString() || '',
+      to: validatedData.Email,
       subject: `Bevestiging van je bericht via het ${formName}`,
       text:
-        `Beste ${formData.get('name')?.toString() || 'gebruiker'},\n\n` +
+        `Beste ${recipientName || 'gebruiker'},\n\n` +
         `Bedankt voor je bericht. We hebben je bericht ontvangen en nemen zo snel mogelijk contact met je op.\n\n` +
         `Met vriendelijke groet,\n` +
         `EGS Jeugd`,

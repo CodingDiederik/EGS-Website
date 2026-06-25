@@ -10,6 +10,7 @@ import {
 } from '@/lib/graphql/services/news';
 import { notFound } from 'next/navigation';
 import { buildMetadata } from '@/lib/siteConfig';
+import { isAllowedImageHost } from '@/lib/images';
 
 type NewsPageProps = {
   params: Promise<{ slug: string }>;
@@ -122,15 +123,27 @@ export default async function NewsPage({ params }: Readonly<NewsPageProps>) {
 
       {heroImageSrc && (
         <div className={styles.imageContainer}>
-          <Image
-            src={heroImageSrc}
-            alt={newsArticleData.title}
-            width={0}
-            height={0}
-            sizes="100vw"
-            className={styles.heroImage}
-            priority
-          />
+          {isAllowedImageHost(heroImageSrc) ? (
+            <Image
+              src={heroImageSrc}
+              alt={newsArticleData.title}
+              width={0}
+              height={0}
+              sizes="100vw"
+              className={styles.heroImage}
+              priority
+            />
+          ) : (
+            // WordPress can embed images from hosts that next/image isn't
+            // configured for; rendering those through next/image would 500 the
+            // page, so fall back to a plain <img>.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={heroImageSrc}
+              alt={newsArticleData.title}
+              className={styles.heroImage}
+            />
+          )}
         </div>
       )}
 

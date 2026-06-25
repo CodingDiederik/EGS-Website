@@ -13,7 +13,7 @@ function createRatelimit(): Ratelimit | null {
   try {
     return new Ratelimit({
       redis: Redis.fromEnv(),
-      limiter: Ratelimit.slidingWindow(2, '30 s'),
+      limiter: Ratelimit.slidingWindow(5, '60 s'),
       analytics: true,
       prefix: '@upstash/ratelimit',
     });
@@ -26,6 +26,14 @@ function createRatelimit(): Ratelimit | null {
 export const ratelimit = createRatelimit();
 
 export default async function proxy(request: NextRequest) {
+  // Only the public form-submission endpoint needs rate limiting. Other /api
+  // routes (e.g. the CRON_SECRET-protected keep-alive cron) are left untouched
+  // so a shared/NAT IP can still reach them, and so a user submitting both
+  // forms isn't blocked by an unrelated request.
+  if (!request.nextUrl.pathname.startsWith('/api/submitform')) {
+    return NextResponse.next();
+  }
+
   // Get the User's IP to use as the unique identifier
   let ip = '127.0.0.1';
   const forwardedFor = request.headers.get('x-forwarded-for');

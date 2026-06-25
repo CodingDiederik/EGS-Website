@@ -1,3 +1,5 @@
+import { FETCH_TIMEOUT_MS } from '../http';
+
 function checkEnvironmentVariables(): string | null {
   if (!process.env.WP_USERNAME || !process.env.WP_PASSWORD) {
     return 'Missing WordPress credentials: WP_USERNAME and WP_PASSWORD must be set';
@@ -45,6 +47,8 @@ export async function fetchGraphQL<TResult, TVariables = unknown>(
     }),
     credentials: 'include',
     ...options,
+    // Applied after ...options so a slow WordPress backend can't hang rendering.
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });
 
   if (!response.ok) {

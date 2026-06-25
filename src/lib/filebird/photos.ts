@@ -1,3 +1,5 @@
+import { FETCH_TIMEOUT_MS } from '../http';
+
 export type FileBirdFolder = {
   id: number;
   title: string;
@@ -45,6 +47,7 @@ export async function fetchFolders(): Promise<FileBirdFolder[]> {
       Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
     },
     next: { revalidate: 3000 },
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });
 
   if (!response.ok) {
@@ -75,6 +78,7 @@ export async function fetchPhotoIds(
           Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
         },
         next: { revalidate: 3000 },
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       },
     );
 
@@ -120,6 +124,7 @@ export async function getFolderTitle(folderId: number): Promise<string | null> {
           Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
         },
         next: { revalidate: 3000 },
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       },
     );
 
