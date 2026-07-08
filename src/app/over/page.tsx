@@ -115,7 +115,7 @@ Hij houdt binnen zijn taken ook contact met de leden en zorgt ervoor dat de club
           imageSrc="/trainer/Sil.jpeg"
           scale={1.1}
           objectPosition="5px -20px"
-          bio="Sil is in het dagelijks leven aan het studeren om Aardrijkskunde te geven aan middelbare scholieren. Met zijn volle overtuiging en veel plezier geeft hij graag les en leert hij leerlingen nieuwe dingen aan. Niet alleen de cognitieve kennis vergroten is voor Sil belangrijk, maar ook de sociale ontwikkeling van kinderen is voor hem een opdracht. Hij past daarom zeer goed in zijn taak als jeugdtrainer van de stap-1-groep.
+          bio="Sil is in het dagelijks leven aan het studeren om aardrijkskunde te geven aan middelbare scholieren. Met zijn volle overtuiging en veel plezier geeft hij graag les en leert hij leerlingen nieuwe dingen aan. Niet alleen de cognitieve kennis vergroten is voor Sil belangrijk, maar ook de sociale ontwikkeling van kinderen is voor hem een opdracht. Hij past daarom zeer goed in zijn taak als jeugdtrainer van de stap-1-groep.
 De stap-1-groep is binnen Schaakclub EGS de groep met de jongste kinderen en Sil zet zich ervoor in dat die kinderen niet alleen beter leren schaken, maar ook een grotere sociale ontwikkeling doormaken.
 Dit zie je daarnaast ook terug in Sil zijn actieve bijdrage aan de kampcommissie voor het jaarlijkse jeugdkamp, waar we kinderen uitdagen om zich te laten zien van een andere kant dan ze doen achter het schaakbord. Sil schaakt daarnaast zelf al meer dan tien jaar bij onze vereniging en traint zelf nog om beter te worden.
 "
