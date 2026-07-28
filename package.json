@@ -29,7 +29,7 @@
     "@vercel/speed-insights": "^2.0.0",
     "cheerio": "^1.2.0",
     "html-to-text": "^10.0.0",
-    "next": "^16.2.9",
+    "next": "^16.2.11",
     "postcss": "^8.5.15",
     "prettier": "^3.8.4",
     "react": "^19.2.7",
