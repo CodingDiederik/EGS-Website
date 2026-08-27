@@ -22,9 +22,7 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Debug secrets
-        run: |
-                - name: Debug auth
+      - name: Debug auth
         continue-on-error: true
         run: |
           echo "ORG prefix: ${VERCEL_ORG_ID:0:5}"
