@@ -22,7 +22,7 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Remove existing Vercel configuration
-        run: rm -f .vercel
+        run: rm -rf .vercel
       - name: Pull environment
         run: vercel pull --yes --environment=preview --project=${{ secrets.VERCEL_PROJECT_ID }} --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build
