@@ -162,10 +162,7 @@ export default async function NewsPage({ params }: Readonly<NewsPageProps>) {
 }
 
 export async function generateStaticParams() {
-  const posts = await fetchNewsArticleSlugs();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  return [];
 }
 
 export const dynamicParams = true;

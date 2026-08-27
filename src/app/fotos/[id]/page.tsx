@@ -77,10 +77,7 @@ export default async function PhotoPage({ params }: Readonly<PhotoPageProps>) {
 }
 
 export async function generateStaticParams() {
-  const folderIds = await fetchFolders();
-  const folderIdsFiltered = removeEmptyFolders(folderIds);
-  const ids = folderIdsFiltered.map((folder) => ({ id: folder.id.toString() }));
-  return ids;
+  return [];
 }
 
 export const dynamicParams = true;
