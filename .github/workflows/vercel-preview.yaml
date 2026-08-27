@@ -21,6 +21,12 @@ jobs:
           node-version: 22
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
+
+      - name: Debug secrets
+        run: |
+          echo "ORG len: ${#VERCEL_ORG_ID}"
+          echo "PROJECT len: ${#VERCEL_PROJECT_ID}"
+          echo "PROJECT prefix: ${VERCEL_PROJECT_ID:0:4}"
       - name: Pull environment
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build
