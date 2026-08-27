@@ -50,7 +50,6 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname, '..'),
   },
-  output: 'standalone',
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }];
   },
