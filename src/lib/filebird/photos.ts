@@ -27,36 +27,43 @@ export type PhotoDetails = {
 };
 
 /**
- * Function to fetch folders from the FileBird API.
- * @returns the list of folders
+ * Function to fetch folders from the FileBird API. Never throws: an
+ * unreachable or misconfigured FileBird API degrades to an empty gallery so
+ * prerendering the page can't fail the build.
+ * @returns the list of folders, or an empty list when unavailable
  */
 export async function fetchFolders(): Promise<FileBirdFolder[]> {
-  if (!process.env.WP_FILEBIRD_API_URL || !process.env.WP_FILEBIRD_API_KEY) {
-    throw new Error(
-      'FileBird API URL or API Key is not defined in environment variables.',
-    );
+  try {
+    if (!process.env.WP_FILEBIRD_API_URL || !process.env.WP_FILEBIRD_API_KEY) {
+      throw new Error(
+        'FileBird API URL or API Key is not defined in environment variables.',
+      );
+    }
+
+    const baseUrl = process.env.WP_FILEBIRD_API_URL.replace(/\/$/, '');
+    const endpoint = `${baseUrl}/folders`;
+
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
+      },
+      next: { revalidate: 3000 },
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch folders: ${response.status}`);
+    }
+
+    const json = await response.json();
+
+    return json.data?.folders ?? [];
+  } catch (error) {
+    console.error('Failed to fetch folders', error);
+    return [];
   }
-
-  const baseUrl = process.env.WP_FILEBIRD_API_URL.replace(/\/$/, '');
-  const endpoint = `${baseUrl}/folders`;
-
-  const response = await fetch(endpoint, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.WP_FILEBIRD_API_KEY}`,
-    },
-    next: { revalidate: 3000 },
-    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch folders: ${response.status}`);
-  }
-
-  const json = await response.json();
-
-  return json.data.folders;
 }
 
 export async function fetchPhotoIds(

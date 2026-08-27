@@ -61,14 +61,14 @@ function convertToAgendaItem(cells: string[]): AgendaItem | null {
   };
 }
 
-function extractTable(rawContent: string): AgendaItem[] | null {
+function extractTable(rawContent: string): AgendaItem[] {
   const $ = cheerio.load(rawContent, null, false);
 
   const table = $('figure.wp-block-table').first();
-  if (table.length === 0) return null;
+  if (table.length === 0) return [];
 
   const rows = table.find('tr').toArray();
-  if (rows.length === 0) return null;
+  if (rows.length === 0) return [];
 
   const agendaItems: AgendaItem[] = [];
 
@@ -87,18 +87,31 @@ function extractTable(rawContent: string): AgendaItem[] | null {
     }
   }
 
-  return agendaItems.length > 0 ? agendaItems : null;
+  return agendaItems;
 }
 
-export async function getAgendaItems(): Promise<AgendaItem[] | null> {
-  const agendaData = await fetchGraphQL<GetAgendaResponse>(GET_AGENDA_QUERY, {
-    next: { revalidate: 600, tags: ['agenda'] },
-  });
+/**
+ * Fetches the agenda table from WordPress. Never throws: a backend that is
+ * unreachable, slow or returning malformed content degrades to an empty
+ * agenda so prerendering the page can't fail the build.
+ */
+export async function getAgendaItems(): Promise<AgendaItem[]> {
+  try {
+    const agendaData = await fetchGraphQL<GetAgendaResponse>(GET_AGENDA_QUERY, {
+      next: { revalidate: 600, tags: ['agenda'] },
+    });
 
-  const rawHTMLContent = agendaData.posts?.edges?.[0]?.node?.content;
-  if (!rawHTMLContent) return null;
+    const rawHTMLContent = agendaData.posts?.edges?.[0]?.node?.content;
+    if (!rawHTMLContent) {
+      console.error('Error fetching agenda: no agenda post found in WordPress');
+      return [];
+    }
 
-  return extractTable(rawHTMLContent);
+    return extractTable(rawHTMLContent);
+  } catch (error) {
+    console.error('Error fetching agenda:', error);
+    return [];
+  }
 }
 
 export function getCurrentSchoolyear(): string {

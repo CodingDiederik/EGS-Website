@@ -43,3 +43,7 @@ export default function Fotos() {
     </div>
   );
 }
+
+// Keep revalidating even when the build-time fetches failed, so an empty
+// gallery repairs itself without a redeploy.
+export const revalidate = 600;

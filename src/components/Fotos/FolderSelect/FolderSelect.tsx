@@ -6,6 +6,8 @@ import { removeEmptyFolders } from '@/lib/services/gallerySelect';
 import styles from './FolderSelect.module.css';
 
 export default async function FolderSelect() {
+  // None of these fetches throw; an unavailable backend yields no folders,
+  // which renders as an empty state instead of breaking the build.
   const folders = await fetchFolders();
   const filteredFolders = removeEmptyFolders(folders);
 
@@ -18,6 +20,17 @@ export default async function FolderSelect() {
       return { folder, preview };
     }),
   );
+
+  if (foldersWithPreview.length === 0) {
+    return (
+      <div className={styles.wrap}>
+        <p className={styles.emptyState}>
+          Er zijn op dit moment geen fotoalbums beschikbaar. Kom later nog eens
+          terug.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.wrap}>
