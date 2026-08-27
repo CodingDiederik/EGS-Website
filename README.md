@@ -1,3 +1,6 @@
+> [!NOTE]  
+> De GPL-3.0-licentie geldt voor de broncode in deze repository. Logo, foto's, teksten en overige content zijn eigendom van de schaakvereniging en vallen er niet onder.
+
 ## Getting Started
 
 This is a [Next.js](https://nextjs.org) project. We outline a few conventions and the setup to start development.
