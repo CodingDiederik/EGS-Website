@@ -24,9 +24,13 @@ jobs:
 
       - name: Debug secrets
         run: |
-          echo "ORG len: ${#VERCEL_ORG_ID}"
-          echo "PROJECT len: ${#VERCEL_PROJECT_ID}"
-          echo "PROJECT prefix: ${VERCEL_PROJECT_ID:0:4}"
+                - name: Debug auth
+        continue-on-error: true
+        run: |
+          echo "ORG prefix: ${VERCEL_ORG_ID:0:5}"
+          vercel whoami --token=${{ secrets.VERCEL_TOKEN }}
+          vercel teams ls --token=${{ secrets.VERCEL_TOKEN }}
+          vercel project ls --token=${{ secrets.VERCEL_TOKEN }}
       - name: Pull environment
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build
